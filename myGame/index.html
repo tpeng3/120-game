@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Tina Peng</title>
+	<script src="../framework/phaser.min.js"></script>
+	<!-- <script src="js/Preloader.js"></script> -->
+	<script src="js/TitleScreen.js"></script>
+	<script src="js/Calendar.js"></script>
+	<script src="js/MorningTalk.js"></script>
+	<script src="js/MorningClient.js"></script>
+	<script src="js/DaytimeWork.js"></script>
+	<script src="js/DaytimeHang.js"></script>
+	<script src="js/EveningTalk.js"></script>
+	<script src="js/EveningSolve.js"></script>
+	<script src="js/Bedtime.js"></script>
+	<script src="js/GameOver.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+
+<body>
+<div id="gameContainer"></div>
+
+<script type="text/javascript">
+
+window.onload = function() {
+	// Create your Phaser game and place it into the gameContainer div.
+	// Do we wanna try for 1024x768?
+	var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameContainer');
+
+	// We can decide how to split up the states later but here's just my thoughts for now
+	// Add the states to the StateManager.
+	//game.state.add('Preloader', BasicGame.Preloader); // If we need to preload things
+	game.state.add('TitleScreen', BasicGame.TitleScreen);
+	game.state.add('Calendar', BasicGame.Calendar);
+	game.state.add('MorningTalk', BasicGame.MorningTalk);
+	game.state.add('MorningClient', BasicGame.MorningClient);
+	game.state.add('DaytimeWork', BasicGame.DaytimeWork);
+	game.state.add('DaytimeHang', BasicGame.DaytimeHang);
+	game.state.add('EveningTalk', BasicGame.EveningTalk);
+	game.state.add('EveningSolve', BasicGame.EveningSolve);
+	game.state.add('Bedtime', BasicGame.Bedtime);
+	game.state.add('GameOver', BasicGame.GameOver);
+
+	// Now start the TitleScreen state.
+	// Maybe later we can start in the Preloader state if we need to
+	game.state.start('TitleScreen');
+};
+
+</script>
+
+</body>
+</html>
