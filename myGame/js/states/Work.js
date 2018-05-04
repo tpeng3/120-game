@@ -36,6 +36,7 @@ BasicGame.Work.prototype = {
     create: function () {
         console.log('Work: create');
         this.stage.backgroundColor = "#facade";
+        this.add.text(this.world.width / 2 - 110, 450, 'WORK!: Press ENTER to go to bed', { fontSize: '32px', fill: '#00ee00' });
         // there's... a Lot to create, but basically the status screen and enemies
     },
 
@@ -65,17 +66,18 @@ BasicGame.Work.prototype = {
         }
     },
 
-    workEnd: function(){
+    workEnd: function () {
+        this.state.start('bedtime');
         // press ENTER to proceed to the next state
         // decide here whether that state should be EveningTalk, EveningSolve, or Bedtime
-        if(this.client == false)
-            // go on to a small solving the case cutscene
-            this.state.start('EveningSolve');
-        else if(Math.random() < .5)
-            // more random opportunities to talk to characters
-            this.state.start('EveningTalk');
-        else
-            // or just go to sleep
-            this.state.start('Bedtime');
+        //if(this.client == false)
+        //    // go on to a small solving the case cutscene
+        //    this.state.start('EveningSolve');
+        //else if(Math.random() < .5)
+        //    // more random opportunities to talk to characters
+        //    this.state.start('EveningTalk');
+        //else
+        //    // or just go to sleep
+        //    this.state.start('Bedtime');
     }
 };
