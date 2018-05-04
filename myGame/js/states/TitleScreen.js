@@ -15,7 +15,7 @@ BasicGame.TitleScreen.prototype = {
 	create: function() {
 		console.log('TitleScreen: create');
 		this.stage.backgroundColor = "#ccddaa";
-
+        this.add.text(this.world.width / 2 - 110, 250, 'Press ENTER to continue', { fontSize: '32px', fill: '#00ee00' });
 		//this.music = this.add.audio('titleMusic');
 		//this.music.play();
 
@@ -25,7 +25,7 @@ BasicGame.TitleScreen.prototype = {
 	update: function () {
 		// press ENTER to proceed to the Calendar state
 		if(this.input.keyboard.isDown(Phaser.Keyboard.ENTER)){
-			this.state.start('Calendar');
+			this.state.start('ActivityDecision');
 		}
 	}
 

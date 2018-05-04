@@ -35,8 +35,9 @@ BasicGame.Bedtime.prototype = {
 			// if it's a something% chance that a morning event doesn't trigger, also go to MorningClient
 			// so the player can decide whether they want to work on the case or hang out with people
 
-			// another day begins
-			this.state.start('Calendar');
+            // another day begins
+            calendar.nextDay();
+			this.state.start('ActivityDecision');
 		}
 	}
 
