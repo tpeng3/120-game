@@ -1,4 +1,4 @@
-BasicGame.DaytimeWork = function (game) {
+BasicGame.Work = function (game) {
     //  When a State is added to Phaser it automatically has the following properties set on it, even if they already exist:
 
     // this.game;      //  a reference to the currently running game (Phaser.Game)
@@ -24,9 +24,9 @@ BasicGame.DaytimeWork = function (game) {
     // I kept the text because I dunno, might be useful
 };
 
-BasicGame.DaytimeWork.prototype = {
+BasicGame.Work.prototype = {
     preload: function() {
-        console.log('DaytimeWork: preload');
+        console.log('Work: preload');
         this.time.advancedTiming = true;
 
         // preload assets
@@ -34,7 +34,7 @@ BasicGame.DaytimeWork.prototype = {
     },
 
     create: function () {
-        console.log('DaytimeWork: create');
+        console.log('Work: create');
         this.stage.backgroundColor = "#facade";
         // there's... a Lot to create, but basically the status screen and enemies
     },

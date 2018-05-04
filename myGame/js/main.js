@@ -1,6 +1,5 @@
-// We're changing the default window size to a longer height
-//var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
-var game = new Phaser.Game(400, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+// Set aspect ration to 1280 x 720
+var game = new Phaser.Game(1280, 720, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 function preload() {
 	// preload assets
