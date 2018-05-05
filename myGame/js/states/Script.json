@@ -1,0 +1,96 @@
+[
+	[
+		{"sprite":"sydney", "dialogue":"HALT THIEF! You're under arrest for unlawful entry and theft!"},
+		{"sprite":"ravenna","dialogue":"Ouch those sirens are sure going to take a toll on my lovely ears."}
+	],
+	[
+		{"sprite":"sydney", "dialogue":"OFFICERS! Don't let the thief get away!"},
+		{"sprite":"ravenna","dialogue":"Well then I hope your troopers are good with rooftops."}
+	],
+	[	
+		{"sprite":"sydney", "dialogue":"GIVE UP NOW WE HAVE YOU SURROUNDED!"},
+		{"sprite":"ravenna","dialogue":"Hey now, is the megaphone really necessary?"},
+		{"sprite":"sydney", "dialogue":"If it's distracting you, then I'm doing my job right!"}
+	],
+	[
+		{"sprite":"sydney", "dialogue":"If you don't stop this instant, I'll be forced to take drastic measures!"},
+		{"sprite":"ravenna","dialogue":"Aww you were going easy on me?"},
+		{"sprite":"sydney", "dialogue":"Alright then, FIRE THE NONLETHAL BULLETS!", "function":"this.firing = true;"}
+	],
+	[
+		{"sprite":"sydney", "dialogue":"Feeling tired yet?"},
+		{"sprite":"ravenna","dialogue":"Not at all! But thanks for your concern~"},
+		{"sprite":"sydney", "dialogue":"I'll show you concern!", "function":"this.NUM_BULLETS++;"}
+	],
+	[
+		{"sprite":"sydney", "dialogue":"Give us back the painting now!"},
+		{"sprite":"ravenna", "dialogue":"Well what are you going to offer? A kiss?"},
+		{"sprite":"sydney","dialogue":"How about more bullets?", "function":"this.NUM_BULLETS++;"}
+	],
+	[
+		{"sprite":"sydney", "dialogue":"I'm not going to give up!"},
+		{"sprite":"ravenna","dialogue":"Well stubborness is a part of your charm."},
+		{"sprite":"sydney", "dialogue":"H-huh?"},
+		{"sprite":"ravenna", "dialogue":"What's the matter? Cat got your tongue?"},
+		{"sprite":"sydney", "dialogue":"N-no! My gun got stuck!", "function":"this.NUM_BULLETS = 2;"}
+	],
+	[
+		{"sprite":"sydney", "dialogue":"You can't outrun justice!"},
+		{"sprite":"ravenna","dialogue":"Really? I've been doing a pretty good job so far."},
+		{"sprite":"sydney", "dialogue":"CALLING NEARBY POLICE CARS! Check ahead and make sure to block all exits!"},
+		{"sprite":"ravenna","dialogue":"I guess I should stop strolling around.", "function":"this.speedupWall();"}
+	],
+	[
+		{"sprite":"sydney", "dialogue":"You're never going to escape!"},
+		{"sprite":"ravenna","dialogue":"Save the sweet talk for the bedroom, honey."},
+		{"sprite":"sydney", "dialogue":"YOU- Officers, I'm going on ahead!"},
+		{"sprite":"ravenna","dialogue":"Well that's my cue to speed up.", "function":"this.speedupWall();"}
+	],
+	[
+		{"sprite":"sydney", "dialogue":"When I get my hands on you..."},
+		{"sprite":"ravenna", "dialogue":"Oh Officer, what are you going to do to me?"},
+		{"sprite":"sydney", "dialogue":"GH- JUST YOU WAIT."},
+		{"sprite":"ravenna","dialogue":"Too bad waiting's my not specialty.", "function":"this.speedupWall();"}
+	],
+	[
+		{"sprite":"sydney", "dialogue":"W-what? There's a traffic accident on First Avenue?"},
+		{"sprite":"sydney", "dialogue":"Try another route! We can't let the thief get away!"},
+		{"sprite":"ravenna","dialogue":"Lucky me~ I can slow down.", "function":"this.slowdownWall();"}
+	],
+	[
+		{"sprite":"sydney", "dialogue":"Surrender and return what you stole immediately!"},
+		{"sprite":"ravenna","dialogue":"Are you talking about your heart?"},
+		{"sprite":"sydney", "dialogue":"wH- WH- NO! The painting!"},
+		{"sprite":"ravenna","dialogue":"Well that's a shame."}
+	],
+	[
+		{"sprite":"sydney", "dialogue":"There's nowhere you can hide!"},
+		{"sprite":"ravenna", "dialogue":"For you? There's nothing I will hide."},
+		{"sprite":"sydney", "dialogue":"......I don't like a liar."}
+	],
+	[
+		{"sprite":"sydney", "dialogue":"Reinforcements are coming!"},
+		{"sprite":"ravenna","dialogue":"All this just for little ol' me?"},
+		{"sprite":"sydney", "dialogue":"You're holding a painting worth tenfold my salary!"},
+		{"sprite":"ravenna","dialogue":"Looks like someone needs a raise."}
+	],
+	[
+		{"sprite":"sydney", "dialogue":"What's it going to take for you to give up?"},
+		{"sprite":"ravenna","dialogue":"Just three words, and I'm yours."},
+		{"sprite":"sydney", "dialogue":"You're under arrest."}
+	],
+	[
+		{"sprite":"sydney", "dialogue":"How are you still going?"},
+		{"sprite":"ravenna","dialogue":"I can say the same to you."},
+		{"sprite":"sydney", "dialogue":"...I won't stop."},
+		{"sprite":"ravenna", "dialogue":"Then the game goes on."}
+	],
+	[
+		{"sprite":"ravenna", "dialogue":"Enjoying the view back there?"},
+		{"sprite":"sydney","dialogue":"We'll catch up to you eventually!"}
+	],
+	[
+		{"sprite":"sydney", "dialogue":"You're just delaying the inevitable."},
+		{"sprite":"ravenna","dialogue":"Even if you catch me, you can't hold me for long."}
+	]
+]
