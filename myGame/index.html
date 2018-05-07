@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
-	<title>Tina Peng</title>
+	<title>Tina Peng (and Tino Abate)</title>
 	<script src="../framework/phaser.min.js"></script>
 	<!-- <script src="js/Preloader.js"></script> -->
+    <script src="js/prefabs/Player.js"></script>
     <script src="js/Calendar.js"></script>
     <script src="js/states/Boot.js"></script>
 	<script src="js/states/TitleScreen.js"></script>
@@ -13,6 +14,7 @@
 	<script src="js/states/Work.js"></script>
 	<script src="js/states/Bedtime.js"></script>
 	<script src="js/states/GameOver.js"></script>
+    <script src="js/main.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 
@@ -20,27 +22,24 @@
 <div id="gameContainer"></div>
 
 <script type="text/javascript">
+    var game;
+    window.onload = function () {
+        // Create your Phaser game and place it into the gameContainer div.
+        game = new Phaser.Game(1280, 720, Phaser.AUTO, 'gameContainer');
 
-window.onload = function() {
-	// Create your Phaser game and place it into the gameContainer div.
-	// Do we wanna try for 1024x768?
-	var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'gameContainer');
+        // Add the states to the StateManager.
+        //game.state.add('Preloader', BasicGame.Preloader); // If we need to preload things
+        game.state.add('TitleScreen', BasicGame.TitleScreen);
+        game.state.add('ActivityDecision', BasicGame.ActivityDecision);
+        game.state.add('Cutscene', BasicGame.Cutscene);
+        game.state.add('Work', BasicGame.Work);
+        game.state.add('Bedtime', BasicGame.Bedtime);
+        game.state.add('GameOver', BasicGame.GameOver);
 
-	// We can decide how to split up the states later but here's just my thoughts for now
-	// Add the states to the StateManager.
-	//game.state.add('Preloader', BasicGame.Preloader); // If we need to preload things
-	game.state.add('TitleScreen', BasicGame.TitleScreen);
-	game.state.add('ActivityDecision', BasicGame.ActivityDecision);
-	game.state.add('Cutscene', BasicGame.Cutscene);
-	game.state.add('Work', BasicGame.Work);
-	game.state.add('Bedtime', BasicGame.Bedtime);
-	game.state.add('GameOver', BasicGame.GameOver);
-
-	// Now start the TitleScreen state.
-	// Maybe later we can start in the Preloader state if we need to
-	game.state.start('TitleScreen');
-};
-
+        // Now start the TitleScreen state.
+        // Maybe later we can start in the Preloader state if we need to
+        game.state.start('TitleScreen');
+    };
 </script>
 
 </body>

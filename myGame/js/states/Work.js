@@ -29,6 +29,10 @@ BasicGame.Work.prototype = {
         console.log('Work: preload');
         this.time.advancedTiming = true;
 
+        this.load.image('locke', 'assets/img/characters/bh_locke.png');
+        this.load.image('enemy', 'assets/img/characters/bh_enemy.png');
+        this.load.image('frame', 'assets/img/ui/ui_bhframe.png');
+
         // preload assets
         // get ready to bullet hell
     },
@@ -37,12 +41,42 @@ BasicGame.Work.prototype = {
         console.log('Work: create');
         this.stage.backgroundColor = "#facade";
         this.add.text(this.world.width / 2 - 110, 450, 'WORK!: Press ENTER to go to bed', { fontSize: '32px', fill: '#00ee00' });
-        // there's... a Lot to create, but basically the status screen and enemies
+        //enable physics
+        this.physics.startSystem(Phaser.Physics.ARCADE);
+        //create the screen fram and boundaries
+        this.frame = this.add.sprite(0, 0, 'frame');
+        this.frameBounds = this.add.group();
+        this.frameBounds.visible = false;
+        this.frameBounds.enableBody = true;
+        this.createBounds(this.frameBounds);
+        //create the player sprite from the player prefab
+        this.player = new Player(game, 'locke', 0, 3);
+        this.add.existing(this.player);
+    },
+    //Create the collision boxes for the frame bounds
+    createBounds: function (group) {
+        var topBound = group.create(0, 0, null);
+        topBound.body.setSize(this.world.width, 60, 0, 0);
+        topBound.body.immovable = true;
+        topBound.body.allowGravity = false;
+        var bottomBound = group.create(0, 0, null);
+        bottomBound.body.setSize(this.world.width, 60, 0, this.world.height -60);
+        bottomBound.body.immovable = true;
+        bottomBound.body.allowGravity = false;
+        var leftBound = group.create(0, 0, null);
+        leftBound.body.setSize(80, this.world.height, 0, 0);
+        leftBound.body.immovable = true;
+        leftBound.body.allowGravity = false;
+        var rightBound = group.create(0, 0, null);
+        rightBound.body.setSize(300, this.world.height, this.world.width - 300, 0);
+        rightBound.body.immovable = true;
+        rightBound.body.allowGravity = false;
     },
 
     update: function () {
         // debug information
-        this.game.debug.text(this.time.fps || '--', 2, 14, "#00ff00");   
+        this.game.debug.text(this.time.fps || '--', 2, 14, "#00ff00");
+        this.physics.arcade.collide(this.player, this.frameBounds);
 
         // bullet hell mechanics are actually pretty similar to endless runner in that we'll be
         // generating enemies flying towards us with the illusion that we're moving upwards
@@ -64,6 +98,10 @@ BasicGame.Work.prototype = {
             this.client == false;
             this.workEnd();
         }
+    },
+
+    render: function () {
+        game.debug.body(this.player);
     },
 
     workEnd: function () {
