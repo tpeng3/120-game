@@ -1,21 +1,28 @@
 // Player prefab constructor function
-function Player(game, key, frame, startingHealth) {
+function Player(game, startingHealth, enemyGroup) {
 	// call to Phaser.Sprite // new Sprite(game, x, y, key, frame)
-    Phaser.Sprite.call(this, game, game.world.width / 2, game.world.height/2, key, frame);
+    Phaser.Sprite.call(this, game, game.world.width / 2, game.world.height/2, 'bh_locke', 0);
 
 	// Sprite stuff
     this.anchor.set(0.5, 0.5);
-    this.scale.x = 2;
-    this.scale.y = 2;
+    //Group stuff
+    this.enemyGroup = enemyGroup
     //Player stuff
     this.maxHealth = 3;
     this.currHealth = startingHealth;
-    this.speed = 200;
-
-
+    this.maxSpeed = 250;
+    this.currSpeed = this.maxSpeed;
+    this.shiftSpeed = 100;
+    //Bullet Stuff
+    this.shotSfx = game.add.audio('sfx_player_laser');
+    this.bulletSpeed = 700;
+    this.bulletDamage = 1;
+    this.firingDelay = 100;//fire every this amount of milliseconds
+    this.isReadyToShoot = true;
 	// put some physics on it
 	game.physics.enable(this);
-	this.body.collideWorldBounds = true;
+    this.body.collideWorldBounds = true;
+    this.body.setSize(32, 32, this.width/4, this.height/4);
 }
 // explicitly define prefab's prototype (Phaser.Sprite) and constructor (Player)
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -23,21 +30,44 @@ Player.prototype.constructor = Player;
 
 // override Phaser.Sprite update (to spin the diamond)
 Player.prototype.update = function () {
+    if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)) {
+        this.bulletDamage = 2;
+        this.currSpeed = this.shiftSpeed;
+    } else {
+        this.bulletDamage = 1;
+        this.currSpeed = this.maxSpeed;
+    }
+    //Movement code
     var xVel = 0;
     var yVel = 0;
     if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-        yVel -= this.speed;
+        yVel -= this.currSpeed;
 	}
     if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
-        yVel += this.speed;
+        yVel += this.currSpeed;
     }
     if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-        xVel += this.speed;
+        xVel += this.currSpeed;
     }
     if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-        xVel -= this.speed;
+        xVel -= this.currSpeed;
     }
     this.body.velocity.x = xVel;
     this.body.velocity.y = yVel;
+    //Shooting code
+    if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.isReadyToShoot) {
+        game.add.existing(new Bullet(game, this.x, this.y, this.bulletDamage, this.bulletSpeed, this.enemyGroup, this.bulletDeleter))
+        this.shotSfx.play();
+        this.isReadyToShoot = false;
+        game.time.events.add(this.firingDelay, this.readyToShoot, this);
+    }
+}
+Player.prototype.readyToShoot = function () {
+    this.isReadyToShoot = true;
+}
+Player.prototype.damage = function (damage) {
+    this.currHealth -= damage;
+    if (this.currHealth <= 0)
+        this.kill();
 }
 

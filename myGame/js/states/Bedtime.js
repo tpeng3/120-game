@@ -8,12 +8,13 @@ BasicGame.Bedtime = function (game) {
 
 BasicGame.Bedtime.prototype = {
 	preload: function() {
-		console.log('Bedtime: preload');
+        console.log('Bedtime: preload');
 		// load phone screen image ... and textbox.... and b-bedroom image bg? and level up screens
 	},
 
 	create: function() {
-		console.log('Bedtime: create');
+        console.log('Bedtime: create');
+        game.sound.stopAll(); 
 		this.stage.backgroundColor = "#9842df";
 	},
 

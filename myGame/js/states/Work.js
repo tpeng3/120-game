@@ -28,11 +28,15 @@ BasicGame.Work.prototype = {
     preload: function() {
         console.log('Work: preload');
         this.time.advancedTiming = true;
-
-        this.load.image('locke', 'assets/img/characters/bh_locke.png');
-        this.load.image('enemy', 'assets/img/characters/bh_enemy.png');
+        //Load images (no sprite atlas right now)
+        this.load.image('bh_locke', 'assets/img/bh/bh_locke.png');
+        this.load.image('locke_bullet', 'assets/img/bh/bh_kunai.png');
+        this.load.image('enemy', 'assets/img/bh/bh_enemy.png');
         this.load.image('frame', 'assets/img/ui/ui_bhframe.png');
-
+        //load bgm and sfx
+        this.load.audio('bgm_touhou_stolen', 'assets/audio/bgm/ravel_nightstar_the_drums_and_bass_of_flower_bless.ogg');
+        this.load.audio('sfx_player_laser', 'assets/audio/sfx/sfx_player_shot_laser.ogg');
+        this.load.audio('sfx_enemy_death', 'assets/audio/sfx/sfx_enemy_death.ogg');
         // preload assets
         // get ready to bullet hell
     },
@@ -49,9 +53,22 @@ BasicGame.Work.prototype = {
         this.frameBounds.visible = false;
         this.frameBounds.enableBody = true;
         this.createBounds(this.frameBounds);
+        //create enemy group
+        this.enemyGroup = this.add.group();
         //create the player sprite from the player prefab
-        this.player = new Player(game, 'locke', 0, 3);
+        this.player = new Player(game, 3, this.enemyGroup);
         this.add.existing(this.player);
+        //spawn an enemy (placement not final)
+        this.spawnEnemy = function () {
+            var enemy = new Enemy(game, game.rnd.integerInRange(80, game.width - 300), game.rnd.integerInRange(60, game.height - 600), 'enemy', 3, this.player);
+            this.add.existing(enemy);
+            this.enemyGroup.add(enemy);
+        }
+        //spawn debug enemies (on a timer)
+        this.game.time.events.loop(1000, this.spawnEnemy, this);
+        //LOL I TOTALLY DIDN'T STEAL THIS AMAZING MUSIC
+        bgm = game.add.audio('bgm_touhou_stolen');
+        bgm.loopFull()
     },
     //Create the collision boxes for the frame bounds
     createBounds: function (group) {
@@ -102,6 +119,8 @@ BasicGame.Work.prototype = {
 
     render: function () {
         game.debug.body(this.player);
+        //Create some debug health text
+        game.debug.text('Health = ' + this.player.currHealth, this.player.x, this.player.y, { fontSize: '32px', fill: '#00ee00' });
     },
 
     workEnd: function () {
