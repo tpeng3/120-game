@@ -22,11 +22,11 @@ BasicGame.ActivityDecision.prototype = {
 	update: function () {
 		// press W to proceed to work
         if (this.input.keyboard.isDown(Phaser.Keyboard.W)) {
-            this.state.start('Work', calendar.getSceneKey());
+            this.state.start('Work', true, false, calendar.getSceneKey());
         }
         // press H to hangout
         if (this.input.keyboard.isDown(Phaser.Keyboard.H)) {
-            this.state.start('Cutscene', calendar.getSceneKey());
+            this.state.start('Cutscene', true, false, 'testScene');//calendar.getSceneKey());
         }
 		// Choosing to hang means you'll skip any chance evening events but I realize you can still get morning events huh...
 		if(this.input.keyboard.isDown(Phaser.Keyboard.ENTER)){

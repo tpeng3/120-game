@@ -1,0 +1,12 @@
+{
+	"scene_name":"test_scene",
+  "bg": "bg_agency",
+  "bgm": "",
+  "sprite_left": "locke_default_pixel",
+  "sprite_right": "locke_default",
+	"lines":[
+		{"name":"Locke", "pos":"r","text":"I see you like to chew..."},
+		{"name":"SHADOW LOCKE","pos":"l","text":"...maybe you should you chew..."},
+		{"name":"Locke", "pos":"r","text":"ON MY FIST!", "functions": ["console.log('function = donezo');"]}
+	]
+}

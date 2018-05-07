@@ -67,7 +67,7 @@ BasicGame.Work.prototype = {
     },
 
     workEnd: function () {
-        this.state.start('bedtime');
+        this.state.start('Bedtime');
         // press ENTER to proceed to the next state
         // decide here whether that state should be EveningTalk, EveningSolve, or Bedtime
         //if(this.client == false)
