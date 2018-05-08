@@ -13,10 +13,14 @@ function Player(game, startingHealth, enemyGroup) {
     this.maxSpeed = 250;
     this.currSpeed = this.maxSpeed;
     this.shiftSpeed = 100;
+    this.showHitbox = false;
     //Bullet Stuff
+    if (Player.bulletGroup == null)
+        Player.bulletGroup = game.add.group();
     this.shotSfx = game.add.audio('sfx_player_laser');
     this.bulletSpeed = 700;
     this.bulletDamage = 1;
+    this.bulletAngle = new Phaser.Point(0, 1); //angle of shots (as Vec2d (Phaser.Point))
     this.firingDelay = 100;//fire every this amount of milliseconds
     this.isReadyToShoot = true;
 	// put some physics on it
@@ -27,15 +31,18 @@ function Player(game, startingHealth, enemyGroup) {
 // explicitly define prefab's prototype (Phaser.Sprite) and constructor (Player)
 Player.prototype = Object.create(Phaser.Sprite.prototype);
 Player.prototype.constructor = Player;
+Player.bulletGroup = null;
 
 // override Phaser.Sprite update (to spin the diamond)
 Player.prototype.update = function () {
     if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)) {
         this.bulletDamage = 2;
         this.currSpeed = this.shiftSpeed;
+        this.showHitbox = true;
     } else {
         this.bulletDamage = 1;
         this.currSpeed = this.maxSpeed;
+        this.showHitbox = false;
     }
     //Movement code
     var xVel = 0;
@@ -56,7 +63,7 @@ Player.prototype.update = function () {
     this.body.velocity.y = yVel;
     //Shooting code
     if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.isReadyToShoot) {
-        game.add.existing(new Bullet(game, this.x, this.y, this.bulletDamage, this.bulletSpeed, this.enemyGroup, this.bulletDeleter))
+        new Bullet(game, 'locke_bullet', this.x, this.y, this.bulletDamage, this.bulletSpeed, this.bulletAngle, this.enemyGroup, Player.bulletGroup);
         this.shotSfx.play();
         this.isReadyToShoot = false;
         game.time.events.add(this.firingDelay, this.readyToShoot, this);

@@ -60,12 +60,17 @@ BasicGame.Work.prototype = {
         this.add.existing(this.player);
         //spawn an enemy (placement not final)
         this.spawnEnemy = function () {
-            var enemy = new Enemy(game, game.rnd.integerInRange(80, game.width - 300), game.rnd.integerInRange(60, game.height - 600), 'enemy', 3, this.player);
+            let xPos = game.rnd.integerInRange(80, game.width - 300);
+            let yPos = game.rnd.integerInRange(60, game.height - 500);
+            var enemy = new EnemyShooter(game, xPos, yPos, 'enemy', 3, this.player, Enemy.movementPattern_followTarget, EnemyShooter.shootingPattern_flower, 150, 800);
+            this.add.existing(enemy);
+            this.enemyGroup.add(enemy);
+            enemy = new Enemy(game, game.rnd.integerInRange(80, game.width - 300), game.rnd.integerInRange(60, game.height - 600), 'enemy', 3, this.player, Enemy.movementPattern_followTarget);
             this.add.existing(enemy);
             this.enemyGroup.add(enemy);
         }
         //spawn debug enemies (on a timer)
-        this.game.time.events.loop(1000, this.spawnEnemy, this);
+        this.game.time.events.add(100, this.spawnEnemy, this);
         //LOL I TOTALLY DIDN'T STEAL THIS AMAZING MUSIC
         bgm = game.add.audio('bgm_touhou_stolen');
         bgm.loopFull()
@@ -111,19 +116,22 @@ BasicGame.Work.prototype = {
         // this.workEnd();
 
         // if the "boss" enemy runs out of health aka case is solved
-        if(this.input.keyboard.isDown(Phaser.Keyboard.ENTER)){ // temporary code just to progress through the states for now
+        if(this.input.keyboard.isDown(Phaser.Keyboard.ENTER) || !this.player.alive){ // temporary code just to progress through the states for now
             this.client == false;
             this.workEnd();
         }
     },
 
     render: function () {
-        game.debug.body(this.player);
+        if(this.player.showHitbox)
+            game.debug.body(this.player);
         //Create some debug health text
         game.debug.text('Health = ' + this.player.currHealth, this.player.x, this.player.y, { fontSize: '32px', fill: '#00ee00' });
     },
 
     workEnd: function () {
+        Player.bulletGroup = null;
+        Enemy.bulletGroup = null;
         this.state.start('Bedtime');
         // press ENTER to proceed to the next state
         // decide here whether that state should be EveningTalk, EveningSolve, or Bedtime
