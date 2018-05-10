@@ -1,4 +1,6 @@
 // Player prefab constructor function
+// Args: game (Phaser.Game), startingHealth (due to fatigue can be lower, usually 3)
+// enemyGroup: 
 function Player(game, startingHealth, enemyGroup) {
 	// call to Phaser.Sprite // new Sprite(game, x, y, key, frame)
     Phaser.Sprite.call(this, game, game.world.width / 2, game.world.height/2, 'bh_locke', 0);

@@ -23,7 +23,6 @@ BasicGame.Work = function (game) {
 
     // I kept the text because I dunno, might be useful
 };
-
 BasicGame.Work.prototype = {
     preload: function() {
         console.log('Work: preload');
@@ -58,18 +57,22 @@ BasicGame.Work.prototype = {
         //create the player sprite from the player prefab
         this.player = new Player(game, 3, this.enemyGroup);
         this.add.existing(this.player);
-        //spawn an enemy (placement not final)
+        //spawn an enemy (placement not final) //EXAMPLE CODE FOR SPAWNING ENEMIES HERE
         this.spawnEnemy = function () {
             let xPos = game.rnd.integerInRange(80, game.width - 300);
             let yPos = game.rnd.integerInRange(60, game.height - 500);
-            var enemy = new EnemyShooter(game, xPos, yPos, 'enemy', 3, this.player, Enemy.movementPattern_followTarget, EnemyShooter.shootingPattern_flower, 150, 800);
+            //Movement patter of null makes the enemy stay still
+            var enemy = new EnemyShooter(game, xPos, yPos, 'enemy', 3, this.player, null, EnemyShooter.shootingPattern_flower, 150, 800);
+            this.add.existing(enemy);
+            this.enemyGroup.add(enemy);
+            enemy = new EnemyShooter(game, xPos + 100, yPos, 'enemy', 3, this.player, Enemy.movementPattern_followTarget, EnemyShooter.shootingPattern_shootAtTarget, 150, 800);
             this.add.existing(enemy);
             this.enemyGroup.add(enemy);
             enemy = new Enemy(game, game.rnd.integerInRange(80, game.width - 300), game.rnd.integerInRange(60, game.height - 600), 'enemy', 3, this.player, Enemy.movementPattern_followTarget);
             this.add.existing(enemy);
             this.enemyGroup.add(enemy);
         }
-        //spawn debug enemies (on a timer)
+        //spawn debug enemies (on a timer) (NOT ON A TIMER RIGHT NOW FOR OTHER DEBUG REASONS)
         this.game.time.events.add(100, this.spawnEnemy, this);
         //LOL I TOTALLY DIDN'T STEAL THIS AMAZING MUSIC
         bgm = game.add.audio('bgm_touhou_stolen');
