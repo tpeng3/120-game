@@ -1,5 +1,3 @@
-// I imagine this as some sort of on-the-way to work kind of cutscene
-
 BasicGame.Cutscene = function (game) {};
 
 BasicGame.Cutscene.prototype = {
@@ -10,70 +8,70 @@ BasicGame.Cutscene.prototype = {
     },
 	preload: function() {
 		console.log('Cutscene: preload');
-        //debug assets
-        this.load.image('locke_default', 'assets/img/characters/templocke.png');
-        this.load.image('locke_default_pixel', 'assets/img/characters/templocke_pixel.png');
+        // load backgrounds
         this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
-        //load text box and fonts
+
+        // load the sprites
+        this.load.image('locke_default', 'assets/img/characters/vn_locke1draft.png');
+        this.load.image('locke_posing', 'assets/img/characters/vn_locke2draft.png');
+        this.load.image('keyna_default', 'assets/img/characters/vn_keyna1draft.png');
+        this.load.image('tai_default', 'assets/img/characters/vn_taidraft.png');
+        this.load.image('fedelynn_default', 'assets/img/characters/vn_fedelynndraft.png');
+
+        // load textbox and font
         this.load.image('textbox', 'assets/img/ui/textbox.png');
         this.load.bitmapFont('btmfont', 'assets/fonts/font.png', 'assets/fonts/font.fnt');
-        // preload scene
+
+        // load script
         this.load.text('scene', 'js/scenes/' + this.sceneName + '.json');
 	},
-
 	create: function() {
 		// initialize some variables/parameters
-        this.TEXT_SPEED = 30; // 20ms per char
+        this.TEXT_SPEED = 30; // 30ms per char
 
 		console.log('Cutscene: create');
-		this.stage.backgroundColor = "#aaaaaa";
+		this.stage.backgroundColor = "#000";
 
-		// scenes and scenes and scenes
+		// parse the scene script
         this.scene = JSON.parse(this.game.cache.getText('scene'));
 
-        //load the initial bg
+        // add the initial bg
         this.bg = this.add.sprite(0, 0, this.scene.bg);
 
-        // load the left character (usually locke)
-        this.leftChara = this.add.sprite(this.world.width - 750, 570, this.scene.sprite_left);
-        this.leftChara.anchor.setTo(1, 1);
-
-        // load the right character (usually the-one-who-is-not-locke)
-        this.rightChara = this.add.sprite(this.world.width - 500, 570, this.scene.sprite_right);
-        this.rightChara.anchor.setTo(0, 1);
+        // add the left character (usually locke)
+        this.leftChara = this.add.sprite(150, this.world.height, this.scene.sprite_left);
+        this.leftChara.anchor.setTo(0, 1);
+        // add the right character (usually the-one-who-is-not-locke)
+        this.rightChara = this.add.sprite(this.world.width - 150, this.world.height, this.scene.sprite_right);
+        this.rightChara.anchor.setTo(1, 1);
 
         // place the textbox
-        this.textbox = this.add.sprite(25, 545, 'textbox');
-
+        var textbox = this.add.sprite(this.world.width/2, this.world.height - 10, 'textbox');
+        textbox.anchor.setTo(0.5, 1);
         // initialize the textbox text
-        this.btmText = this.add.bitmapText(40, 590, 'btmfont', '', 24); // 24 is the fontSize
-        this.btmText.maxWidth = 800;
-        this.game.cache.getBitmapFont('btmfont').font.lineHeight = 30; // change line spacing in a more roundabout way
+        this.btmText = this.add.bitmapText(textbox.left+100, textbox.top+60, 'btmfont', '', 32); // 32 is the fontSize
+        console.log(textbox.right);
+        this.btmText.maxWidth = textbox.width-200; // wordwrap width
+        this.game.cache.getBitmapFont('btmfont').font.lineHeight = 64; // changing line spacing in a roundabout way
 
         // initialize the nameTag text
-        this.nameText = this.add.bitmapText(40, 548, 'btmfont', 'NAME', 24); // 24 is the fontSize
-        this.nameText.maxWidth = 200;
-
-        //Move the character sprites up in the render order
-        this.world.moveUp(this.leftChara);
-        this.world.moveUp(this.rightChara);
+        this.nameText = this.add.bitmapText(textbox.left+60, textbox.top+20, 'btmfont', 'NAME', 32);
 
         // Start the scene
-        this.textLine = -1;//current line in the scene
-        this.charNum = 0; //current character of the line text
-        this.textRun = false; //is text scrolling?
-        this.advanceTextBox(); //show the first line of text (and trigger functions, and stuff)
+        this.textLine = -1;// current line in the scene
+        this.charNum = 0; // current char of the line text
+        this.textRun = false; // text scrolling
+        this.firstTalker = this.scene.lines[0].name; // To get rid of that l/r pos thing
         //Bind the text scrolling event to a timed event
         this.game.time.events.loop(this.TEXT_SPEED, this.unfoldDialogue, this);
+        this.advanceTextBox(); // show the first line of text (and trigger functions, and stuff)
 
         //Bind the line advancing function to the spacebar
         var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.advanceTextBox, this);
 	},
-
     update: function () {
-		// press ENTER to proceed to the next state
-		// Choosing to hang means you'll skip any chance evening events but I realize you can still get morning events huh...
+		// press ENTER to skip to the next state
 		if(this.input.keyboard.isDown(Phaser.Keyboard.ENTER)){
 			this.state.start('Bedtime');
 		}
@@ -81,10 +79,12 @@ BasicGame.Cutscene.prototype = {
     unfoldDialogue: function () {
         if (this.textRun == true) {
             var line = this.scene.lines[this.textLine];
+
             // sprite dimming
             var dimColor = 0x555555;
-            this.leftChara.tint = (line.pos == "l" ? 0xffffff : dimColor);
-            this.rightChara.tint = (line.pos == "r" ? 0xffffff : dimColor);
+            this.leftChara.tint = (line.name == this.firstTalker? 0xffffff : dimColor);
+            this.rightChara.tint = (line.name == this.firstTalker? dimColor : 0xffffff);
+
             // show dialogue text
             if (line.text[this.charNum] != undefined) {
 	            this.btmText.text += line.text[this.charNum];
@@ -105,16 +105,14 @@ BasicGame.Cutscene.prototype = {
             this.charNum = 0;
             this.btmText.text = "";
             this.nameText.text = this.scene.lines[this.textLine].name;
-            //Call all funtions (currently happens at line beginning)
+            // Call all funtions (currently happens at line beginning)
             if (this.scene.lines[this.textLine].functions != undefined) {
                 for (let i = 0; i < this.scene.lines[this.textLine].functions.length; i++) {
                     eval(this.scene.lines[this.textLine].functions[i]);
                 }
             }
             this.textRun = true; 
-        } else { // else clear textbox and end conversation (if no more lines)
-            this.textbox.visible = false;
-            this.btmText.text = "";
+        } else { // else end conversation (if no more lines)
             this.state.start('Bedtime');
         }
     }

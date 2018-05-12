@@ -1,12 +1,13 @@
 {
 	"scene_name":"test_scene",
-  "bg": "bg_agency",
-  "bgm": "",
-  "sprite_left": "locke_default_pixel",
-  "sprite_right": "locke_default",
+	"bg": "bg_agency",
+	"bgm": "",
+	"sprite_left": "locke_default",
+	"sprite_right": "tai_default",
 	"lines":[
-		{"name":"Locke", "pos":"r","text":"I see you like to chew..."},
-		{"name":"SHADOW LOCKE","pos":"l","text":"...maybe you should you chew..."},
-		{"name":"Locke", "pos":"r","text":"ON MY FIST!", "functions": ["console.log('function = donezo');"]}
+		{"name":"Locke","text":"Everything that we know and love is reducible to the absurd acts of chemicals, and there is therefore no intrinsic value in this material universe."},
+		{"name":"Tai","text":"Hypocrite that you are, for you trust the chemicals in your brain to tell you they are chemicals."},
+		{"name":"Locke","text":"All knowledge is ultimately based on that which we cannot prove."},
+		{"name":"Locke","text":"Will you fight? Or will you perish like a dog?", "functions": ["console.log('function = donezo');"]}
 	]
 }
