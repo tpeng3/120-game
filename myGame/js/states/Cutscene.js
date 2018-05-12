@@ -19,11 +19,16 @@ BasicGame.Cutscene.prototype = {
         this.load.bitmapFont('btmfont', 'assets/fonts/font.png', 'assets/fonts/font.fnt');
         // preload scene
         this.load.text('scene', 'js/scenes/' + this.sceneName + '.json');
+        // load sfx
+        this.load.audio('sfx_text_scroll', 'assets/audio/sfx/sfx_text_scroll4.ogg');
 	},
 
-	create: function() {
+    create: function () {
+        //Create SFX
+        this.textScrollSfx = game.add.audio('sfx_text_scroll');
+
 		// initialize some variables/parameters
-        this.TEXT_SPEED = 30; // 20ms per char
+        this.TEXT_SPEED = 50; // 20ms per char
 
 		console.log('Cutscene: create');
 		this.stage.backgroundColor = "#aaaaaa";
@@ -88,7 +93,9 @@ BasicGame.Cutscene.prototype = {
             // show dialogue text
             if (line.text[this.charNum] != undefined) {
 	            this.btmText.text += line.text[this.charNum];
-	            this.charNum++;
+                this.charNum++;
+                this.textScrollSfx.stop();
+                this.textScrollSfx.play();
 	        }else{
 	        	this.textRun = false;
 	        }
