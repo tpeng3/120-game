@@ -63,7 +63,7 @@ BasicGame.Work.prototype = {
 
         // some text for the players
         var textStyle = { fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: 200 };
-        var text = this.add.text(1000, 20, 'Use arrow keys to move, SPACEBAR to shoot. Move to next stage via death or after 15 seconds.', textStyle);
+        this.add.text(1000, 40, 'Use arrow keys to move, SPACEBAR to shoot. Move to next stage via death or after 15 seconds.', textStyle);
 
         // timer before going on to the next stage
         this.game.time.events.add(15000, this.workEnd, this);

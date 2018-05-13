@@ -11,7 +11,7 @@ BasicGame.Bedtime.prototype = {
         console.log('Bedtime: preload');
 		// load phone screen image ... and textbox.... and b-bedroom image bg? and level up screens
         
-        this.load.image('ui_ribitter', 'assets/img/ui/ui_ribbitter.png');
+        this.load.image('ribbitter', 'assets/img/ui/ui_ribbitter.png');
         this.load.image('bg_bedroom', 'assets/img/bg/bg_bedroom.png');
 
         this.load.spritesheet('sprite_locke', 'assets/img/bedtime/sprite_locke.png', 64, 64);
@@ -37,8 +37,8 @@ BasicGame.Bedtime.prototype = {
 		sprite.anchor.set(0.5);
 		this.physics.arcade.enable(sprite);
 		sprite.animations.add('down', [0, 1, 2, 1], 10, true);
-		sprite.animations.add('left', [3, 4, 5, 4], 10, true);
-		sprite.animations.add('right', [6, 7, 8, 7], 10, true);
+		sprite.animations.add('left', [3, 4, 5], 10, true);
+		sprite.animations.add('right', [6, 7, 8], 10, true);
 		sprite.animations.add('up', [9, 10, 11, 10], 10, true);
 		this.spriteDirection = 1; // facing down is default
 
@@ -56,6 +56,14 @@ BasicGame.Bedtime.prototype = {
 		this.physics.arcade.enable(this.desk);
 		this.physics.arcade.collide(sprite, this.desk);
 	 	this.desk.body.immovable = true;
+
+	 	// some temp text for the players
+  		var textStyle = { fontSize: '24px', fill: '#000', wordWrap: true, wordWrapWidth: 64*10 };
+        this.add.text(64*3, 64*8, 'Use arrow keys to move, Press SPACEBAR when overlapped with the bed or desk to interact with them.', textStyle);
+
+	 	// add ribbiter (and set up the ribbits... in the next sprint)
+	 	this.ribbitter = this.add.sprite(0, 0, 'ribbitter');
+	 	this.ribbitter.visible = false;
 
 		// fade transition (It has to be placed at the end for layering reasons)
         var fade = new TransitionFade(game);
@@ -98,7 +106,7 @@ BasicGame.Bedtime.prototype = {
 	    // if player checks bed, go to sleep and proceed back to activity decision
 	    // I keep forgetting results screen is on Sunday and not like, at the end of the day
         // var hitBed = this.physics.arcade.collide(sprite, this.bed);
-	    if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.physics.arcade.collide(sprite, this.bed)){
+	    if(this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && this.physics.arcade.collide(sprite, this.bed)){
 	    	console.log("checking bed");
 	    	calendar.nextDay();
 	    	this.state.start('ActivityDecision');
@@ -106,9 +114,16 @@ BasicGame.Bedtime.prototype = {
 	    // if player check desks, opens up social media
 	    // should we make tweets like a prefab or function like the textbox?
         // var hitDesk = this.physics.arcade.collide(sprite, this.desk);
-	    if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.physics.arcade.collide(sprite, this.desk)){
+	    if(this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && this.physics.arcade.collide(sprite, this.desk)){
 	    	console.log("checking desk");
 	    	// looks like I won't be able to make the social media ui for this sprint
+	    	if(this.ribbitter.visible == false){
+	    		this.ribbitter.visible = true;
+	    		sprite.immovable = true;
+	    	}else{
+	    		this.ribbitter.visible = false;
+	    		sprite.immovable = false;
+	    	}
 	    }
 
 		// press ENTER to proceed to the next state
