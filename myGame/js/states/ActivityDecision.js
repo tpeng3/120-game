@@ -23,7 +23,7 @@ BasicGame.ActivityDecision.prototype = {
         // add textbox and text, we don't have to keep this but for now give some explanations to the players
         var textbox = this.add.sprite(this.world.width/2, this.world.height - 10, 'textbox');
         textbox.anchor.setTo(0.5, 1);
-        var textStyle = { fontSize: '32px', fill: '#facade', wordWrap: true, wordWrapWidth: textbox.width-10 };
+        var textStyle = { fontSize: '32px', fill: '#fff', wordWrap: true, wordWrapWidth: textbox.width-120 };
         var text = this.add.text(textbox.left+60, textbox.top+40, 'Use Arrow Keys or WASD to navigate. Press SPACEBAR to select choice and advance text.', textStyle);
 
         // add choice buttons
@@ -64,7 +64,7 @@ BasicGame.ActivityDecision.prototype = {
         	}else{
 				this.camera.fade('#000', 1000);
 				this.camera.onFadeComplete.add(function(){
-					this.state.start('Cutscene', true, false, 'testScene');
+					this.state.start('Cutscene', true, false, 'Script');
 				}, this);
         	}
     	}    	
@@ -76,7 +76,7 @@ BasicGame.ActivityDecision.prototype = {
         }
         // press H to hangout
         if (this.input.keyboard.isDown(Phaser.Keyboard.H)) {
-            this.state.start('Cutscene', true, false, 'testScene');//calendar.getSceneKey());
+            this.state.start('Cutscene', true, false, 'Script');//calendar.getSceneKey());
         }
 	}
 	

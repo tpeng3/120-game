@@ -34,12 +34,15 @@ BasicGame.Cutscene.prototype = {
         // this.textScrollSfx = game.add.audio('sfx_text_scroll');
 
 		// initialize some variables/parameters
-        this.TEXT_SPEED = 30; // 20ms per char
+        this.TEXT_SPEED = 20; // 20ms per char
 
 		console.log('Cutscene: create');
 
 		// parse the scene script
         this.scene = JSON.parse(this.game.cache.getText('scene'));
+
+        // what does the cutscene transition to
+        this.nextState = this.scene.next_state;
 
         // add the initial bg
         this.bg = this.add.sprite(0, 0, this.scene.bg);
@@ -81,7 +84,7 @@ BasicGame.Cutscene.prototype = {
     update: function () {
 		// press ENTER to skip to the next state
 		if(this.input.keyboard.isDown(Phaser.Keyboard.ENTER)){
-			this.state.start('Bedtime');
+			this.state.start(this.nextState);
 		}
 	},
     unfoldDialogue: function () {
@@ -125,7 +128,7 @@ BasicGame.Cutscene.prototype = {
         } else { // else end conversation (if no more lines)
             this.camera.fade('#000');
             this.camera.onFadeComplete.add(function(){
-                this.state.start('Bedtime');
+                this.state.start(this.nextState);
             }, this);
         }
     }

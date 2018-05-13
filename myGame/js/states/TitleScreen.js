@@ -12,6 +12,11 @@ BasicGame.TitleScreen.prototype = {
 		this.load.image('bg_black', 'assets/img/bg/bg_black.png');
 	},
 	create: function() {
+		this.case = 0;
+		this.tai = 0;
+		this.fedelynn = 0;
+		this.keyna = 0;
+
 		console.log('TitleScreen: create');
 		this.stage.backgroundColor = "#000";
 
@@ -39,7 +44,8 @@ BasicGame.TitleScreen.prototype = {
 		if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
 			this.camera.fade('#000');
 			this.camera.onFadeComplete.add(function(){
-				this.state.start('ActivityDecision');
+				// this.state.start('ActivityDecision');
+				this.state.start('Cutscene', true, false, 'CaseStart_' + this.case)
 			}, this);
 		}
 	},

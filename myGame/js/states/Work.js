@@ -1,84 +1,72 @@
-BasicGame.Work = function (game) {
-    //  When a State is added to Phaser it automatically has the following properties set on it, even if they already exist:
+BasicGame.Work = function (game) {};
 
-    // this.game;      //  a reference to the currently running game (Phaser.Game)
-    // this.add;       //  used to add sprites, text, groups, etc (Phaser.GameObjectFactory)
-    // this.camera;    //  a reference to the game camera (Phaser.Camera)
-    // this.cache;     //  the game cache (Phaser.Cache)
-    // this.input;     //  the global input manager. You can access this.input.keyboard, this.input.mouse, as well from it. (Phaser.Input)
-    // this.load;      //  for preloading assets (Phaser.Loader)
-    // this.math;      //  lots of useful common math operations (Phaser.Math)
-    // this.sound;     //  the sound manager - add a sound, play one, set-up markers, etc (Phaser.SoundManager)
-    // this.stage;     //  the game stage (Phaser.Stage)
-    // this.time;      //  the clock (Phaser.Time)
-    // this.tweens;    //  the tween manager (Phaser.TweenManager)
-    // this.state;     //  the state manager (Phaser.StateManager)
-    // this.world;     //  the game world (Phaser.World)
-    // this.particles; //  the particle manager (Phaser.Particles)
-    // this.physics;   //  the physics manager (Phaser.Physics)
-    // this.rnd;       //  the repeatable random number generator (Phaser.RandomDataGenerator)
-
-    //  You can use any of these from any function within this State.
-    //  But do consider them as being 'reserved words', i.e. don't create a property for your own game called "world" or you'll over-write the world reference.
-
-    // I kept the text because I dunno, might be useful
-};
 BasicGame.Work.prototype = {
     preload: function() {
         console.log('Work: preload');
         this.time.advancedTiming = true;
-        //Load images (no sprite atlas right now)
+
+        // load images (no sprite atlas right now)
         this.load.image('bh_locke', 'assets/img/bh/bh_locke.png');
         this.load.image('locke_bullet', 'assets/img/bh/bh_kunai.png');
         this.load.image('enemy', 'assets/img/bh/bh_enemy.png');
         this.load.image('frame', 'assets/img/ui/ui_bhframe.png');
-        //load bgm and sfx
+
+        // load bgm and sfx
         this.load.audio('bgm_touhou_stolen', 'assets/audio/bgm/ravel_nightstar_the_drums_and_bass_of_flower_bless.ogg');
         this.load.audio('sfx_player_laser', 'assets/audio/sfx/sfx_player_shot_laser.ogg');
         this.load.audio('sfx_enemy_death', 'assets/audio/sfx/sfx_enemy_death.ogg');
-        // preload assets
-        // get ready to bullet hell
     },
-
     create: function () {
+        // p-p-parameters/variables
+        this.lives = 3;
+
         console.log('Work: create');
-        this.add.text(this.world.width / 2 - 110, 450, 'WORK!: Press ENTER to go to bed', { fontSize: '32px', fill: '#00ee00' });
-        //enable physics
+
+        // enable physics
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
         // add background/frame, I'm actually going to seperate this into two images later I think
-        this.add.sprite(game.width/2, game.height/2, 'frame');
-        game.physics.arcade.setBounds(80, 60, 900, 600); // gonna change these to variables later when I redraw the bg
+        this.add.sprite(0, 0, 'frame');
+        game.physics.arcade.setBounds(80, 60, 900, 600); // gonna change these to parameters later when I redraw the bg
 
-        //create enemy group
+        // create enemy group
         this.enemyGroup = this.add.group();
 
-        //create the player sprite from the player prefab
-        this.player = new Player(game, 3, this.enemyGroup);
+        // create the player sprite from the player prefab
+        this.player = new Player(game, this.lives, this.enemyGroup);
         this.add.existing(this.player);
         this.player.body.collideWorldBounds = true; // player can't move outside of frame
 
-        //spawn an enemy (placement not final) //EXAMPLE CODE FOR SPAWNING ENEMIES HERE
+        // spawn an enemy (placement not final)
+        // EXAMPLE CODE FOR SPAWNING ENEMIES HERE
         this.spawnEnemy = function () {
             let xPos = game.rnd.integerInRange(80, game.width - 300);
             let yPos = game.rnd.integerInRange(60, game.height - 500);
             //Movement patter of null makes the enemy stay still
-            var enemy = new EnemyShooter(game, xPos, yPos, 'enemy', 3, this.player, null, EnemyShooter.shootingPattern_flower, 150, 800);
+            var enemy = new EnemyShooter(game, xPos, yPos, 'enemy', 3, this.player, null, EnemyShooter.shootingPattern_flower, 150, 2000);
             this.add.existing(enemy);
             this.enemyGroup.add(enemy);
-            enemy = new EnemyShooter(game, xPos + 100, yPos, 'enemy', 3, this.player, Enemy.movementPattern_followTarget, EnemyShooter.shootingPattern_shootAtTarget, 150, 800);
+            enemy = new EnemyShooter(game, xPos + 100, yPos, 'enemy', 3, this.player, Enemy.movementPattern_followTarget, EnemyShooter.shootingPattern_shootAtTarget, 150, 2000);
             this.add.existing(enemy);
             this.enemyGroup.add(enemy);
-            enemy = new Enemy(game, game.rnd.integerInRange(80, game.width - 300), game.rnd.integerInRange(60, game.height - 600), 'enemy', 3, this.player, Enemy.movementPattern_followTarget);
+            enemy = new Enemy(game, game.rnd.integerInRange(80, game.width - 300), game.rnd.integerInRange(60, game.height - 2000), 'enemy', 3, this.player, Enemy.movementPattern_followTarget);
             this.add.existing(enemy);
             this.enemyGroup.add(enemy);
         }
 
-        //spawn debug enemies (on a timer) (NOT ON A TIMER RIGHT NOW FOR OTHER DEBUG REASONS)
+        // spawn debug enemies (on a timer) (NOT ON A TIMER RIGHT NOW FOR OTHER DEBUG REASONS)
         this.game.time.events.add(100, this.spawnEnemy, this);
-        //LOL I TOTALLY DIDN'T STEAL THIS AMAZING MUSIC
-        bgm = game.add.audio('bgm_touhou_stolen');
-        bgm.loopFull()
+
+        // LOL I TOTALLY DIDN'T STEAL THIS AMAZING MUSIC
+        // bgm = game.add.audio('bgm_touhou_stolen');
+        // bgm.loopFull()
+
+        // some text for the players
+        var textStyle = { fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: 200 };
+        var text = this.add.text(1000, 20, 'Use arrow keys to move, SPACEBAR to shoot. Move to next stage via death or after 15 seconds.', textStyle);
+
+        // timer before going on to the next stage
+        this.game.time.events.add(15000, this.workEnd, this);
     },
     update: function () {
         // debug information
@@ -109,23 +97,16 @@ BasicGame.Work.prototype = {
     render: function () {
         if(this.player.showHitbox)
             game.debug.body(this.player);
+
         //Create some debug health text
         game.debug.text('Health = ' + this.player.currHealth, this.player.x, this.player.y, { fontSize: '32px', fill: '#00ee00' });
     },
     workEnd: function () {
         Player.bulletGroup = null;
         Enemy.bulletGroup = null;
-        this.state.start('Bedtime');
-        // press ENTER to proceed to the next state
-        // decide here whether that state should be EveningTalk, EveningSolve, or Bedtime
-        //if(this.client == false)
-        //    // go on to a small solving the case cutscene
-        //    this.state.start('EveningSolve');
-        //else if(Math.random() < .5)
-        //    // more random opportunities to talk to characters
-        //    this.state.start('EveningTalk');
-        //else
-        //    // or just go to sleep
-        //    this.state.start('Bedtime');
+        this.camera.fade('#000');
+            this.camera.onFadeComplete.add(function(){
+                this.state.start('Bedtime');
+            }, this);
     }
 };

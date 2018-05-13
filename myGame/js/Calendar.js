@@ -16,7 +16,7 @@ Calendar.prototype = {
     daysInMonth: function (month, year) {
         return new Date(year, month, 0).getDate();
     },
-    //Go to the next day, where months and years automaticall roll over
+    //Go to the next day, where months and years automatically roll over
     nextDay: function () {
         if (this.date.getDate() + 1 > this.daysInMonth(this.date.getMonth(), this.date.getFullYear())) {
             if (this.date.getMonth() == 12) {

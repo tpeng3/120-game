@@ -49,9 +49,12 @@ BasicGame.Bedtime.prototype = {
 		// add room objects
 		this.bed = this.add.sprite(64*2, 64*1, 'sprite_bed');
 		this.physics.arcade.enable(this.bed);
+		this.physics.arcade.collide(sprite, this.bed);
 		this.bed.body.immovable = true;
+
 		this.desk = this.add.sprite(64*12, 64*1, 'sprite_desk');
 		this.physics.arcade.enable(this.desk);
+		this.physics.arcade.collide(sprite, this.desk);
 	 	this.desk.body.immovable = true;
 
 		// fade transition (It has to be placed at the end for layering reasons)
@@ -94,18 +97,16 @@ BasicGame.Bedtime.prototype = {
 
 	    // if player checks bed, go to sleep and proceed back to activity decision
 	    // I keep forgetting results screen is on Sunday and not like, at the end of the day
-        // this.physics.arcade.collide(sprite, this.bed);
-	    if(this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) &&
-	    	this.physics.arcade.collide(sprite, this.bed)){
+        // var hitBed = this.physics.arcade.collide(sprite, this.bed);
+	    if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.physics.arcade.collide(sprite, this.bed)){
 	    	console.log("checking bed");
 	    	calendar.nextDay();
 	    	this.state.start('ActivityDecision');
 	    }
 	    // if player check desks, opens up social media
 	    // should we make tweets like a prefab or function like the textbox?
-        // this.physics.arcade.collide(sprite, this.desk);
-	    if(this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) &&
-	    	this.physics.arcade.collide(sprite, this.desk)){
+        // var hitDesk = this.physics.arcade.collide(sprite, this.desk);
+	    if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.physics.arcade.collide(sprite, this.desk)){
 	    	console.log("checking desk");
 	    	// looks like I won't be able to make the social media ui for this sprint
 	    }
