@@ -42,21 +42,22 @@ BasicGame.Work.prototype = {
 
     create: function () {
         console.log('Work: create');
-        this.stage.backgroundColor = "#facade";
         this.add.text(this.world.width / 2 - 110, 450, 'WORK!: Press ENTER to go to bed', { fontSize: '32px', fill: '#00ee00' });
         //enable physics
         this.physics.startSystem(Phaser.Physics.ARCADE);
-        //create the screen fram and boundaries
-        this.frame = this.add.sprite(0, 0, 'frame');
-        this.frameBounds = this.add.group();
-        this.frameBounds.visible = false;
-        this.frameBounds.enableBody = true;
-        this.createBounds(this.frameBounds);
+
+        // add background/frame, I'm actually going to seperate this into two images later I think
+        this.add.sprite(game.width/2, game.height/2, 'frame');
+        game.physics.arcade.setBounds(80, 60, 900, 600); // gonna change these to variables later when I redraw the bg
+
         //create enemy group
         this.enemyGroup = this.add.group();
+
         //create the player sprite from the player prefab
         this.player = new Player(game, 3, this.enemyGroup);
         this.add.existing(this.player);
+        this.player.body.collideWorldBounds = true; // player can't move outside of frame
+
         //spawn an enemy (placement not final) //EXAMPLE CODE FOR SPAWNING ENEMIES HERE
         this.spawnEnemy = function () {
             let xPos = game.rnd.integerInRange(80, game.width - 300);
@@ -72,32 +73,13 @@ BasicGame.Work.prototype = {
             this.add.existing(enemy);
             this.enemyGroup.add(enemy);
         }
+
         //spawn debug enemies (on a timer) (NOT ON A TIMER RIGHT NOW FOR OTHER DEBUG REASONS)
         this.game.time.events.add(100, this.spawnEnemy, this);
         //LOL I TOTALLY DIDN'T STEAL THIS AMAZING MUSIC
         bgm = game.add.audio('bgm_touhou_stolen');
         bgm.loopFull()
     },
-    //Create the collision boxes for the frame bounds
-    createBounds: function (group) {
-        var topBound = group.create(0, 0, null);
-        topBound.body.setSize(this.world.width, 60, 0, 0);
-        topBound.body.immovable = true;
-        topBound.body.allowGravity = false;
-        var bottomBound = group.create(0, 0, null);
-        bottomBound.body.setSize(this.world.width, 60, 0, this.world.height -60);
-        bottomBound.body.immovable = true;
-        bottomBound.body.allowGravity = false;
-        var leftBound = group.create(0, 0, null);
-        leftBound.body.setSize(80, this.world.height, 0, 0);
-        leftBound.body.immovable = true;
-        leftBound.body.allowGravity = false;
-        var rightBound = group.create(0, 0, null);
-        rightBound.body.setSize(300, this.world.height, this.world.width - 300, 0);
-        rightBound.body.immovable = true;
-        rightBound.body.allowGravity = false;
-    },
-
     update: function () {
         // debug information
         this.game.debug.text(this.time.fps || '--', 2, 14, "#00ff00");
@@ -124,14 +106,12 @@ BasicGame.Work.prototype = {
             this.workEnd();
         }
     },
-
     render: function () {
         if(this.player.showHitbox)
             game.debug.body(this.player);
         //Create some debug health text
         game.debug.text('Health = ' + this.player.currHealth, this.player.x, this.player.y, { fontSize: '32px', fill: '#00ee00' });
     },
-
     workEnd: function () {
         Player.bulletGroup = null;
         Enemy.bulletGroup = null;

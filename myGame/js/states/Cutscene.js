@@ -3,6 +3,8 @@ BasicGame.Cutscene = function (game) {};
 BasicGame.Cutscene.prototype = {
     init: function (sceneKey)
     {
+        this.stage.backgroundColor = "#000";
+
         //Set the scene name (json file path) from the place that started the scene
         this.sceneName = sceneKey;
     },
@@ -29,13 +31,12 @@ BasicGame.Cutscene.prototype = {
 	},
     create: function () {
         //Create SFX
-        this.textScrollSfx = game.add.audio('sfx_text_scroll');
+        // this.textScrollSfx = game.add.audio('sfx_text_scroll');
 
 		// initialize some variables/parameters
-        this.TEXT_SPEED = 50; // 20ms per char
+        this.TEXT_SPEED = 30; // 20ms per char
 
 		console.log('Cutscene: create');
-		this.stage.backgroundColor = "#000";
 
 		// parse the scene script
         this.scene = JSON.parse(this.game.cache.getText('scene'));
@@ -55,7 +56,6 @@ BasicGame.Cutscene.prototype = {
         textbox.anchor.setTo(0.5, 1);
         // initialize the textbox text
         this.btmText = this.add.bitmapText(textbox.left+100, textbox.top+60, 'btmfont', '', 32); // 32 is the fontSize
-        console.log(textbox.right);
         this.btmText.maxWidth = textbox.width-200; // wordwrap width
         this.game.cache.getBitmapFont('btmfont').font.lineHeight = 64; // changing line spacing in a roundabout way
 
@@ -74,6 +74,9 @@ BasicGame.Cutscene.prototype = {
         //Bind the line advancing function to the spacebar
         var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.advanceTextBox, this);
+
+        // fade transition (It has to be placed at the end for layering reasons)
+        var fade = new TransitionFade(game);
 	},
     update: function () {
 		// press ENTER to skip to the next state
@@ -94,8 +97,8 @@ BasicGame.Cutscene.prototype = {
             if (line.text[this.charNum] != undefined) {
 	            this.btmText.text += line.text[this.charNum];
                 this.charNum++;
-                this.textScrollSfx.stop();
-                this.textScrollSfx.play();
+                // this.textScrollSfx.stop();
+                // this.textScrollSfx.play();
 	        }else{
 	        	this.textRun = false;
 	        }
@@ -120,7 +123,10 @@ BasicGame.Cutscene.prototype = {
             }
             this.textRun = true; 
         } else { // else end conversation (if no more lines)
-            this.state.start('Bedtime');
+            this.camera.fade('#000');
+            this.camera.onFadeComplete.add(function(){
+                this.state.start('Bedtime');
+            }, this);
         }
     }
 };

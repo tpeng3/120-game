@@ -14,10 +14,8 @@ BasicGame.ActivityDecision.prototype = {
 		this.load.image('button_work', 'assets/img/ui/button_work.png');
 		this.load.image('button_hangout', 'assets/img/ui/button_hangout.png');
 	},
-
 	create: function() {
 		console.log('ActivityDecision: create');
-        this.stage.backgroundColor = "#000";
 
         // add agency background. It feels weird loading it twice but this is just FOR NOW.
         this.add.sprite(0, 0, 'bg_agency');
@@ -36,6 +34,9 @@ BasicGame.ActivityDecision.prototype = {
 
 		// default choice
 		this.selectWork = true;
+
+		// fade transition (It has to be placed at the end for layering reasons)
+		var fade = new TransitionFade(game);
 	},
 
 	update: function () {
@@ -61,7 +62,10 @@ BasicGame.ActivityDecision.prototype = {
         	if(this.selectWork){
         		this.state.start('Work', true, false, calendar.getSceneKey());
         	}else{
-        		this.state.start('Cutscene', true, false, 'testScene');
+				this.camera.fade('#000', 1000);
+				this.camera.onFadeComplete.add(function(){
+					this.state.start('Cutscene', true, false, 'testScene');
+				}, this);
         	}
     	}    	
 
