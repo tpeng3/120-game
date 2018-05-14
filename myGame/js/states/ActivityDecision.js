@@ -1,7 +1,5 @@
-// I imagine this as some sort of on-the-way to work kind of cutscene
-
 BasicGame.ActivityDecision = function (game) {
-	//this.music = null;
+	this.music = null;
 	//this.playButton = null;
 };
 
@@ -64,7 +62,7 @@ BasicGame.ActivityDecision.prototype = {
         	}else{
 				this.camera.fade('#000', 1000);
 				this.camera.onFadeComplete.add(function(){
-					this.state.start('Cutscene', true, false, 'Script');
+					this.state.start('Cutscene', true, false, 'Debug_' + BasicGame.global.debug);
 				}, this);
         	}
     	}    	

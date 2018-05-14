@@ -26,12 +26,17 @@ BasicGame.Cutscene.prototype = {
 
         // load script
         this.load.text('scene', 'js/scenes/' + this.sceneName + '.json');
-        // load sfx
+
+        // load music and sfx
+        this.load.audio('bgm_temp_locke', 'assets/audio/bgm/Locke_And_Load.ogg');
+        this.load.audio('bgm_temp_talk', 'assets/audio/bgm/yoiyaminoseaside.mp3');
         this.load.audio('sfx_text_scroll', 'assets/audio/sfx/sfx_text_scroll4.ogg');
 	},
     create: function () {
-        //Create SFX
-        // this.textScrollSfx = game.add.audio('sfx_text_scroll');
+        game.sound.stopAll(); 
+
+        // create SFX
+        this.textScrollSfx = game.add.audio('sfx_text_scroll');
 
 		// initialize some variables/parameters
         this.TEXT_SPEED = 20; // 20ms per char
@@ -40,6 +45,10 @@ BasicGame.Cutscene.prototype = {
 
 		// parse the scene script
         this.scene = JSON.parse(this.game.cache.getText('scene'));
+
+        // add music, it'll be late but I'm lazy rn to change that
+        var bgm = game.add.audio(this.scene.bgm);
+        bgm.loopFull()
 
         // what does the cutscene transition to
         this.nextState = this.scene.next_state;
@@ -100,8 +109,8 @@ BasicGame.Cutscene.prototype = {
             if (line.text[this.charNum] != undefined) {
 	            this.btmText.text += line.text[this.charNum];
                 this.charNum++;
-                // this.textScrollSfx.stop();
-                // this.textScrollSfx.play();
+                this.textScrollSfx.stop();
+                this.textScrollSfx.play();
 	        }else{
 	        	this.textRun = false;
 	        }

@@ -58,8 +58,9 @@ BasicGame.Work.prototype = {
         this.game.time.events.add(100, this.spawnEnemy, this);
 
         // LOL I TOTALLY DIDN'T STEAL THIS AMAZING MUSIC
-        // bgm = game.add.audio('bgm_touhou_stolen');
-        // bgm.loopFull()
+        game.sound.stopAll(); 
+        bgm = game.add.audio('bgm_touhou_stolen');
+        bgm.loopFull()
 
         // some text for the players
         var textStyle = { fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: 200 };

@@ -17,6 +17,8 @@ BasicGame.Bedtime.prototype = {
         this.load.spritesheet('sprite_locke', 'assets/img/bedtime/sprite_locke.png', 64, 64);
         this.load.image('sprite_bed', 'assets/img/bedtime/sprite_bed.png');
         this.load.image('sprite_desk', 'assets/img/bedtime/sprite_desk.png');
+
+        this.load.audio('bgm_temp_paino', 'assets/audio/bgm/paino.ogg');
 	},
 
 	create: function() {
@@ -25,6 +27,9 @@ BasicGame.Bedtime.prototype = {
 
         console.log('Bedtime: create');
         game.sound.stopAll(); 
+
+        bgm = game.add.audio('bgm_temp_paino');
+        bgm.loopFull()
 
         // add background
 		this.stage.backgroundColor = "#000";

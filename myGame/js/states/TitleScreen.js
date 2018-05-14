@@ -1,8 +1,13 @@
 // add the states to Basic Game
 var BasicGame = {};
 
+BasicGame.global = {
+	case : 0,
+	debug : 0
+}
+
 BasicGame.TitleScreen = function (game) {
-	//this.music = null;
+	this.music = null;
 	//this.playButton = null;
 };
 BasicGame.TitleScreen.prototype = {
@@ -12,11 +17,6 @@ BasicGame.TitleScreen.prototype = {
 		this.load.image('bg_black', 'assets/img/bg/bg_black.png');
 	},
 	create: function() {
-		this.case = 0;
-		this.tai = 0;
-		this.fedelynn = 0;
-		this.keyna = 0;
-
 		console.log('TitleScreen: create');
 		this.stage.backgroundColor = "#000";
 
@@ -45,7 +45,7 @@ BasicGame.TitleScreen.prototype = {
 			this.camera.fade('#000');
 			this.camera.onFadeComplete.add(function(){
 				// this.state.start('ActivityDecision');
-				this.state.start('Cutscene', true, false, 'CaseStart_' + this.case)
+				this.state.start('Cutscene', true, false, 'CaseStart_' + BasicGame.global.case)
 			}, this);
 		}
 	},
