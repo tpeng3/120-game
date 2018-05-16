@@ -6,8 +6,8 @@
 	"sprite_right": "keyna_default",
 	"next_state":"Bedtime",
 	"lines":[
-		{"name":"Locke", "pos":"r","text":"I see you like to chew..."},
-		{"name":"SHADOW LOCKE","pos":"l","text":"...maybe you should you chew..."},
-		{"name":"Locke", "pos":"r","text":"ON MY FIST!", "functions": ["console.log('function = donezo');"]}
+		{"name":"Locke", "text":"I see you like to chew..."},
+		{"name":"Keyna", "text":"...maybe you should you chew..."},
+		{"name":"Locke", "text":"ON MY FIST!", "functions": ["BasicGame.global.debug += 1;"]}
 	]
 } 

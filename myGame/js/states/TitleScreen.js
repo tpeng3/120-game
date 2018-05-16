@@ -25,7 +25,7 @@ BasicGame.TitleScreen.prototype = {
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 		game.input.onDown.add(this.goFullscreen, this);
 
-        var titleText = this.add.text(this.world.width/2, this.world.height/2, '(Insert Title Screen Here)\nPress SPACEBAR to start.\n\n*Clicking on the game will start in Fullscreen.', { fontSize: '32px', fill: '#fff' });
+        var titleText = this.add.text(this.world.width/2, this.world.height/2, '(Insert Title Screen Here)\nPress SPACEBAR to start.\n\n*Clicking on the game will start in Fullscreen. \nThis is a one-time thing, use keyboard keys to play!\n\nIn the "work" portion, keep in mind\n that you will use arrow keys, SPACEBAR, and SHIFT.', { fontSize: '32px', fill: '#fff' });
 		titleText.anchor.setTo(0.5);
 		//this.music = this.add.audio('titleMusic');
 		//this.music.play();

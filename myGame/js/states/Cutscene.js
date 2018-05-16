@@ -22,7 +22,6 @@ BasicGame.Cutscene.prototype = {
 
         // load textbox and font
         this.load.image('textbox', 'assets/img/ui/textbox.png');
-        this.load.bitmapFont('btmfont', 'assets/fonts/font.png', 'assets/fonts/font.fnt');
 
         // load script
         this.load.text('scene', 'js/scenes/' + this.sceneName + '.json');
@@ -66,13 +65,14 @@ BasicGame.Cutscene.prototype = {
         // place the textbox
         var textbox = this.add.sprite(this.world.width/2, this.world.height - 10, 'textbox');
         textbox.anchor.setTo(0.5, 1);
-        // initialize the textbox text
-        this.btmText = this.add.bitmapText(textbox.left+100, textbox.top+60, 'btmfont', '', 32); // 32 is the fontSize
-        this.btmText.maxWidth = textbox.width-200; // wordwrap width
-        this.game.cache.getBitmapFont('btmfont').font.lineHeight = 64; // changing line spacing in a roundabout way
 
         // initialize the nameTag text
-        this.nameText = this.add.bitmapText(textbox.left+60, textbox.top+20, 'btmfont', 'NAME', 32);
+        this.nameText = this.add.text(textbox.left+60, textbox.top+20, '', {font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff'});
+
+        // initialize the textbox text
+        var textStyle = { font: 'Trebuchet MS', fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: textbox.width-200 };
+        this.bodyText = this.add.text(textbox.left+100, textbox.top+60, '', textStyle);
+        this.bodyText.lineSpacing = -8;
 
         // Start the scene
         this.textLine = -1;// current line in the scene
@@ -107,7 +107,7 @@ BasicGame.Cutscene.prototype = {
 
             // show dialogue text
             if (line.text[this.charNum] != undefined) {
-	            this.btmText.text += line.text[this.charNum];
+	            this.bodyText.text += line.text[this.charNum];
                 this.charNum++;
                 this.textScrollSfx.stop();
                 this.textScrollSfx.play();
@@ -119,13 +119,13 @@ BasicGame.Cutscene.prototype = {
     advanceTextBox: function () {
         // if there is still text unfolding, just load the whole thing
         if (this.textRun == true) {
-            this.btmText.text = this.scene.lines[this.textLine].text;
+            this.bodyText.text = this.scene.lines[this.textLine].text;
             this.textRun = false;
         }
         else if (this.scene.lines[this.textLine + 1] != undefined) { // else load next line
             this.textLine++;
             this.charNum = 0;
-            this.btmText.text = "";
+            this.bodyText.text = "";
             this.nameText.text = this.scene.lines[this.textLine].name;
             // Call all funtions (currently happens at line beginning)
             if (this.scene.lines[this.textLine].functions != undefined) {
