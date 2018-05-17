@@ -5,7 +5,10 @@ BasicGame.ActivityDecision = function (game) {
 
 BasicGame.ActivityDecision.prototype = {
 	preload: function() {
-		console.log('ActivityDecision: preload');
+        console.log('ActivityDecision: preload');
+        //Load cases
+        if (BasicGame.global.case == undefined)//normal cases
+            game.load.text('next_case', 'js/cases/Case_' + (BasicGame.global.case_number + 1) + '.json');
 		// load background assets of a generic daytime place and the textbox
 		this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
 		this.load.image('textbox', 'assets/img/ui/textbox.png');
@@ -33,6 +36,22 @@ BasicGame.ActivityDecision.prototype = {
         dateBox.alpha = 0.75
         // initialize the dateTime text
         this.dateText = this.add.text(textbox.left + 60, 20, calendar.print(), { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
+
+        // place the dateTimeBox
+        var caseInfo = this.add.sprite(textbox.left, 50, 'textbox');
+        caseInfo.anchor.setTo(0, 0);
+        caseInfo.scale.x = 0.5;
+        caseInfo.scale.y = 0.25;
+        caseInfo.alpha = 0.75
+        // initialize the caseInfo text
+        var info = '';
+        if (BasicGame.global.case == undefined)
+            info = 'No active case: work to find a client!';
+        else if (BasicGame.global.case == 'final')
+            info = '???';
+        else
+            info = 'Case: ' + BasicGame.global.case.case_name + ' (' + (BasicGame.global.case.boss.max_health - BasicGame.global.case.boss.curr_health) + '/' + BasicGame.global.case.boss.max_health + ' done)';      
+        this. caseInfoText = this.add.text(textbox.left + 60, 50, info, { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
 
         // add choice buttons
 		this.work = this.add.sprite(this.world.width/2 - 200, this.world.height/2 - 50, 'button_work');
@@ -67,9 +86,19 @@ BasicGame.ActivityDecision.prototype = {
 
     	if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || 
         	this.input.keyboard.isDown(Phaser.Keyboard.ENTER)){
-        	if(this.selectWork){
-        		this.state.start('Work', true, false, calendar.getSceneKey());
-        	}else{
+            if (this.selectWork) {
+                BasicGame.global.player_stats.fatigue++;
+                if (BasicGame.global.case == undefined) {
+                    BasicGame.global.case_number++;
+                    BasicGame.global.case = JSON.parse(this.game.cache.getText('next_case'));
+                    this.state.start('Cutscene', true, false, 'case/CaseStart_' + (BasicGame.global.case_number));
+                }
+                else if (BasicGame.global.case == "final")
+                    console.log('final case reached, not yet handled in code');//handle final case choosing here
+                else
+        		    this.state.start('Work', true, false);
+            } else {
+                BasicGame.global.player_stats.fatigue = 0;
 				this.camera.fade('#000', 1000);
 				this.camera.onFadeComplete.add(function(){
 					this.state.start('Cutscene', true, false, 'Debug_' + BasicGame.global.debug);

@@ -1,0 +1,30 @@
+{
+  "scene_name": "casestart_0",
+  "bg": "bg_agency",
+  "bgm": "bgm_temp_locke",
+  "sprite_left": "locke_default",
+  "sprite_right": "",
+  "next_state": "Work",
+  "lines": [
+    {
+      "name": "Locke",
+      "text": "..."
+    },
+    {
+      "name": "Crazy Cat Lady",
+      "text": "..."
+    },
+    {
+      "name": "Locke",
+      "text": "............................."
+    },
+    {
+      "name": "Crazy Cat Lady",
+      "text": "...Sooooooo"
+    },
+    {
+      "name": "Locke",
+      "text": "...I understand"
+    }
+  ]
+}

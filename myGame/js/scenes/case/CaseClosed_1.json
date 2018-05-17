@@ -1,0 +1,18 @@
+{
+  "scene_name": "caseclosed_0",
+  "bg": "bg_agency",
+  "bgm": "bgm_temp_locke",
+  "sprite_left": "locke_default",
+  "sprite_right": "",
+  "next_state": "Bedtime",
+  "lines": [
+    {
+      "name": "Locke",
+      "text": "I can't believe case 1 was also a cat!"
+    },
+    {
+      "name": "Crazy Cat Lady",
+      "text": "Oh this is just the beginning..."
+    }
+  ]
+}

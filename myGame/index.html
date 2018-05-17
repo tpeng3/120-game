@@ -32,7 +32,7 @@
         game = new Phaser.Game(1280, 720, Phaser.AUTO, 'gameContainer');
 
         // Add the states to the StateManager.
-        //game.state.add('Preloader', BasicGame.Preloader); // If we need to preload things
+        game.state.add('Boot', BasicGame.Boot);
         game.state.add('TitleScreen', BasicGame.TitleScreen);
         game.state.add('ActivityDecision', BasicGame.ActivityDecision);
         game.state.add('Cutscene', BasicGame.Cutscene);
@@ -42,7 +42,7 @@
 
         // Now start the TitleScreen state.
         // Maybe later we can start in the Preloader state if we need to
-        game.state.start('TitleScreen');
+        game.state.start('Boot');
     };
 </script>
 

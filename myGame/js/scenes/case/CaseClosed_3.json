@@ -1,0 +1,19 @@
+{
+  "scene_name": "caseclosed_0",
+  "bg": "bg_agency",
+  "bgm": "bgm_temp_locke",
+  "sprite_left": "locke_default",
+  "sprite_right": "",
+  "next_state": "Bedtime",
+  "lines": [
+    {
+      "name": "Locke",
+      "text": "If I see another cat I swear to glob I'll-"
+    },
+    {
+      "name": "Crazy Cat Lady",
+      "text": "-Ok this is the last cat case for real lol bye~~~~~~",
+      "functions":  ["BasicGame.global.case = 'final';"]
+    }
+  ]
+}

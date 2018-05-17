@@ -1,0 +1,18 @@
+{
+  "scene_name": "casestart_0",
+  "bg": "bg_agency",
+  "bgm": "bgm_temp_locke",
+  "sprite_left": "locke_default",
+  "sprite_right": "",
+  "next_state": "Work",
+  "lines": [
+    {
+      "name": "Locke",
+      "text": "I wonder what case 1 will actually be?"
+    },
+    {
+      "name": "Tino",
+      "text": "Yeah we should probably get on writing this"
+    }
+  ]
+}

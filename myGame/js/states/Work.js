@@ -11,6 +11,7 @@ BasicGame.Work.prototype = {
         this.load.image('enemy_bullet', 'assets/img/bh/bh_bullet_bright.png');
         this.load.image('enemy_bullet_l', 'assets/img/bh/bh_bullet_lbright.png');
         this.load.image('enemy', 'assets/img/bh/bh_enemy.png');
+        this.load.image('boss', 'assets/img/bh/' + BasicGame.global.case.boss.sprite + '.png');
         this.load.image('frame', 'assets/img/ui/ui_bhframe.png');
 
         // load bgm and sfx
@@ -19,10 +20,10 @@ BasicGame.Work.prototype = {
         this.load.audio('sfx_enemy_death', 'assets/audio/sfx/sfx_enemy_death.ogg');
     },
     create: function () {
-        // p-p-parameters/variables
-        this.lives = 3;
-
         console.log('Work: create');
+
+        //Initialize lives based on the player's fatigue
+        this.lives = Math.max(1, 3 - Math.floor((BasicGame.global.player_stats.fatigue - 1) / 2));
 
         // enable physics
         this.physics.startSystem(Phaser.Physics.ARCADE);
@@ -38,6 +39,11 @@ BasicGame.Work.prototype = {
         this.player = new Player(game, this.lives, this.enemyGroup);
         this.add.existing(this.player);
         this.player.body.collideWorldBounds = true; // player can't move outside of frame
+
+        // create and spawn the boss enemy
+        this.boss = new EnemyShooter(game, this.world.width / 2, -300, 'boss', BasicGame.global.case.boss.curr_health, this.player, null, EnemyShooter.shootingPattern_flower, 150, 1500);
+        this.add.existing(this.boss);
+        this.enemyGroup.add(this.boss);
 
         // spawn an enemy (placement not final)
         // EXAMPLE CODE FOR SPAWNING ENEMIES HERE
@@ -60,8 +66,8 @@ BasicGame.Work.prototype = {
         this.game.time.events.add(100, this.spawnEnemy, this);
 
         // LOL I TOTALLY DIDN'T STEAL THIS AMAZING MUSIC
-        game.sound.stopAll(); 
-        bgm = game.add.audio('bgm_touhou_stolen');
+        game.sound.stopAll();
+        bgm = game.add.audio(BasicGame.global.case.bgm);
         bgm.loopFull()
 
         // some text for the players
@@ -69,31 +75,18 @@ BasicGame.Work.prototype = {
         this.add.text(1000, 40, 'Use arrow keys to move, SPACEBAR to shoot. Move to next stage via death or after 15 seconds.', textStyle);
 
         // timer before going on to the next stage
-        this.game.time.events.add(15000, this.workEnd, this);
+        this.game.time.events.add(45000, this.workEnd, this);
     },
     update: function () {
         // debug information
         this.game.debug.text(this.time.fps || '--', 2, 14, "#00ff00");
         this.physics.arcade.collide(this.player, this.frameBounds);
 
-        // bullet hell mechanics are actually pretty similar to endless runner in that we'll be
-        // generating enemies flying towards us with the illusion that we're moving upwards
+        if (!this.boss.alive) {
+            this.workEndBossDeath();
+        }
 
-        // I'm thinking we can either have different enemies to fight each day...
-        // OR just one type of "boss" enemy per case, so we have less to code and a time limit to damage
-        // the boss as much as possible
-        // so when time limit runs out, you die, or boss health is gone, we go on to the next day
-
-        // so if time limit runs out (30-60seconds? how long does a stage usually last idr i need to play touhou again)
-        // this.workEnd();
-
-        // if you die in bullet hell, you die in real life
-        // i imagine the mc either has a "motivation" health bar, or like, three hits they're out sorta thing
-        // this.workEnd();
-
-        // if the "boss" enemy runs out of health aka case is solved
         if(this.input.keyboard.isDown(Phaser.Keyboard.ENTER) || !this.player.alive){ // temporary code just to progress through the states for now
-            this.client == false;
             this.workEnd();
         }
     },
@@ -103,13 +96,26 @@ BasicGame.Work.prototype = {
 
         //Create some debug health text
         game.debug.text('Health = ' + this.player.currHealth, this.player.x, this.player.y, { fontSize: '32px', fill: '#00ee00' });
+
+        //Create some debug health text
+        game.debug.text('Boss Health = ' + this.boss.currHealth, this.boss.x, this.boss.y, { fontSize: '32px', fill: '#ff0000' });
     },
     workEnd: function () {
         Player.bulletGroup = null;
         Enemy.bulletGroup = null;
+        BasicGame.global.case.boss.curr_health = this.boss.currHealth;
         this.camera.fade('#000');
             this.camera.onFadeComplete.add(function(){
                 this.state.start('Bedtime');
             }, this);
+    },
+    workEndBossDeath: function () {
+        BasicGame.global.case = undefined;
+        Player.bulletGroup = null;
+        Enemy.bulletGroup = null;
+        this.camera.fade('#000');
+        this.camera.onFadeComplete.add(function () {
+            this.state.start('Cutscene', true, false, 'case/CaseClosed_' + (BasicGame.global.case_number));
+        }, this);
     }
 };

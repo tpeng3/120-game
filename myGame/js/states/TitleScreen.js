@@ -1,11 +1,3 @@
-// add the states to Basic Game
-var BasicGame = {};
-
-BasicGame.global = {
-	case : 0,
-	debug : 0
-}
-
 BasicGame.TitleScreen = function (game) {
 	this.music = null;
 	//this.playButton = null;
@@ -44,8 +36,8 @@ BasicGame.TitleScreen.prototype = {
 		if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
 			this.camera.fade('#000');
 			this.camera.onFadeComplete.add(function(){
-				// this.state.start('ActivityDecision');
-				this.state.start('Cutscene', true, false, 'CaseStart_' + BasicGame.global.case)
+                // this.state.start('ActivityDecision');
+                this.state.start('Cutscene', true, false, 'Intro_0')
 			}, this);
 		}
 	},

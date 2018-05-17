@@ -1,0 +1,18 @@
+{
+  "scene_name": "caseclosed_0",
+  "bg": "bg_agency",
+  "bgm": "bgm_temp_locke",
+  "sprite_left": "locke_default",
+  "sprite_right": "",
+  "next_state": "Bedtime",
+  "lines": [
+    {
+      "name": "Locke",
+      "text": "Ok seriously this is getting kind of messed up"
+    },
+    {
+      "name": "Crazy Cat Lady",
+      "text": "I lose a lot of cats. Cut me some slack. I'm presumably old"
+    }
+  ]
+}

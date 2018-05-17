@@ -1,10 +1,25 @@
+// add the states to Basic Game
 var BasicGame = {};
 
-BasicGame.GameOver = function (game) {
+BasicGame.global = {
+    case_number: -1,
+    case: undefined,
+    player_stats: {
+        fatigue: 0, 
+        relationships: {
+            Tai: 0,
+            Keyna: 0,
+            Fedelynn: 0
+        }
+    },
+    debug: 0
+}
+
+BasicGame.Boot = function (game) {
 
 };
 
-BasicGame.GameOver.prototype = {
+BasicGame.Boot.prototype = {
 
     init: function () {
 
@@ -28,7 +43,6 @@ BasicGame.GameOver.prototype = {
             this.scale.forceLandscape = true;
             this.scale.pageAlignHorizontally = true;
         }
-
     },
 
     preload: function () {
@@ -36,15 +50,13 @@ BasicGame.GameOver.prototype = {
         //  Here we load the assets required for our preloader (in this case a background and a loading bar)
         //this.load.image('preloaderBackground', 'images/preloader_background.jpg');
         //this.load.image('preloaderBar', 'images/preloadr_bar.png');
-
     },
 
     create: function () {
-
-        //  By this point the preloader assets have loaded to the cache, we've set the game settings
+        //BasicGame.global.case = JSON.parse(this.game.cache.getText('starting_case'))
         //  So now let's start the real preloader going
         //this.state.start('Preloader');
-
+        this.state.start('TitleScreen');
     }
 
 };

@@ -1,0 +1,11 @@
+{
+  "case_name": "The Whispered Meow",
+  "bg": "",
+  "bgm": "bgm_touhou_stolen",
+  "boss": {
+    "max_health": 150,
+    "curr_health": 150,
+    "sprite": "bh_boss_cat",
+    "ai_pattern":  "ai_boss_cat"
+  }
+}

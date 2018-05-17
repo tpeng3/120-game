@@ -1,0 +1,30 @@
+{
+  "scene_name": "casestart_0",
+  "bg": "bg_agency",
+  "bgm": "bgm_temp_locke",
+  "sprite_left": "locke_default",
+  "sprite_right": "",
+  "next_state": "Work",
+  "lines": [
+    {
+      "name": "Locke",
+      "text": "You again?"
+    },
+    {
+      "name": "Crazy Cat Lady",
+      "text": "So you wouldn't believe what happen-"
+    },
+    {
+      "name": "Locke",
+      "text": "-You lost your cat again."
+    },
+    {
+      "name": "Locke",
+      "text": "...Ok. This is the last time I help you find a cat"
+    },
+    {
+      "name": "Crazy Cat Lady",
+      "text": "We'll see about that"
+    }
+  ]
+}

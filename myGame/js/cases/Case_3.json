@@ -1,0 +1,11 @@
+{
+  "case_name": "The Catatonic Cat-Capturer" ,
+  "bg": "",
+  "bgm": "bgm_touhou_stolen",
+  "boss": {
+    "max_health": 100,
+    "curr_health": 100,
+    "sprite": "bh_boss_cat",
+    "ai_pattern":  "ai_boss_cat"
+  }
+}
