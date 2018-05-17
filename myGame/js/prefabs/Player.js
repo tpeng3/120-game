@@ -4,7 +4,6 @@
 function Player(game, startingHealth, enemyGroup) {
 	// call to Phaser.Sprite // new Sprite(game, x, y, key, frame)
     Phaser.Sprite.call(this, game, game.world.width / 2, game.world.height/2, 'bh_locke', 0);
-
 	// Sprite stuff
     this.anchor.set(0.5, 0.5);
     //Group stuff
@@ -28,7 +27,7 @@ function Player(game, startingHealth, enemyGroup) {
 	// put some physics on it
 	game.physics.enable(this);
     this.body.collideWorldBounds = true;
-    this.body.setSize(32, 32, this.width/4, this.height/4);
+    this.body.setSize(28, 28, this.width/4, this.height/4);
 }
 // explicitly define prefab's prototype (Phaser.Sprite) and constructor (Player)
 Player.prototype = Object.create(Phaser.Sprite.prototype);

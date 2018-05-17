@@ -7,7 +7,9 @@ BasicGame.Work.prototype = {
 
         // load images (no sprite atlas right now)
         this.load.image('bh_locke', 'assets/img/bh/bh_locke.png');
-        this.load.image('locke_bullet', 'assets/img/bh/bh_kunai.png');
+        this.load.image('locke_bullet', 'assets/img/bh/bh_bullet_locke.png');
+        this.load.image('enemy_bullet', 'assets/img/bh/bh_bullet_bright.png');
+        this.load.image('enemy_bullet_l', 'assets/img/bh/bh_bullet_lbright.png');
         this.load.image('enemy', 'assets/img/bh/bh_enemy.png');
         this.load.image('frame', 'assets/img/ui/ui_bhframe.png');
 
@@ -43,7 +45,7 @@ BasicGame.Work.prototype = {
             let xPos = game.rnd.integerInRange(80, game.width - 300);
             let yPos = game.rnd.integerInRange(60, game.height - 500);
             //Movement patter of null makes the enemy stay still
-            var enemy = new EnemyShooter(game, xPos, yPos, 'enemy', 3, this.player, null, EnemyShooter.shootingPattern_flower, 150, 2000);
+            var enemy = new EnemyShooter(game, xPos, yPos, 'enemy', 3, this.player, null, EnemyShooter.shootingPattern_spiral, 150, 100);
             this.add.existing(enemy);
             this.enemyGroup.add(enemy);
             enemy = new EnemyShooter(game, xPos + 100, yPos, 'enemy', 3, this.player, Enemy.movementPattern_followTarget, EnemyShooter.shootingPattern_shootAtTarget, 150, 2000);

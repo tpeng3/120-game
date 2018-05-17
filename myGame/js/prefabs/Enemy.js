@@ -112,10 +112,10 @@ EnemyShooter.prototype.setAngle = function (angle, fromDegrees) {
 EnemyShooter.prototype.shoot = function (isDestructible) {
     var bullet;
     if (isDestructible) {
-        bullet = new DestructibleBullet(game, 'locke_bullet', this.x, this.y, this.bulletDamage, this.bulletSpeed, this.bulletAngle, this.target, Enemy.bulletGroup, Player.bulletGroup);
-        bullet.tint = 0x000000;
+        bullet = new DestructibleBullet(game, 'enemy_bullet_l', this.x, this.y, this.bulletDamage, this.bulletSpeed, this.bulletAngle, this.target, Enemy.bulletGroup, Player.bulletGroup);
+        bullet.tint = 0x666666;
     } else {
-        bullet = new Bullet(game, 'locke_bullet', this.x, this.y, this.bulletDamage, this.bulletSpeed, this.bulletAngle, this.target, Enemy.bulletGroup);
+        bullet = new Bullet(game, 'enemy_bullet', this.x, this.y, this.bulletDamage, this.bulletSpeed, this.bulletAngle, this.target, Enemy.bulletGroup);
     }
     this.shotSfx.play();
 }
@@ -145,5 +145,20 @@ EnemyShooter.shootingPattern_flower = function () {
         this.shoot(Destructible);
         Destructible = !Destructible;
     }
+    this.finishShooting();
+}
+//shoot a spiral pattern of destructible and non-destructible bullets
+EnemyShooter.shootingPattern_spiral = function () {
+    if (this.modAngle == undefined) {
+        let angle = Phaser.Point.angle(new Phaser.Point(this.x, this.y), new Phaser.Point(this.target.x, this.target.y));
+        this.modAngle = angle
+    }
+    if (this.Destructible == undefined)
+        this.Destructible = false;
+    else
+        this.Destructible = !this.Destructible;
+    this.modAngle += Math.PI / 18;
+    this.setAngle(this.modAngle);
+    this.shoot(this.Destructible);
     this.finishShooting();
 }
