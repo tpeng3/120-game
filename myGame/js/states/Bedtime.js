@@ -62,7 +62,7 @@ BasicGame.Bedtime.prototype = {
 		this.physics.arcade.enable(sensor);
 
 		// create boundaries player basically collides with
-		game.physics.arcade.setBounds(bg.x, bg.y, bg.width, bg.height);
+		game.physics.arcade.setBounds(bg.x, bg.y + 64*2, bg.width, bg.height);
 		sprite.body.collideWorldBounds = true;
 
 		// add room objects
@@ -119,41 +119,39 @@ BasicGame.Bedtime.prototype = {
 	},
 
 	update: function () {
-		// Sorry the movement here is super ugly I do want to fix it next sprint
 		// update player sprite movement
 	    if (game.input.keyboard.isDown(Phaser.Keyboard.UP) ||
 	    	game.input.keyboard.isDown(Phaser.Keyboard.W)) {
 	    	sprite.animations.play('up');
 	    	this.spriteDirection = 10;
-	        sprite.body.velocity.y = -this.spriteSpeed;
+	        sprite.body.velocity.setTo(0, -this.spriteSpeed);
 	        sensor.anchor.setTo(.5,.75);
 		}
 	    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) ||
 	    	game.input.keyboard.isDown(Phaser.Keyboard.S)) {
 	    	sprite.animations.play('down');
 	    	this.spriteDirection = 1;
-	        sprite.body.velocity.y = this.spriteSpeed;
+	        sprite.body.velocity.setTo(0, this.spriteSpeed);
 	        sensor.anchor.setTo(.5,.25);
 	    }
 	    else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ||
 	    	game.input.keyboard.isDown(Phaser.Keyboard.D)) {
 	    	sprite.animations.play('right');
 	    	this.spriteDirection = 7;
-	        sprite.body.velocity.x = this.spriteSpeed;
+	        sprite.body.velocity.setTo(this.spriteSpeed, 0);
 	        sensor.anchor.setTo(.25,.5);
 	    }
 	    else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) ||
 	    	game.input.keyboard.isDown(Phaser.Keyboard.A)) {
 	    	sprite.animations.play('left');
 	    	this.spriteDirection = 4;
-	        sprite.body.velocity.x = -this.spriteSpeed;
+	        sprite.body.velocity.setTo(-this.spriteSpeed,0);
 	        sensor.anchor.setTo(.75,.5);
 	    }
 	    else{
 	    	sprite.animations.stop();
 	    	sprite.animations.frame = this.spriteDirection;
-	        sprite.body.velocity.x = 0;
-	        sprite.body.velocity.y = 0;
+	        sprite.body.velocity.setTo(0, 0);
 	    }
 	    // update sensor positions
 	    sensor.x = sprite.x;
