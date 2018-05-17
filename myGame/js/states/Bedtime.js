@@ -120,54 +120,50 @@ BasicGame.Bedtime.prototype = {
 
     update: function () {
         //Movement code
-        var xVel = 0;
-        var yVel = 0;
+        var dir = new Phaser.Point(0, 0);
         if (game.input.keyboard.isDown(Phaser.Keyboard.UP) ||
             game.input.keyboard.isDown(Phaser.Keyboard.W)) {
-            yVel -= this.currSpeed;
+            dir.y -= this.spriteSpeed;
         }
         if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) ||
             game.input.keyboard.isDown(Phaser.Keyboard.S)) {
-            yVel += this.currSpeed;
+            dir.y += this.spriteSpeed;
         }
         if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ||
             game.input.keyboard.isDown(Phaser.Keyboard.D)) {
-            xVel += this.currSpeed;
+            dir.x += this.spriteSpeed;
         }
         if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) ||
             game.input.keyboard.isDown(Phaser.Keyboard.A)) {
-            xVel -= this.currSpeed;
+            dir.x -= this.spriteSpeed;
         }
-        this.body.velocity.x = xVel;
-        this.body.velocity.y = yVel;
-		// update player sprite movement
-	    if (game.input.keyboard.isDown(Phaser.Keyboard.UP) ||
+        dir.normalize();
+        dir.setMagnitude(this.spriteSpeed);
+        sprite.body.velocity = dir;
+		// update player sprite Animation
+        if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ||
+            game.input.keyboard.isDown(Phaser.Keyboard.D)) {
+            sprite.animations.play('right');
+            this.spriteDirection = 7;
+            sensor.anchor.setTo(.25, .5);
+        }
+	    else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) ||
+            game.input.keyboard.isDown(Phaser.Keyboard.A)) {
+            sprite.animations.play('left');
+            this.spriteDirection = 4;
+            sensor.anchor.setTo(.75, .5);
+        }
+	    else if (game.input.keyboard.isDown(Phaser.Keyboard.UP) ||
 	    	game.input.keyboard.isDown(Phaser.Keyboard.W)) {
 	    	sprite.animations.play('up');
 	    	this.spriteDirection = 10;
-	        sprite.body.velocity.setTo(0, -this.spriteSpeed);
-	        sensor.anchor.setTo(.5,.75);
+            sensor.anchor.setTo(.5, .75);
 		}
 	    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) ||
 	    	game.input.keyboard.isDown(Phaser.Keyboard.S)) {
 	    	sprite.animations.play('down');
 	    	this.spriteDirection = 1;
-	        sprite.body.velocity.setTo(0, this.spriteSpeed);
 	        sensor.anchor.setTo(.5,.25);
-	    }
-	    else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ||
-	    	game.input.keyboard.isDown(Phaser.Keyboard.D)) {
-	    	sprite.animations.play('right');
-	    	this.spriteDirection = 7;
-	        sprite.body.velocity.setTo(this.spriteSpeed, 0);
-	        sensor.anchor.setTo(.25,.5);
-	    }
-	    else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) ||
-	    	game.input.keyboard.isDown(Phaser.Keyboard.A)) {
-	    	sprite.animations.play('left');
-	    	this.spriteDirection = 4;
-	        sprite.body.velocity.setTo(-this.spriteSpeed,0);
-	        sensor.anchor.setTo(.75,.5);
 	    }
 	    else{
 	    	sprite.animations.stop();
