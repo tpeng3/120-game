@@ -65,6 +65,17 @@ BasicGame.Cutscene.prototype = {
         // place the textbox
         var textbox = this.add.sprite(this.world.width/2, this.world.height - 10, 'textbox');
         textbox.anchor.setTo(0.5, 1);
+        textbox.alpha = 0.75
+
+        // place the dateTimeBox
+        var dateBox = this.add.sprite(textbox.left, 20, 'textbox');
+        dateBox.anchor.setTo(0, 0);
+        dateBox.scale.x = 0.27;
+        dateBox.scale.y = 0.25;
+        dateBox.alpha = 0.75
+
+        // initialize the dateTime text
+        this.dateText = this.add.text(textbox.left + 60, 20, calendar.date.toDateString(), { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
 
         // initialize the nameTag text
         this.nameText = this.add.text(textbox.left+60, textbox.top+20, '', {font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff'});

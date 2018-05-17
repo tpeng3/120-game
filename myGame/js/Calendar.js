@@ -1,9 +1,6 @@
-// I actually don't know if we really need a calendar state, I was thinking of using it to update kinda like
-// the schedules during the day but maybe that can also be done during Bedtime?
-
 function Calendar() {
     //new Date(year, month [, day [, hours [, minutes [, seconds [, milliseconds]]]]]);
-    this.date = new Date(2020, 5, 1);
+    this.date = new Date(2019, 2, 1);
 };
 
 Calendar.prototype = {
@@ -28,7 +25,6 @@ Calendar.prototype = {
                 this.date.setMonth(this.date.getMonth() + 1);
                 this.date.setDate(1);
             }
-
         }
         else {
             this.date.setDate(this.date.getDate() + 1);
