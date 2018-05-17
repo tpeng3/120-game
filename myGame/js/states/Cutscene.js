@@ -37,9 +37,6 @@ BasicGame.Cutscene.prototype = {
         // create SFX
         this.textScrollSfx = game.add.audio('sfx_text_scroll');
 
-		// initialize some variables/parameters
-        this.TEXT_SPEED = 20; // 20ms per char
-
 		console.log('Cutscene: create');
 
 		// parse the scene script
@@ -67,16 +64,6 @@ BasicGame.Cutscene.prototype = {
         textbox.anchor.setTo(0.5, 1);
         textbox.alpha = 0.75
 
-        // place the dateTimeBox
-        var dateBox = this.add.sprite(textbox.left, 20, 'textbox');
-        dateBox.anchor.setTo(0, 0);
-        dateBox.scale.x = 0.27;
-        dateBox.scale.y = 0.25;
-        dateBox.alpha = 0.75
-
-        // initialize the dateTime text
-        this.dateText = this.add.text(textbox.left + 60, 20, calendar.date.toDateString(), { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
-
         // initialize the nameTag text
         this.nameText = this.add.text(textbox.left+60, textbox.top+20, '', {font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff'});
 
@@ -85,13 +72,23 @@ BasicGame.Cutscene.prototype = {
         this.bodyText = this.add.text(textbox.left+100, textbox.top+60, '', textStyle);
         this.bodyText.lineSpacing = -8;
 
+        // place the dateTimeBox
+        var dateBox = this.add.sprite(textbox.left, 20, 'textbox');
+        dateBox.anchor.setTo(0, 0);
+        dateBox.scale.x = 0.27;
+        dateBox.scale.y = 0.25;
+        dateBox.alpha = 0.75
+
+        // initialize the dateTime text
+        this.dateText = this.add.text(textbox.left + 60, 20, calendar.print(), { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
+
         // Start the scene
         this.textLine = -1;// current line in the scene
         this.charNum = 0; // current char of the line text
         this.textRun = false; // text scrolling
         this.firstTalker = this.scene.lines[0].name; // To get rid of that l/r pos thing
         //Bind the text scrolling event to a timed event
-        this.game.time.events.loop(this.TEXT_SPEED, this.unfoldDialogue, this);
+        this.game.time.events.loop(Settings.TEXT_SCROLL_DELAY, this.unfoldDialogue, this);
         this.advanceTextBox(); // show the first line of text (and trigger functions, and stuff)
 
         //Bind the line advancing function to the spacebar

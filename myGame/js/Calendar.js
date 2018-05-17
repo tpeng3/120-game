@@ -5,6 +5,10 @@ function Calendar() {
 
 Calendar.prototype = {
     getSceneKey: function () { },
+    //Prints a specially formatted version of the date for the game's purposes
+    print: function () {
+        return (this.date.getMonth() + 1) + "/" + this.date.getDate() + " " + this.date.toLocaleString('en-us', { weekday: 'long' });
+    },
     // Month here is 1-indexed (January is 1, February is 2, etc). This is
     // because we're using 0 as the day so that it returns the last day
     // of the last month, so you have to add 1 to the month number 

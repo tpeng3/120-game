@@ -118,7 +118,28 @@ BasicGame.Bedtime.prototype = {
         var fade = new TransitionFade(game);
 	},
 
-	update: function () {
+    update: function () {
+        //Movement code
+        var xVel = 0;
+        var yVel = 0;
+        if (game.input.keyboard.isDown(Phaser.Keyboard.UP) ||
+            game.input.keyboard.isDown(Phaser.Keyboard.W)) {
+            yVel -= this.currSpeed;
+        }
+        if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) ||
+            game.input.keyboard.isDown(Phaser.Keyboard.S)) {
+            yVel += this.currSpeed;
+        }
+        if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ||
+            game.input.keyboard.isDown(Phaser.Keyboard.D)) {
+            xVel += this.currSpeed;
+        }
+        if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) ||
+            game.input.keyboard.isDown(Phaser.Keyboard.A)) {
+            xVel -= this.currSpeed;
+        }
+        this.body.velocity.x = xVel;
+        this.body.velocity.y = yVel;
 		// update player sprite movement
 	    if (game.input.keyboard.isDown(Phaser.Keyboard.UP) ||
 	    	game.input.keyboard.isDown(Phaser.Keyboard.W)) {
