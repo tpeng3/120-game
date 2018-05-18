@@ -176,9 +176,12 @@ BasicGame.Bedtime.prototype = {
 	    // if player checks bed, go to sleep and proceed back to activity decision
 	    // I keep forgetting results screen is on Sunday and not like, at the end of the day
         this.physics.arcade.collide(sprite, this.bed);
-	    if(this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && game.physics.arcade.overlap(sensor, this.bed)){
-	    	calendar.nextDay();
-	    	this.state.start('ActivityDecision');
+        if (this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && game.physics.arcade.overlap(sensor, this.bed)) {
+            calendar.nextDay();
+            if (calendar.date.getDay() == 0)
+                this.state.start('Results');
+            else
+	    	    this.state.start('ActivityDecision');
 	    }
 	    // if player check desks, opens up social media
 	    // should we make tweets like a prefab or function like the textbox?
@@ -195,7 +198,11 @@ BasicGame.Bedtime.prototype = {
 
 		// press ENTER to proceed to the next state
 		if(this.input.keyboard.isDown(Phaser.Keyboard.ENTER)){
-			this.state.start('ActivityDecision');
+            calendar.nextDay();
+            if (calendar.date.getDay() == 0)
+                this.state.start('Results');
+            else
+                this.state.start('ActivityDecision');
 		}
 	}
 };

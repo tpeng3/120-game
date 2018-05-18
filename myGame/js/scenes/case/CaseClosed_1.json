@@ -13,6 +13,11 @@
     {
       "name": "Crazy Cat Lady",
       "text": "Oh this is just the beginning..."
+    },
+    {
+      "name": "System",
+      "text": "You unlocked the ability to hang out with Fedelynn!",
+      "functions": [ "calendar.schedule['3/9 Saturday'].push('Fedelynn')" ]
     }
   ]
 }

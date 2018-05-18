@@ -63,7 +63,7 @@ BasicGame.Work.prototype = {
         }
 
         // spawn debug enemies (on a timer) (NOT ON A TIMER RIGHT NOW FOR OTHER DEBUG REASONS)
-        this.game.time.events.add(100, this.spawnEnemy, this);
+        this.game.time.events.add(1000, this.spawnEnemy, this);
 
         // LOL I TOTALLY DIDN'T STEAL THIS AMAZING MUSIC
         game.sound.stopAll();
@@ -101,6 +101,10 @@ BasicGame.Work.prototype = {
         game.debug.text('Boss Health = ' + this.boss.currHealth, this.boss.x, this.boss.y, { fontSize: '32px', fill: '#ff0000' });
     },
     workEnd: function () {
+        if (!this.boss.alive) {
+            this.workEndBossDeath();
+            return;
+        }
         Player.bulletGroup = null;
         Enemy.bulletGroup = null;
         BasicGame.global.case.boss.curr_health = this.boss.currHealth;

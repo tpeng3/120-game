@@ -1,13 +1,73 @@
 function Calendar() {
     //new Date(year, month [, day [, hours [, minutes [, seconds [, milliseconds]]]]]);
     this.date = new Date(2019, 2, 1);
+    this.week = 0;
+    this.scenes = {
+        Fedelynn: {
+            'normal': ['Fedelynn_1', 'Fedelynn_2', 'Fedelynn_3', 'Fedelynn_4']
+        },
+        Fedelynn_ind: 0,
+        Keyna: {
+            'normal': ['Keyna_1', 'Keyna_2', 'Keyna_3', 'Keyna_4', 'Keyna_5']
+        },
+        Keyna_ind: 0,
+        Tai: {
+            'normal': ['Tai_1', 'Tai_2', 'Tai_3', 'Tai_4']
+        },
+        Tai_ind: 0
+    },
+    this.schedule = {
+            '3/1 Friday': 'no_option',
+            '3/2 Saturday': ['Tai'],
+
+            '3/4 Monday': 'nobody_there',
+            '3/5 Tuesday': ['Keyna'],
+            '3/6 Wednesday': 'nobody_there',
+            '3/7 Thursday': ['Keyna'],
+            '3/8 Friday': ['Keyna', 'Tai'],
+            '3/9 Saturday': ['Keyna', 'Tai'],
+
+            '3/11 Monday': 'nobody_there',
+            '3/12 Tuesday': ['Keyna'],
+            '3/13 Wednesday': ['Fedelynn', 'Tai'],
+            '3/14 Thursday': ['Fedelynn', 'Keyna'],
+            '3/15 Friday': ['Tai'],
+            '3/16 Saturday': ['Fedelynn', 'Keyna', 'Tai'],
+
+            '3/18 Monday': 'nobody_there',
+            '3/19 Tuesday': ['Keyna'],
+            '3/20 Wednesday': ['Fedelynn', 'Tai'],
+            '3/21 Thursday': ['Fedelynn', 'Keyna'],
+            '3/22 Friday': ['Tai'],
+            '3/23 Saturday': ['Fedelynn', 'Keyna', 'Tai'],
+
+            '3/25 Monday': 'no_option',
+            '3/26 Tuesday': 'no_option',
+            '3/27 Wednesday': 'no_option',
+            '3/28 Thursday': 'no_option',
+            '3/29 Friday': 'no_option',
+            '3/30 Saturday': 'no_option'
+    }
 };
 
 Calendar.prototype = {
-    getSceneKey: function () { },
+    getSceneKey: function () {
+        var today = this.schedule[this.print()];
+        if (today == 'no_option' || today == 'nobody_there')
+            return today;
+        for (let i = 0; i < today.length;) {
+            if (this.schedule[today[i] + '_ind'] > this.week)
+                today.splice(i, 1);
+            else
+                i++;
+        }
+        if (today.length <= 0)
+            return 'nobody_there';
+        return today;
+    },
     //Prints a specially formatted version of the date for the game's purposes
     print: function () {
-        return (this.date.getMonth() + 1) + "/" + this.date.getDate() + " " + this.date.toLocaleString('en-us', { weekday: 'long' });
+        return (this.date.getMonth() + 1) + '/' + this.date.getDate() + ' ' + this.date.toLocaleString('en-us', { weekday: 'long' });
     },
     // Month here is 1-indexed (January is 1, February is 2, etc). This is
     // because we're using 0 as the day so that it returns the last day
