@@ -7,6 +7,7 @@ BasicGame.Cutscene.prototype = {
 
         //Set the scene name (json file path) from the place that started the scene
         this.sceneName = sceneKey;
+        console.log('starting scene: ' + sceneKey);
     },
 	preload: function() {
 		console.log('Cutscene: preload');
@@ -14,11 +15,11 @@ BasicGame.Cutscene.prototype = {
         this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
 
         // load the sprites
-        this.load.image('locke_default', 'assets/img/characters/vn_locke1draft.png');
+        this.load.image('locke_default', 'assets/img/characters/vn_locke.png');
         this.load.image('locke_posing', 'assets/img/characters/vn_locke2draft.png');
-        this.load.image('keyna_default', 'assets/img/characters/vn_keyna1draft.png');
-        this.load.image('tai_default', 'assets/img/characters/vn_taidraft.png');
-        this.load.image('fedelynn_default', 'assets/img/characters/vn_fedelynndraft.png');
+        this.load.image('keyna_default', 'assets/img/characters/vn_keyna.png');
+        this.load.image('tai_default', 'assets/img/characters/vn_tai.png');
+        this.load.image('fedelynn_default', 'assets/img/characters/vn_fedelynn.png');
 
         // load textbox and font
         this.load.image('textbox', 'assets/img/ui/textbox.png');
@@ -144,7 +145,7 @@ BasicGame.Cutscene.prototype = {
             this.textRun = true; 
         } else { // else end conversation (if no more lines)
             this.camera.fade('#000');
-            this.camera.onFadeComplete.add(function(){
+            this.camera.onFadeComplete.addOnce(function () {
                 this.state.start(this.nextState);
             }, this);
         }

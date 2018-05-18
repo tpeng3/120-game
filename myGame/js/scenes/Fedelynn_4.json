@@ -1,0 +1,14 @@
+{
+	"scene_name":"meme_scene",
+	"bg": "bg_agency",
+	"bgm": "bgm_temp_talk",
+	"sprite_left": "locke_default",
+	"sprite_right": "fedelynn_default",
+	"next_state":"Bedtime",
+	"lines":[
+		{"name":"Locke","text":"Everything that we know and love is reducible to the absurd acts of chemicals, and there is therefore no intrinsic value in this material universe."},
+		{"name":"Tai","text":"Hypocrite that you are, for you trust the chemicals in your brain to tell you they are chemicals."},
+		{"name":"Locke","text":"All knowledge is ultimately based on that which we cannot prove."},
+		{"name":"Locke","text":"Will you fight? Or will you perish like a dog?", "functions": ["BasicGame.global.debug += 1;"]}
+	]
+}

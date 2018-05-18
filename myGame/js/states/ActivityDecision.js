@@ -13,9 +13,10 @@ BasicGame.ActivityDecision.prototype = {
 		this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
 		this.load.image('textbox', 'assets/img/ui/textbox.png');
 		this.load.image('button_work', 'assets/img/ui/button_work.png');
-		this.load.image('button_hangout', 'assets/img/ui/button_hangout.png');
+        this.load.image('button_hangout', 'assets/img/ui/button_hangout.png');
+        this.load.image('button_hangout_no_option', 'assets/img/ui/button_hangout_no_option.png');
 	},
-	create: function() {
+    create: function () {
 		console.log('ActivityDecision: create');
 
         // add agency background. It feels weird loading it twice but this is just FOR NOW.
@@ -53,11 +54,18 @@ BasicGame.ActivityDecision.prototype = {
             info = 'Case: ' + BasicGame.global.case.case_name + ' (' + (BasicGame.global.case.boss.max_health - BasicGame.global.case.boss.curr_health) + '/' + BasicGame.global.case.boss.max_health + ' done)';      
         this. caseInfoText = this.add.text(textbox.left + 60, 50, info, { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
 
+        //get scene data
+        this.sceneData = calendar.getSceneData();
+        this.exit = false;
+
         // add choice buttons
 		this.work = this.add.sprite(this.world.width/2 - 200, this.world.height/2 - 50, 'button_work');
-		this.work.anchor.setTo(0.5);
-		this.hangout = this.add.sprite(this.world.width/2 + 200, this.world.height/2 - 50, 'button_hangout');
-		this.hangout.anchor.setTo(0.5);
+        this.work.anchor.setTo(0.5);
+        if (this.sceneData == 'no_option')
+            this.hangout = this.add.sprite(this.world.width / 2 + 200, this.world.height / 2 - 50, 'button_hangout_no_option');
+        else
+            this.hangout = this.add.sprite(this.world.width / 2 + 200, this.world.height / 2 - 50, 'button_hangout');
+        this.hangout.anchor.setTo(0.5);
 
 		// default choice
 		this.selectWork = true;
@@ -83,7 +91,7 @@ BasicGame.ActivityDecision.prototype = {
         	this.selectWork){
         	this.selectWork = false;
     	}
-
+        //Choice has been made
     	if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || 
         	this.input.keyboard.isDown(Phaser.Keyboard.ENTER)){
             if (this.selectWork) {
@@ -98,18 +106,35 @@ BasicGame.ActivityDecision.prototype = {
                 else
         		    this.state.start('Work', true, false);
             } else {
+                if (this.sceneData == 'no_option' || this.exit)
+                    return;
                 BasicGame.global.player_stats.fatigue = 0;
-				this.camera.fade('#000', 1000);
-				this.camera.onFadeComplete.add(function(){
-					this.state.start('Cutscene', true, false, 'Debug_' + BasicGame.global.debug);
-				}, this);
+                this.camera.fade('#000', 1000);
+                if (this.sceneData == "nobody_there") {
+                    this.exit = true;
+                    this.camera.onFadeComplete.addOnce(function () {
+                        this.state.start('Cutscene', true, false, 'NobodyThere');
+                    }, this);
+                } else if (this.sceneData.length == 1) {
+                    this.exit = true;
+                    this.camera.onFadeComplete.addOnce(function () {
+                        console.log('incrementing ' + this.sceneData[0] + '_ind: ' + (calendar.scenes[this.sceneData[0] + '_ind'] + 1));
+                        calendar.scenes[this.sceneData[0] + '_ind']++;
+                        this.state.start('Cutscene', true, false, this.sceneData[0] + '_' + calendar.scenes[this.sceneData[0] + '_ind']);
+                    }, this);
+                } else {
+                    this.exit = true;
+                    this.camera.onFadeComplete.addOnce(function () {
+                        this.state.start('CharacterDecision', true, false, this.sceneData);
+                    }, this);
+                }
         	}
     	}    	
 
     	// Another way to progress states that we can honestly just keep for the heck of it.
 		// press W to proceed to work
         if (this.input.keyboard.isDown(Phaser.Keyboard.W)) {
-            this.state.start('Work', true, false, calendar.getSceneKey());
+            this.state.start('Work');
         }
         // press H to hangout
         if (this.input.keyboard.isDown(Phaser.Keyboard.H)) {

@@ -2,6 +2,7 @@ function Calendar() {
     //new Date(year, month [, day [, hours [, minutes [, seconds [, milliseconds]]]]]);
     this.date = new Date(2019, 2, 1);
     this.week = 0;
+    this.fedelynn_unlocked = false;
     this.scenes = {
         Fedelynn: {
             'normal': ['Fedelynn_1', 'Fedelynn_2', 'Fedelynn_3', 'Fedelynn_4']
@@ -18,14 +19,14 @@ function Calendar() {
     },
     this.schedule = {
             '3/1 Friday': 'no_option',
-            '3/2 Saturday': ['Tai'],
+            '3/2 Saturday': ['Tai', 'Keyna'],
 
             '3/4 Monday': 'nobody_there',
             '3/5 Tuesday': ['Keyna'],
             '3/6 Wednesday': 'nobody_there',
             '3/7 Thursday': ['Keyna'],
             '3/8 Friday': ['Keyna', 'Tai'],
-            '3/9 Saturday': ['Keyna', 'Tai'],
+            '3/9 Saturday': ['Fedelynn', 'Keyna', 'Tai'],
 
             '3/11 Monday': 'nobody_there',
             '3/12 Tuesday': ['Keyna'],
@@ -51,18 +52,23 @@ function Calendar() {
 };
 
 Calendar.prototype = {
-    getSceneKey: function () {
+    getSceneData: function () {
         var today = this.schedule[this.print()];
-        if (today == 'no_option' || today == 'nobody_there')
+        if (today == 'no_option' || today == 'nobody_there') {
+            console.log(this.print() + ': ' + today);
             return today;
+        }
         for (let i = 0; i < today.length;) {
-            if (this.schedule[today[i] + '_ind'] > this.week)
+            if (this.scenes[today[i] + '_ind'] > this.week || (!this.fedelynn_unlocked && today[1] == 'Fedelynn')) {
                 today.splice(i, 1);
-            else
+            }
+            else {
                 i++;
+            }
         }
         if (today.length <= 0)
-            return 'nobody_there';
+            today = 'nobody_there';
+        console.log(this.print() + ': ' + today);
         return today;
     },
     //Prints a specially formatted version of the date for the game's purposes
