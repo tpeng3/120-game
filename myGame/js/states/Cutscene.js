@@ -29,16 +29,15 @@ BasicGame.Cutscene.prototype = {
 
         // load music and sfx
         this.load.audio('bgm_temp_locke', 'assets/audio/bgm/Locke_And_Load.ogg');
-        this.load.audio('bgm_temp_talk', 'assets/audio/bgm/yoiyaminoseaside.mp3');
+        this.load.audio('bgm_temp_talk', 'assets/audio/bgm/yoiyaminoseaside.ogg');
         this.load.audio('sfx_text_scroll', 'assets/audio/sfx/sfx_text_scroll4.ogg');
 	},
     create: function () {
+        console.log('Cutscene: create');
         game.sound.stopAll(); 
 
         // create SFX
         this.textScrollSfx = game.add.audio('sfx_text_scroll');
-
-		console.log('Cutscene: create');
 
 		// parse the scene script
         this.scene = JSON.parse(this.game.cache.getText('scene'));
@@ -76,8 +75,7 @@ BasicGame.Cutscene.prototype = {
         // place the dateTimeBox
         var dateBox = this.add.sprite(textbox.left, 20, 'textbox');
         dateBox.anchor.setTo(0, 0);
-        dateBox.scale.x = 0.27;
-        dateBox.scale.y = 0.25;
+        dateBox.scale.setTo(0.27, 0.25);
         dateBox.alpha = 0.75
 
         // initialize the dateTime text
@@ -97,7 +95,7 @@ BasicGame.Cutscene.prototype = {
         spaceKey.onDown.add(this.advanceTextBox, this);
 
         // fade transition (It has to be placed at the end for layering reasons)
-        var fade = new TransitionFade(game);
+        var fade = new TransitionFade(game, 1000);
 	},
     update: function () {
 		// press ENTER to skip to the next state
@@ -110,7 +108,7 @@ BasicGame.Cutscene.prototype = {
             var line = this.scene.lines[this.textLine];
 
             // sprite dimming
-            var dimColor = 0x555555;
+            var dimColor = 0x666666;
             this.leftChara.tint = (line.name == this.firstTalker? 0xffffff : dimColor);
             this.rightChara.tint = (line.name == this.firstTalker? dimColor : 0xffffff);
 

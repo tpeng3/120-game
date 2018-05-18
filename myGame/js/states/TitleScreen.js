@@ -6,6 +6,8 @@ BasicGame.TitleScreen.prototype = {
 	preload: function() {
 		console.log('TitleScreen: preload');
 		// basically load a title screen image and assets
+
+		// this is just for transitions
 		this.load.image('bg_black', 'assets/img/bg/bg_black.png');
 	},
 	create: function() {
@@ -32,12 +34,12 @@ BasicGame.TitleScreen.prototype = {
         ]);
 	},
 	update: function () {
-		// press ENTER to proceed to the Calendar state
+		// start the game with the cutscene of Case 0
 		if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
 			this.camera.fade('#000');
 			this.camera.onFadeComplete.add(function(){
-                // this.state.start('ActivityDecision');
-                this.state.start('Cutscene', true, false, 'Intro_0')
+                // this.state.start('Cutscene', true, false, 'Intro_0');
+                this.state.start('Bedtime', true, false);
 			}, this);
 		}
 	},

@@ -71,9 +71,13 @@ Calendar.prototype = {
         console.log(this.print() + ': ' + today);
         return today;
     },
-    //Prints a specially formatted version of the date for the game's purposes
+    // Prints a specially formatted version of the date for the game's purposes
     print: function () {
         return (this.date.getMonth() + 1) + '/' + this.date.getDate() + ' ' + this.date.toLocaleString('en-us', { weekday: 'long' });
+    },
+    // Prints the current day of the week
+    printDay: function () {
+        return (this.date.toLocaleString('en-us', { weekday: 'long' }));
     },
     // Month here is 1-indexed (January is 1, February is 2, etc). This is
     // because we're using 0 as the day so that it returns the last day

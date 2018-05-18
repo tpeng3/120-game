@@ -6,10 +6,12 @@ BasicGame.ActivityDecision = function (game) {
 BasicGame.ActivityDecision.prototype = {
 	preload: function() {
         console.log('ActivityDecision: preload');
-        //Load cases
-        if (BasicGame.global.case == undefined)//normal cases
+
+        // load cases
+        if (BasicGame.global.case == undefined) //normal cases
             game.load.text('next_case', 'js/cases/Case_' + (BasicGame.global.case_number + 1) + '.json');
-		// load background assets of a generic daytime place and the textbox
+		
+        // load background assets of a generic daytime place and the textbox
 		this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
 		this.load.image('textbox', 'assets/img/ui/textbox.png');
 		this.load.image('button_work', 'assets/img/ui/button_work.png');
@@ -32,18 +34,16 @@ BasicGame.ActivityDecision.prototype = {
         // place the dateTimeBox
         var dateBox = this.add.sprite(textbox.left, 20, 'textbox');
         dateBox.anchor.setTo(0, 0);
-        dateBox.scale.x = 0.27;
-        dateBox.scale.y = 0.25;
-        dateBox.alpha = 0.75
+        dateBox.scale.setTo(0.27, 0.25);
+        dateBox.alpha = 0.75;
         // initialize the dateTime text
         this.dateText = this.add.text(textbox.left + 60, 20, calendar.print(), { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
-
         // place the dateTimeBox
-        var caseInfo = this.add.sprite(textbox.left, 50, 'textbox');
+        var caseInfo = this.add.sprite(textbox.left, 60, 'textbox');
         caseInfo.anchor.setTo(0, 0);
-        caseInfo.scale.x = 0.5;
-        caseInfo.scale.y = 0.25;
+        caseInfo.scale.setTo(0.5, 0.25);
         caseInfo.alpha = 0.75
+
         // initialize the caseInfo text
         var info = '';
         if (BasicGame.global.case == undefined)
@@ -52,7 +52,7 @@ BasicGame.ActivityDecision.prototype = {
             info = '???';
         else
             info = 'Case: ' + BasicGame.global.case.case_name + ' (' + (BasicGame.global.case.boss.max_health - BasicGame.global.case.boss.curr_health) + '/' + BasicGame.global.case.boss.max_health + ' done)';      
-        this. caseInfoText = this.add.text(textbox.left + 60, 50, info, { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
+        this.caseInfoText = this.add.text(textbox.left + 60, 60, info, { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
 
         //get scene data
         this.sceneData = calendar.getSceneData();
@@ -71,7 +71,7 @@ BasicGame.ActivityDecision.prototype = {
 		this.selectWork = true;
 
 		// fade transition (It has to be placed at the end for layering reasons)
-		var fade = new TransitionFade(game);
+		var fade = new TransitionFade(game, 1000);
 	},
 
 	update: function () {
