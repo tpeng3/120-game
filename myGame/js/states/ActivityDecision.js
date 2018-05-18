@@ -73,7 +73,6 @@ BasicGame.ActivityDecision.prototype = {
 		// fade transition (It has to be placed at the end for layering reasons)
         var fade = new TransitionFade(game, 1000);
 	},
-
 	update: function () {
         // button dimming
         var dimColor = 0x555555;
@@ -105,7 +104,7 @@ BasicGame.ActivityDecision.prototype = {
                     console.log('final case reached, not yet handled in code');//handle final case choosing here
                 else
         		    this.state.start('Work', true, false);
-            } else {
+            }else{
                 if (this.sceneData == 'no_option' || this.exit)
                     return;
                 BasicGame.global.player_stats.fatigue = 0;
@@ -130,16 +129,6 @@ BasicGame.ActivityDecision.prototype = {
                 }
         	}
     	}    	
-
-    	// Another way to progress states that we can honestly just keep for the heck of it.
-		// press W to proceed to work
-        if (this.input.keyboard.isDown(Phaser.Keyboard.W)) {
-            this.state.start('Work');
-        }
-        // press H to hangout
-        if (this.input.keyboard.isDown(Phaser.Keyboard.H)) {
-            this.state.start('Cutscene', true, false, 'Script');//calendar.getSceneKey());
-        }
 	}
 	
 };

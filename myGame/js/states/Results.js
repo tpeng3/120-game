@@ -34,6 +34,9 @@ BasicGame.Results.prototype = {
         this.tomorrow.alpha = 0;
 
         this.game.time.events.add(1000, function () { this.exit = false; }, this);
+
+        // fade transition (It has to be placed at the end for layering reasons)
+        var fade = new TransitionFade(game, 1000);
     },
 
     update: function () {

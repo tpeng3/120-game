@@ -112,6 +112,9 @@ BasicGame.Bedtime.prototype = {
 		    }
 	    }
 	    this.ribbitter.visible = false;
+
+		// fade transition (It has to be placed at the end for layering reasons)
+        var fade = new TransitionFade(game, 1000);
 	},
     update: function () {
         //Movement code
