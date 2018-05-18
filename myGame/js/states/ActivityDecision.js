@@ -71,7 +71,7 @@ BasicGame.ActivityDecision.prototype = {
 		this.selectWork = true;
 
 		// fade transition (It has to be placed at the end for layering reasons)
-		var fade = new TransitionFade(game, 1000);
+        var fade = new TransitionFade(game, 1000);
 	},
 
 	update: function () {

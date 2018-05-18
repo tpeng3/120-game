@@ -121,6 +121,7 @@ BasicGame.Bedtime.prototype = {
 	    this.world.bringToTop(this.black);
     	this.black.alpha = 1;
 	    this.add.tween(this.black).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
+        this.exit = false;
 
 	    // text of the days for transition
 	    var dayTextStyle = { font: 'Trebuchet MS', fontSize: '60px', fill: '#fff' };
@@ -191,10 +192,13 @@ BasicGame.Bedtime.prototype = {
 	    // I keep forgetting results screen is on Sunday and not like, at the end of the day
         this.physics.arcade.collide(sprite, this.bed);
         if (this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && game.physics.arcade.overlap(sensor, this.bed)) {
-        		bgm.fadeOut(500);
-	    		var fadeOut = this.game.add.tween(this.black).to( { alpha: 1 }, 500, Phaser.Easing.Linear.None, true);
-	    		fadeOut.onComplete.add(this.printDay, this);
-	    }
+            if (this.exit)
+                return;
+            this.exit = true;
+            bgm.fadeOut(500);
+            var fadeOut = this.game.add.tween(this.black).to({ alpha: 1 }, 500, Phaser.Easing.Linear.None, true);
+            fadeOut.onComplete.add(this.printDay, this);
+        }
 	    // if player check desks, opens up social media
 	    // should we make tweets like a prefab or function like the textbox?
         this.physics.arcade.collide(sprite, this.desk);
@@ -209,13 +213,13 @@ BasicGame.Bedtime.prototype = {
 	    }
 
 		// press ENTER to proceed to the next state
-		if(this.input.keyboard.isDown(Phaser.Keyboard.ENTER)){
-
-            calendar.nextDay();
-            if (calendar.date.getDay() == 0)
-                this.state.start('Results');
-            else
-                this.state.start('ActivityDecision');
+        if (this.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+            if (this.exit)
+                return;
+            this.exit = true;
+            bgm.fadeOut(500);
+            var fadeOut = this.game.add.tween(this.black).to({ alpha: 1 }, 500, Phaser.Easing.Linear.None, true);
+            fadeOut.onComplete.add(this.printDay, this);
 		}
 	},
 	printDay: function(){
@@ -224,7 +228,7 @@ BasicGame.Bedtime.prototype = {
     	this.tomorrow.text = calendar.printDay();
     	tweenToday.onComplete.add(this.changeDay, this);
 	},
-	changeDay: function(){
+    changeDay: function () {
 		this.game.time.events.add(1000, function(){
 			game.add.tween(this.today).to( { alpha: 0 }, 200, Phaser.Easing.Linear.None, true);
 			game.add.tween(this.today).to( { y: this.world.height/2 + 200 }, 600, Phaser.Easing.Linear.None, true);
