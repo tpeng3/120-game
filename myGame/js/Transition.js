@@ -1,9 +1,7 @@
-var TransitionFade = function transitionFade(game, fadetime, alpha){
+var TransitionFade = function transitionFade(game, fadetime){
 	var black = game.add.sprite(0, 0, 'bg_black');
     black.scale.setTo(game.width, game.height);
-    black.alpha = alpha || 1;
-    var newAlpha = 1 - alpha;
+    black.alpha = 1;
     game.world.bringToTop(black);
-    game.add.tween(black).to( { alpha: newAlpha }, fadetime, Phaser.Easing.Linear.None, true);
+    game.add.tween(black).to( { alpha: 0 }, fadetime, Phaser.Easing.Linear.None, true);
 }
-

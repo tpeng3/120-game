@@ -40,33 +40,14 @@ BasicGame.Results.prototype = {
         if (this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
             if (this.exit)
                 return;
-            this.exit = true;
             bgm.fadeOut(500);
-            var fadeOut = this.game.add.tween(this.black).to({ alpha: 1 }, 500, Phaser.Easing.Linear.None, true);
-            fadeOut.onComplete.add(this.printDay, this);
-        }
-    },
-    printDay: function () {
-        var tweenToday = game.add.tween(this.today).to({ alpha: 1 }, 100, Phaser.Easing.Linear.None, true);
-        calendar.nextDay();
-        this.tomorrow.text = calendar.printDay();
-        tweenToday.onComplete.add(this.changeDay, this);
-    },
-    changeDay: function () {
-        this.game.time.events.add(1000, function () {
-            game.add.tween(this.today).to({ alpha: 0 }, 200, Phaser.Easing.Linear.None, true);
-            game.add.tween(this.today).to({ y: this.world.height / 2 + 200 }, 600, Phaser.Easing.Linear.None, true);
-            game.add.tween(this.tomorrow).to({ alpha: 1 }, 100, Phaser.Easing.Linear.None, true);
-            game.add.tween(this.tomorrow).to({ y: this.world.height / 2 }, 300, Phaser.Easing.Linear.None, true);
-
-            this.game.time.events.add(2500, function () {
-                this.camera.fade('#000', 1000);
+            this.camera.fade('#000', 500);
+            this.camera.onFadeComplete.addOnce(function () {
                 if (calendar.date.getDay() == 0)
                     this.state.start('Results');
                 else
-                    this.state.start('ActivityDecision');
+                    this.state.start('NextDay');
             }, this);
-        }, this);
-    }
-
+        }
+    },
 };
