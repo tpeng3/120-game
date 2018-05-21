@@ -17,13 +17,12 @@ BasicGame.Bedtime.prototype = {
         this.load.image('icon_lynn', 'assets/img/ui/icon_lynn.png');
         this.load.text('scene', 'js/scenes/' + 'Ribbits' + '.json');
 
-        // this.load.image('bg_bedroom', 'assets/img/bg/bg_bedroom.png');
-        this.load.image('bg_bedroom', 'assets/img/bg/bg_bedroom_temp.png');
-
+        // load sprite furniture and locke
         this.load.spritesheet('sprite_locke', 'assets/img/bedtime/sprite_locke.png', 64, 64);
-        this.load.image('sprite_bed', 'assets/img/bedtime/sprite_bed.png');
-        this.load.image('sprite_desk', 'assets/img/bedtime/sprite_desk.png');
+        this.load.image('bg_bedroom', 'assets/img/bedtime/bg_bedroom.png');
+        this.load.atlas('furniture', 'assets/img/bedtime/bedroom.png', 'assets/img/bedtime/bedroom.json');
 
+        // load music and sfx
         this.load.audio('bgm_temp_paino', 'assets/audio/bgm/paino.ogg');
 	},
 
@@ -39,7 +38,7 @@ BasicGame.Bedtime.prototype = {
 
         // add background
 		this.stage.backgroundColor = "#000";
-		var bg = this.add.sprite(64*2, 64*1, 'bg_bedroom');
+		var bg = this.add.sprite(128, 64, 'bg_bedroom');
 
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -60,24 +59,15 @@ BasicGame.Bedtime.prototype = {
 		sensor.alpha = 0;
 		this.physics.arcade.enable(sensor);
 
-		// create boundaries player basically collides with
-		game.physics.arcade.setBounds(bg.x, bg.y + 64*2, bg.width, bg.height);
+		// create room walls player collides with
+		game.physics.arcade.setBounds(bg.x, bg.y+150, bg.width, bg.height-150);
 		sprite.body.collideWorldBounds = true;
 
 		// add room objects
-		this.bed = this.add.sprite(64*2, 195, 'sprite_bed');
-		this.physics.arcade.enable(this.bed);
-		this.physics.arcade.collide(sprite, this.bed);
-		this.bed.body.immovable = true;
+		this.addFurniture();
 
-		this.desk = this.add.sprite(64*2, 64*6, 'sprite_desk');
-		this.physics.arcade.enable(this.desk);
-		this.physics.arcade.collide(sprite, this.desk);
-	 	this.desk.body.immovable = true;
-
-	 	// add debug text
-	 	var textStyle = { fontSize: '16px', fill: '#000', wordWrap: true, wordWrapWidth: 500 };
-        this.add.text(600, 400, 'Use Arrow Keys or WASD to navigate. Press SPACEBAR to interact with objects.', textStyle);
+		// add notification
+		this.notification = this.add.sprite(64*2+10, 64*6+6, 'furniture', 'sprite_notification');
 
 	 	// add ribbitter
 	 	this.ribbitter = this.add.group();
@@ -105,7 +95,6 @@ BasicGame.Bedtime.prototype = {
 		        var ribbitText = this.add.text(540, prevHeight + 24, this.ribbits[i].text, textStyle);
 		        ribbitText.lineSpacing = -8;
 		        prevHeight = prevHeight + ribbitText.height + 32;
-		        console.log(prevHeight);
 		        this.ribbitter.add(ribbitIcon);
 		        this.ribbitter.add(ribbitHandle);
 		        this.ribbitter.add(ribbitText);
@@ -196,5 +185,96 @@ BasicGame.Bedtime.prototype = {
 	    		sprite.body.moves = true;
 	    	}
 	    }
+	},
+	addFurniture: function(){
+		this.bed = this.add.sprite(64*2+8, 64*3+10, 'furniture', 'sprite_bed');
+		this.physics.arcade.enable(this.bed);
+		this.physics.arcade.collide(sprite, this.bed);
+		this.bed.body.immovable = true;
+
+		var desk = this.add.sprite(64*2+4, 64*6+32, 'furniture', 'sprite_desk');
+		this.physics.arcade.enable(desk);
+		this.physics.arcade.collide(sprite, desk);
+	 	desk.body.immovable = true;
+
+	 	var bookshelf1 = this.add.sprite(64*9+6, 64*2+32, 'furniture', 'sprite_bookshelf1');
+		this.physics.arcade.enable(bookshelf1);
+		this.physics.arcade.collide(sprite, bookshelf1);
+	 	bookshelf1.body.immovable = true;
+
+	 	var bookshelf2 = this.add.sprite(64*9+6, 64*6+60, 'furniture', 'sprite_bookshelf2');
+		this.physics.arcade.enable(bookshelf2);
+		this.physics.arcade.collide(sprite, bookshelf2);
+	 	bookshelf2.body.immovable = true;
+	 	
+	 	var cabinet = this.add.sprite(64*17+10, 64*7+4, 'furniture', 'sprite_cabinet');
+		this.physics.arcade.enable(cabinet);
+		this.physics.arcade.collide(sprite, cabinet);
+	 	cabinet.body.immovable = true;
+	 	
+	 	this.calendar = this.add.sprite(64*11+2, 64*2+24, 'furniture', 'sprite_calendar');
+		this.physics.arcade.enable(this.calendar);
+		this.physics.arcade.collide(sprite, this.calendar);
+	 	this.calendar.body.immovable = true;
+
+	 	var dresser = this.add.sprite(64*7+38, 64*3+32, 'furniture', 'sprite_dresser');
+		this.physics.arcade.enable(dresser);
+		this.physics.arcade.collide(sprite, dresser);
+	 	dresser.body.immovable = true;
+
+	 	var filecab = this.add.sprite(64*5+6, 64*7+46, 'furniture', 'sprite_file');
+		this.physics.arcade.enable(filecab);
+		this.physics.arcade.collide(sprite, filecab);
+	 	filecab.body.immovable = true;
+
+	 	var friend = this.add.sprite(64*6+48, 64*3+32, 'furniture', 'sprite_friend');
+		this.physics.arcade.enable(friend);
+		this.physics.arcade.collide(sprite, friend);
+	 	friend.body.immovable = true;
+
+	 	var hat = this.add.sprite(64*7+46, 64*4+9, 'furniture', 'sprite_hat');
+		this.physics.arcade.enable(hat);
+		this.physics.arcade.collide(sprite, hat);
+	 	hat.body.immovable = true;
+
+	 	this.lamp = this.add.sprite(64*4+4, 64*3+0, 'furniture', 'sprite_lamp');
+		this.physics.arcade.enable(this.lamp);
+		this.physics.arcade.collide(sprite, this.lamp);
+	 	this.lamp.body.immovable = true;
+
+	 	this.laptop = this.add.sprite(64*2+2, 64*6+44, 'furniture', 'sprite_laptop');
+		this.physics.arcade.enable(this.laptop);
+		this.physics.arcade.collide(sprite, this.laptop);
+	 	this.laptop.body.immovable = true;
+
+	 	var plant1 = this.add.sprite(64*11+8, 64*7+16, 'furniture', 'sprite_plant');
+		this.physics.arcade.enable(plant1);
+		this.physics.arcade.collide(sprite, plant1);
+	 	plant1.body.immovable = true;
+
+	 	var plant2 = this.add.sprite(64*17+8, 64*3+0, 'furniture', 'sprite_plant');
+		this.physics.arcade.enable(plant2);
+		this.physics.arcade.collide(sprite, plant2);
+	 	plant2.body.immovable = true;
+
+	 	var sofa = this.add.sprite(64*14+32, 64*6+24, 'furniture', 'sprite_sofa');
+		this.physics.arcade.enable(sofa);
+		this.physics.arcade.collide(sprite, sofa);
+	 	sofa.body.immovable = true;
+	 	
+	 	var table = this.add.sprite(64*17+4, 64*4+42, 'furniture', 'sprite_table');
+		this.physics.arcade.enable(table);
+		this.physics.arcade.collide(sprite, table);
+	 	table.body.immovable = true;
+
+	 	var trashcan = this.add.sprite(64*4+12, 64*8+14, 'furniture', 'sprite_trashcan');
+		this.physics.arcade.enable(trashcan);
+		this.physics.arcade.collide(sprite, trashcan);
+	 	trashcan.body.immovable = true;
+
+	 	var tv = this.add.sprite(64*14+36, 64*2+62, 'furniture', 'sprite_tv');
+		this.physics.arcade.enable(tv);
+		this.physics.arcade.collide(sprite, tv);
+	 	tv.body.immovable = true;
 	}
 };
