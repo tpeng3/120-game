@@ -1,3 +1,4 @@
 var Settings = {
-    TEXT_SCROLL_DELAY: 20
+    TEXT_SCROLL_DELAY: 20,
+    BEDROOM_SPRITE_SPEED: 500
 }

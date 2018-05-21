@@ -29,7 +29,7 @@ BasicGame.Bedtime.prototype = {
 
 	create: function() {
 		// variables
-		this.spriteSpeed = 500;
+		this.spriteSpeed = Settings.BEDROOM_SPRITE_SPEED;
 
         console.log('Bedtime: create');
         game.sound.stopAll(); 
@@ -123,14 +123,14 @@ BasicGame.Bedtime.prototype = {
 	    // for the lamp lighting
 		this.lighting = this.add.sprite(0, 0, 'bg_grey');
 		this.lighting.scale.setTo(game.width, game.height);
-		this.lighting.tint = 0x666666;
+		this.lighting.tint = 0x333;
 		this.lighting.alpha = .6;
 		this.lighting.visible = false;
 
 		// fade transition (It has to be placed at the end for layering reasons)
         var fade = new TransitionFade(game, 1000);
         this.fadeIn = false;
-        this.game.time.events.add(1500, function(){
+        this.game.time.events.add(1000, function(){
         	this.fadeIn = true;
         }, this);
 	},
@@ -209,7 +209,7 @@ BasicGame.Bedtime.prototype = {
 		this.bed.body.immovable = true;
 
 		this.bedframe = this.add.sprite(this.bed.x, this.bed.y, 'bg_black');
-		this.bedframe.scale.setTo(this.bed.width, 16);
+		this.bedframe.scale.setTo(this.bed.width, 12);
 		this.bedframe.alpha = 0;
 		this.physics.arcade.enable(this.bedframe);
 		this.bedframe.body.immovable = true;
@@ -386,9 +386,9 @@ BasicGame.Bedtime.prototype = {
 	},
 	render: function(){
 		// game.debug.body(sprite);
-		// // game.debug.body(this.sofasensor);
+		// game.debug.body(this.sofasensor);
 		// game.debug.body(sensor);
-		// // game.debug.body(this.cabinet);
+		// game.debug.body(this.lamp);
 		// // game.debug.body(this.sofa);
 		// // game.debug.body(this.plant1);
 		// // game.debug.body(this.trashcan);
