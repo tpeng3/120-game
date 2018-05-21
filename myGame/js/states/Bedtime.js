@@ -176,13 +176,10 @@ BasicGame.Bedtime.prototype = {
 	    // if player checks bed, go to sleep and proceed back to activity decision
 	    // I keep forgetting results screen is on Sunday and not like, at the end of the day
         this.physics.arcade.collide(sprite, this.bed);
-        if (this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && game.physics.arcade.overlap(sensor, this.bed)) {
+        if ((this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && game.physics.arcade.overlap(sensor, this.bed)) || this.input.keyboard.justPressed(Phaser.Keyboard.ENTER)) {
             bgm.fadeOut(500);
             this.camera.fade('#000', 500);
             this.camera.onFadeComplete.addOnce(function () {
-                if (calendar.date.getDay() == 0)
-                	this.state.start('Results');
-            	else
                 	this.state.start('NextDay');
             }, this);
         }
@@ -199,15 +196,5 @@ BasicGame.Bedtime.prototype = {
 	    		sprite.body.moves = true;
 	    	}
 	    }
-
-		// press ENTER to proceed to the next state
-        if (this.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-            if (this.exit)
-                return;
-            this.exit = true;
-            bgm.fadeOut(500);
-            var fadeOut = this.game.add.tween(this.black).to({ alpha: 1 }, 500, Phaser.Easing.Linear.None, true);
-            fadeOut.onComplete.add(this.printDay, this);
-		}
 	}
 };

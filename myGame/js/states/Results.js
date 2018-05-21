@@ -13,7 +13,7 @@ BasicGame.Results.prototype = {
         var textStyle = { fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: 900 };
         this.add.text(200, 40, 'Rest day: ' + calendar.print() + ': Results (Placeholder)', textStyle);
         // fade transition (It has to be placed at the end for layering reasons)
-        var fade = new TransitionFade(game);
+        var fade = new TransitionFade(game, 750);
         // fade transition (It has to be placed at the end for layering reasons)
         // camera.fade has some weird bug where it's reloading the state every time it fades
         // I hate that I have to do this
@@ -33,7 +33,7 @@ BasicGame.Results.prototype = {
         this.tomorrow.anchor.set(0.5);
         this.tomorrow.alpha = 0;
 
-        this.game.time.events.add(1000, function () { this.exit = false; }, this);
+        this.game.time.events.add(750, function () { this.exit = false; }, this);
 
         // fade transition (It has to be placed at the end for layering reasons)
         var fade = new TransitionFade(game, 1000);
@@ -46,9 +46,6 @@ BasicGame.Results.prototype = {
             bgm.fadeOut(500);
             this.camera.fade('#000', 500);
             this.camera.onFadeComplete.addOnce(function () {
-                if (calendar.date.getDay() == 0)
-                    this.state.start('Results');
-                else
                     this.state.start('NextDay');
             }, this);
         }

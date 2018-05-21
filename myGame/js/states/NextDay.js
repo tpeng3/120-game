@@ -73,7 +73,10 @@ BasicGame.NextDay.prototype = {
             this.game.time.events.add(2500, function () {
                 this.camera.fade();
                 this.camera.onFadeComplete.addOnce(function () {
-                    this.state.start('ActivityDecision', true, false);
+                    if (calendar.date.getDay() == 0)
+                        this.state.start('Results');
+                    else
+                        this.state.start('ActivityDecision', true, false);
                 }, this);
             }, this);
         }, this);
