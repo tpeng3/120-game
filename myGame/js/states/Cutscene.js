@@ -106,12 +106,6 @@ BasicGame.Cutscene.prototype = {
     unfoldDialogue: function () {
         if (this.textRun == true) {
             var line = this.scene.lines[this.textLine];
-
-            // sprite dimming
-            var dimColor = 0x666666;
-            this.leftChara.tint = (line.name == this.firstTalker? 0xffffff : dimColor);
-            this.rightChara.tint = (line.name == this.firstTalker? dimColor : 0xffffff);
-
             // show dialogue text
             if (line.text[this.charNum] != undefined) {
 	            this.bodyText.text += line.text[this.charNum];
@@ -131,15 +125,20 @@ BasicGame.Cutscene.prototype = {
         }
         else if (this.scene.lines[this.textLine + 1] != undefined) { // else load next line
             this.textLine++;
+            var line = this.scene.lines[this.textLine];
             this.charNum = 0;
             this.bodyText.text = "";
-            this.nameText.text = this.scene.lines[this.textLine].name;
+            this.nameText.text = line.name;
             // Call all funtions (currently happens at line beginning)
-            if (this.scene.lines[this.textLine].functions != undefined) {
-                for (let i = 0; i < this.scene.lines[this.textLine].functions.length; i++) {
-                    eval(this.scene.lines[this.textLine].functions[i]);
+            if (line.functions != undefined) {
+                for (let i = 0; i < line.functions.length; i++) {
+                    eval(line.functions[i]);
                 }
             }
+            // sprite dimming
+            var dimColor = 0x666666;
+            this.leftChara.tint = (line.name == this.firstTalker ? 0xffffff : dimColor);
+            this.rightChara.tint = (line.name == this.firstTalker ? dimColor : 0xffffff);
             this.textRun = true; 
         } else { // else end conversation (if no more lines)
             this.camera.fade('#000');
