@@ -41,6 +41,13 @@ BasicGame.Bedtime.prototype = {
 		this.stage.backgroundColor = "#000";
 		var bg = this.add.sprite(128, 64, 'bg_bedroom');
 
+		// add some instruction text
+	 	instrStyle = { font: 'bold Trebuchet MS', fontSize: '22px', fill: '#fff'};
+		this.add.text(10, 10, 'Use Arrow Keys or WASD to move. Press SPACEBAR at the Bed to sleep.', instrStyle);
+		this.ribbitInstr = this.add.text(game.width/2, game.height - 60, 'Press SPACEBAR to close window.', instrStyle);
+		this.ribbitInstr.anchor.set(0.5, 1);
+		this.ribbitInstr.visible = false;
+
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 
 		// add room objects
@@ -89,7 +96,7 @@ BasicGame.Bedtime.prototype = {
 	 	// parse those ribbits
         this.ribbits = JSON.parse(this.game.cache.getText('scene'));
 
-	 	titleStyle = { font: 'italics Trebuchet MS', fontSize: '22px', fill: '#333'};
+	 	titleStyle = { font: 'bold Trebuchet MS', fontSize: '22px', fill: '#333'};
 	 	textStyle = { font: 'Trebuchet MS', fontSize: '18px', fill: '#333', wordWrap: true, wordWrapWidth: 64*7 };
 
 	 	var prevHeight = 240;
@@ -339,10 +346,12 @@ BasicGame.Bedtime.prototype = {
 	    if(this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && game.physics.arcade.overlap(sensor, this.laptop)){
 	    	if(this.ribbitter.visible == false){
 	    		this.ribbitter.visible = true;
+	    		this.ribbitInstr.visible = true;
 	    		sprite.body.moves = false;
 	    		this.notification.visible = false;
 	    	}else{
 	    		this.ribbitter.visible = false;
+	    		this.ribbitInstr.visible = false;
 	    		sprite.body.moves = true;
 	    	}
 	    }

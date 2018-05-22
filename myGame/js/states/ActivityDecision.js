@@ -27,8 +27,8 @@ BasicGame.ActivityDecision.prototype = {
         // add textbox and text, we don't have to keep this but for now give some explanations to the players
         var textbox = this.add.sprite(this.world.width/2, this.world.height - 10, 'textbox');
         textbox.anchor.setTo(0.5, 1);
-        textbox.alpha = 0.75
-        var textStyle = { fontSize: '32px', fill: '#fff', wordWrap: true, wordWrapWidth: textbox.width-120 };
+        textbox.alpha = 0.75;
+        var textStyle = { font: 'Trebuchet MS', fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: textbox.width-200 };
         var text = this.add.text(textbox.left + 60, textbox.top + 40, 'Use Arrow Keys or WASD to navigate. Press SPACEBAR to select choice and advance text.', textStyle);
 
         // place the dateTimeBox

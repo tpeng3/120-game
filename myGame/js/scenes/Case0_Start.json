@@ -1,0 +1,32 @@
+{
+	"scene_name":"",
+	"bg": "bg_agency",
+	"bgm": "bgm_temp_talk",
+	"sprite_left": "locke_default",
+	"sprite_right": "tai_default",
+	"next_state":"Bedtime",
+	"lines":[
+		{"name":"Locke",
+			"text":"This shadowy city. Some think that it’s a quiet sunny paradise, but I’ve roamed these streets long enough to know better.",
+			"functions":""},
+		{"name":"Locke",
+			"text":"The brightest light casts the darkest shadows, and this place is no different. Just out of sight, there’s a hazy world of crime that escapes the law."},
+		{"name":"Locke",
+			"text":"It’s not perfect, but it’s home."},
+		{"name":"Locke",
+			"text":"And I’m the only one that can drag the criminals into the light. It’s my burden to bear, my-"},
+		{"name":"Tai",
+			"text":"Hey Locke! ...Are you talking to yourself again?",
+			"functions":["this.rightChara.loadTexture(\"tai_default\");"]},
+		{"name":"Locke",
+			"text":"N-no! It was practice! A pep talk!",
+			"functions":["this.leftChara.loadTexture(\"locke_default\");"]},
+		{"name":"Locke",
+			"text":"Wait, how did you get in here?"},
+		{"name":"Tai",
+			"text":"I mean your door's unlocked like usual. Anyways, what are you up to?"}
+	]
+}
+		}
+	]
+}
