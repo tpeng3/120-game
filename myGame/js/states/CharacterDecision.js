@@ -9,15 +9,18 @@ BasicGame.CharacterDecision.prototype = {
     preload: function () {
         this.characterSprites = [];
         this.load.image('textbox', 'assets/img/ui/textbox.png');
+        this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
         for (let i = 0; i < this.characters.lenth; ++i) {
             this.load.image(this.characters[i].toLowerCase() + '_default', 'assets/img/characters/vn_' + this.characters[i].toLowerCase() + '.png');
         }
     },
     create: function () {
         console.log('CharacterDecision!')
+        // add the initial bg
+        this.bg = this.add.sprite(0, 0, 'bg_agency');
         this.selected = 0;
         this.exit = false;
-        this.dimColor = 0x666666;
+        this.dimColor = 0x444444;
         // some text for the players
         var textStyle = { fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: 700 };
         this.add.text(200, 40, 'CharacterDecision:', textStyle);
@@ -29,13 +32,34 @@ BasicGame.CharacterDecision.prototype = {
             newSprite.tint = this.dimColor;
             this.characterSprites.push(newSprite);
         }
+        if (this.characters.length == 2) {
+            this.characterSprites[0].x -= 50;
+            this.characterSprites[1].x += 50;
+        } else {
+            this.characterSprites[0].x -= 75;
+            this.characterSprites[2].x += 75;
+            this.selected = 1;
+        }
         this.characterSprites[this.selected].tint = 0xffffff;
-        // PLACEHOLDER CHARACTER DECISON DISPLAY
-        this.add.text(200, 80, 'Use arrow keys to change selection', textStyle);
+        this.characterSprites[this.selected].scale = new Phaser.Point(1.05, 1.05);
+
+        // add textbox and text, we don't have to keep this but for now give some explanations to the players
+        var textbox = this.add.sprite(this.world.width / 2, this.world.height - 10, 'textbox');
+        textbox.anchor.setTo(0.5, 1);
+        textbox.alpha = 0.75;
+        var textStyle = { font: 'Trebuchet MS', fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: textbox.width - 200 };
+        this.text = this.add.text(textbox.left + 60, textbox.top + 40, 'Hang out with ' + this.characters[this.selected] + ' ?', textStyle);
+
+        // place the dateTimeBox
+        var dateBox = this.add.sprite(textbox.left, 20, 'textbox');
+        dateBox.anchor.setTo(0, 0);
+        dateBox.scale.setTo(0.27, 0.25);
+        dateBox.alpha = 0.75;
+        // initialize the dateTime text
+        this.dateText = this.add.text(textbox.left + 60, 20, calendar.print(), { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
 
         // fade transition (It has to be placed at the end for layering reasons)
         var fade = new TransitionFade(game);
-        console.log(this.characterSprites);
     },
 
     update: function () {
@@ -44,17 +68,21 @@ BasicGame.CharacterDecision.prototype = {
             this.input.keyboard.justPressed(Phaser.Keyboard.LEFT)) &&
             this.selected != 0) {
             this.characterSprites[this.selected].tint = this.dimColor;
+            this.characterSprites[this.selected].scale = new Phaser.Point(1, 1);
             this.selected--;
             this.characterSprites[this.selected].tint = 0xffffff;
-            console.log(this.selected);
+            this.characterSprites[this.selected].scale = new Phaser.Point(1.05, 1.05);
+            this.text.text = 'Hang out with ' + this.characters[this.selected] + ' ?';
         }
         if ((this.input.keyboard.justPressed(Phaser.Keyboard.D) ||
             this.input.keyboard.justPressed(Phaser.Keyboard.RIGHT)) &&
             this.selected < (this.characters.length - 1)) {
             this.characterSprites[this.selected].tint = this.dimColor;
+            this.characterSprites[this.selected].scale = new Phaser.Point(1, 1);
             this.selected++;
             this.characterSprites[this.selected].tint = 0xffffff;
-            console.log(this.selected);
+            this.characterSprites[this.selected].scale = new Phaser.Point(1.05, 1.05);
+            this.text.text = 'Hang out with ' + this.characters[this.selected] + '?';
         }
         //@Tina you don't need to change any of this code, just set this.selected appropriately
         if (this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) || this.input.keyboard.justPressed(Phaser.Keyboard.ENTER)) {

@@ -38,12 +38,12 @@ BasicGame.ActivityDecision.prototype = {
         dateBox.alpha = 0.75;
         // initialize the dateTime text
         this.dateText = this.add.text(textbox.left + 60, 20, calendar.print(), { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
-        // place the dateTimeBox
+
+        // place the case info box
         var caseInfo = this.add.sprite(textbox.left, 60, 'textbox');
         caseInfo.anchor.setTo(0, 0);
         caseInfo.scale.setTo(0.5, 0.25);
         caseInfo.alpha = 0.75
-
         // initialize the caseInfo text
         var info = '';
         if (BasicGame.global.case == undefined)
@@ -51,7 +51,7 @@ BasicGame.ActivityDecision.prototype = {
         else if (BasicGame.global.case == 'final')
             info = '???';
         else
-            info = 'Case: ' + BasicGame.global.case.case_name + ' (' + (BasicGame.global.case.boss.max_health - BasicGame.global.case.boss.curr_health) + '/' + BasicGame.global.case.boss.max_health + ' done)';      
+            info = 'Case: ' + BasicGame.global.case.case_name + ' (' + (((BasicGame.global.case.boss.max_health - BasicGame.global.case.boss.curr_health) / BasicGame.global.case.boss.max_health) * 100) + '% done)';      
         this.caseInfoText = this.add.text(textbox.left + 60, 60, info, { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
 
         //get scene data
