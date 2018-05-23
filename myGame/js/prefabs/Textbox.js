@@ -64,6 +64,7 @@ Textbox.prototype.unfoldDialogue = function () {
         }
     }
 }
+
 Textbox.prototype.advance = function () {
     // if there is still text unfolding, just load the whole thing
     if (this.textRun == true) {
@@ -81,6 +82,8 @@ Textbox.prototype.advance = function () {
                 eval(this.scene.lines[this.textLine].functions[i]);
             }
         }
+        // change character sprite expression
+        if(this.scene.lines[this.textLine].)
         // sprite dimming
         var dimColor = 0x555555;
         this.leftChara.tint = (this.scene.lines[this.textLine].name == this.firstTalker ? 0xffffff : dimColor);
@@ -95,6 +98,7 @@ Textbox.prototype.advance = function () {
         }
     }
 }
+
 Textbox.prototype.startNewScene = function (changeState, scene, lines) {
     this.textRun = false;
     this.changeState = changeState;
@@ -115,6 +119,7 @@ Textbox.prototype.startNewScene = function (changeState, scene, lines) {
     this.firstTalker = this.scene.lines[0].name; // To get rid of that l/r pos thing
     this.advance(); // show the first line of text (and trigger functions, and stuff)
 }
+
 Textbox.prototype.skipScene = function () {
     this.callbackGame.camera.fade('#000');
     this.callbackGame.camera.onFadeComplete.add(function () {

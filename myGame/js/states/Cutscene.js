@@ -16,6 +16,8 @@ BasicGame.Cutscene.prototype = {
 
         // load the sprites
         this.load.image('locke_default', 'assets/img/characters/vn_locke.png');
+        // this.load.spritesheet('Locke', 'assets/img/characters/sprite_locke.png', 584, 637);
+        this.load.atlas('Locke', 'assets/img/characters/sprite_locke.png', 'assets/img/characters/sprite_locke.json');
         this.load.image('locke_posing', 'assets/img/characters/vn_locke2draft.png');
         this.load.image('keyna_default', 'assets/img/characters/vn_keyna.png');
         this.load.image('tai_default', 'assets/img/characters/vn_tai.png');
@@ -48,7 +50,10 @@ BasicGame.Cutscene.prototype = {
 
         // add the initial bg
         this.bg = this.add.sprite(0, 0, this.scene.bg);
+
+        // add textbox
         var textbox = new Textbox(game, true, this.scene);
+
         // place the dateTimeBox
         var dateBox = this.add.sprite(textbox.left, 20, 'textbox');
         dateBox.anchor.setTo(0, 0);
