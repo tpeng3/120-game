@@ -46,32 +46,9 @@ BasicGame.Cutscene.prototype = {
         var bgm = game.add.audio(this.scene.bgm);
         bgm.loopFull()
 
-        // what does the cutscene transition to
-        this.nextState = this.scene.next_state;
-
         // add the initial bg
         this.bg = this.add.sprite(0, 0, this.scene.bg);
-
-        // add the left character (usually locke)
-        this.leftChara = this.add.sprite(150, this.world.height, this.scene.sprite_left);
-        this.leftChara.anchor.setTo(0, 1);
-        // add the right character (usually the-one-who-is-not-locke)
-        this.rightChara = this.add.sprite(this.world.width - 150, this.world.height, this.scene.sprite_right);
-        this.rightChara.anchor.setTo(1, 1);
-
-        // place the textbox
-        var textbox = this.add.sprite(this.world.width/2, this.world.height - 10, 'textbox');
-        textbox.anchor.setTo(0.5, 1);
-        textbox.alpha = 0.75
-
-        // initialize the nameTag text
-        this.nameText = this.add.text(textbox.left+60, textbox.top+20, '', {font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff'});
-
-        // initialize the textbox text
-        var textStyle = { font: 'Trebuchet MS', fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: textbox.width-200 };
-        this.bodyText = this.add.text(textbox.left+100, textbox.top+60, '', textStyle);
-        this.bodyText.lineSpacing = -8;
-
+        var textbox = new Textbox(game, true, this.scene);
         // place the dateTimeBox
         var dateBox = this.add.sprite(textbox.left, 20, 'textbox');
         dateBox.anchor.setTo(0, 0);
@@ -81,70 +58,16 @@ BasicGame.Cutscene.prototype = {
         // initialize the dateTime text
         this.dateText = this.add.text(textbox.left + 60, 20, calendar.print(), { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
 
-        // Start the scene
-        this.textLine = -1;// current line in the scene
-        this.charNum = 0; // current char of the line text
-        this.textRun = false; // text scrolling
-        this.firstTalker = this.scene.lines[0].name; // To get rid of that l/r pos thing
-        //Bind the text scrolling event to a timed event
-        this.game.time.events.loop(Settings.TEXT_SCROLL_DELAY, this.unfoldDialogue, this);
-        this.advanceTextBox(); // show the first line of text (and trigger functions, and stuff)
-
         //Bind the line advancing function to the spacebar
         var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        spaceKey.onDown.add(this.advanceTextBox, this);
-
+        spaceKey.onDown.add(textbox.advance, textbox);
+        //Bind the line advancing function to the spacebar
+        var enterKey = this.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+        enterKey.onDown.add(textbox.skipScene, textbox);
         // fade transition (It has to be placed at the end for layering reasons)
         var fade = new TransitionFade(game, 1000);
 	},
     update: function () {
-		// press ENTER to skip to the next state
-		if(this.input.keyboard.isDown(Phaser.Keyboard.ENTER)){
-			this.state.start(this.nextState);
-		}
+
 	},
-    unfoldDialogue: function () {
-        if (this.textRun == true) {
-            var line = this.scene.lines[this.textLine];
-            // show dialogue text
-            if (line.text[this.charNum] != undefined) {
-	            this.bodyText.text += line.text[this.charNum];
-                this.charNum++;
-                this.textScrollSfx.stop();
-                this.textScrollSfx.play();
-	        }else{
-	        	this.textRun = false;
-	        }
-		}
-    },
-    advanceTextBox: function () {
-        // if there is still text unfolding, just load the whole thing
-        if (this.textRun == true) {
-            this.bodyText.text = this.scene.lines[this.textLine].text;
-            this.textRun = false;
-        }
-        else if (this.scene.lines[this.textLine + 1] != undefined) { // else load next line
-            this.textLine++;
-            var line = this.scene.lines[this.textLine];
-            this.charNum = 0;
-            this.bodyText.text = "";
-            this.nameText.text = line.name;
-            // Call all funtions (currently happens at line beginning)
-            if (line.functions != undefined) {
-                for (let i = 0; i < line.functions.length; i++) {
-                    eval(line.functions[i]);
-                }
-            }
-            // sprite dimming
-            var dimColor = 0x666666;
-            this.leftChara.tint = (line.name == this.firstTalker ? 0xffffff : dimColor);
-            this.rightChara.tint = (line.name == this.firstTalker ? dimColor : 0xffffff);
-            this.textRun = true; 
-        } else { // else end conversation (if no more lines)
-            this.camera.fade('#000');
-            this.camera.onFadeComplete.addOnce(function () {
-                this.state.start(this.nextState);
-            }, this);
-        }
-    }
 };
