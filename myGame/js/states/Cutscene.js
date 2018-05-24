@@ -15,7 +15,7 @@ BasicGame.Cutscene.prototype = {
         this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
 
         // load the sprites
-        this.load.image('locke_default', 'assets/img/characters/vn_locke.png');
+        // this.load.image('locke_default', 'assets/img/characters/vn_locke.png');
         // this.load.spritesheet('Locke', 'assets/img/characters/sprite_locke.png', 584, 637);
         this.load.atlas('Locke', 'assets/img/characters/sprite_locke.png', 'assets/img/characters/sprite_locke.json');
         this.load.image('locke_posing', 'assets/img/characters/vn_locke2draft.png');

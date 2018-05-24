@@ -21,7 +21,7 @@ function Textbox(game, changeState, scene, lines) {
     // create SFX
     this.textScrollSfx = game.add.audio('sfx_text_scroll');
     // add the left character (usually locke)
-    this.leftChara = this.callbackGame.add.sprite(150, this.callbackGame.world.height, this.scene.sprite_left);
+    this.leftChara = this.callbackGame.add.sprite(150, this.callbackGame.world.height, this.scene.sprite_left, "");
     this.leftChara.anchor.setTo(0, 1);
     // add the right character (usually the-one-who-is-not-locke)
     this.rightChara = this.callbackGame.add.sprite(this.callbackGame.world.width - 150, this.callbackGame.world.height, this.scene.sprite_right);
@@ -74,16 +74,20 @@ Textbox.prototype.advance = function () {
     else if (this.scene.lines[this.textLine + 1] != undefined) { // else load next line
         this.textLine++;
         this.charNum = 0;
+        var line = this.scene.lines[this.textLine];
         this.bodyText.text = "";
-        this.nameText.text = this.scene.lines[this.textLine].name;
+        this.nameText.text = line.name;
         // Call all funtions (currently happens at line beginning)
-        if (this.scene.lines[this.textLine].functions != undefined) {
-            for (let i = 0; i < this.scene.lines[this.textLine].functions.length; i++) {
-                eval(this.scene.lines[this.textLine].functions[i]);
+        if (line.functions != undefined) {
+            for (let i = 0; i < line.functions.length; i++) {
+                eval(line.functions[i]);
             }
         }
         // change character sprite expression
-        if(this.scene.lines[this.textLine].)
+        if(line.expression != undefined){
+            var chara = (line.name == this.leftChara.key? this.leftChara : this.rightChara);
+            chara.frameName = line.name + '_' + line.expression;
+        }
         // sprite dimming
         var dimColor = 0x555555;
         this.leftChara.tint = (this.scene.lines[this.textLine].name == this.firstTalker ? 0xffffff : dimColor);

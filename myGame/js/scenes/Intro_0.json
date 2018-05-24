@@ -2,8 +2,8 @@
 	"scene_name":"intro_0",
 	"bg": "bg_agency",
 	"bgm": "bgm_temp_locke",
-	"sprite_left": "locke_posing",
-	"sprite_right": "",
+	"sprite_left": "Locke",
+	"sprite_right": "Tai",
 	"next_state":"ActivityDecision",
   "lines": [
     {
