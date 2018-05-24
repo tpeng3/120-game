@@ -14,6 +14,9 @@ BasicGame.Work.prototype = {
         this.load.image('boss', 'assets/img/bh/' + BasicGame.global.case.boss.sprite + '.png');
         this.load.image('frame', 'assets/img/ui/ui_bhframe.png');
 
+        this.load.image('test', 'assets/img/bg/bg_test.png');
+
+
         // load bgm and sfx
         this.load.audio('bgm_touhou_stolen', 'assets/audio/bgm/ravel_nightstar_the_drums_and_bass_of_flower_bless.ogg');
         this.load.audio('sfx_player_laser', 'assets/audio/sfx/sfx_player_shot_laser.ogg');
@@ -28,9 +31,12 @@ BasicGame.Work.prototype = {
         // enable physics
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
+        // this.test = this.add.tileSprite(0, 0, this.world.width, this.world.height, 'test');
+
         // add background/frame, I'm actually going to seperate this into two images later I think
         this.add.sprite(0, 0, 'frame');
         game.physics.arcade.setBounds(80, 60, 900, 600); // gonna change these to parameters later when I redraw the bg
+
 
         // create enemy group
         this.enemyGroup = this.add.group();
@@ -78,6 +84,8 @@ BasicGame.Work.prototype = {
         this.game.time.events.add(45000, this.workEnd, this);
     },
     update: function () {
+        this.test.tilePosition.y -= 1;
+
         // debug information
         this.game.debug.text(this.time.fps || '--', 2, 14, "#00ff00");
         this.physics.arcade.collide(this.player, this.frameBounds);

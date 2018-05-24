@@ -31,6 +31,7 @@ BasicGame.Cutscene.prototype = {
 
         // load music and sfx
         this.load.audio('bgm_temp_locke', 'assets/audio/bgm/Locke_And_Load.ogg');
+        this.load.audio('bgm_oldtemp_locke', 'assets/audio/bgm/old_Locke_And_Load.ogg');
         this.load.audio('bgm_temp_talk', 'assets/audio/bgm/yoiyaminoseaside.ogg');
         this.load.audio('sfx_text_scroll', 'assets/audio/sfx/sfx_text_scroll4.ogg');
 	},
@@ -46,10 +47,10 @@ BasicGame.Cutscene.prototype = {
 
         // add music, it'll be late but I'm lazy rn to change that
         var bgm = game.add.audio(this.scene.bgm);
-        bgm.loopFull()
+        bgm.loopFull();
 
         // add the initial bg
-        this.bg = this.add.sprite(0, 0, this.scene.bg);
+        bg = this.add.sprite(0, 0, this.scene.bg);
 
         // add textbox
         var textbox = new Textbox(game, true, this.scene);

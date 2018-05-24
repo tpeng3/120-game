@@ -6,6 +6,7 @@ BasicGame.TitleScreen.prototype = {
 	preload: function() {
 		console.log('TitleScreen: preload');
 		// basically load a title screen image and assets
+		this.load.image('title', 'assets/img/ui/ui_title.png');
 
 		// this is just for transitions
 		this.load.image('bg_black', 'assets/img/bg/bg_black.png');
@@ -19,12 +20,33 @@ BasicGame.TitleScreen.prototype = {
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 		game.input.onDown.add(this.goFullscreen, this);
 
-        var titleText = this.add.text(this.world.width/2, this.world.height/2, '(Insert Title Screen Here)\nPress SPACEBAR to start.\n\n*Clicking on the game will start in Fullscreen. \nThis is a one-time thing, use keyboard keys to play!\n\nIn the "work" portion, keep in mind\n that you will use arrow keys, SPACEBAR, and SHIFT.', { fontSize: '32px', fill: '#fff' });
-		titleText.anchor.setTo(0.5);
 		//this.music = this.add.audio('titleMusic');
 		//this.music.play();
 
-		//this.add.sprite(0, 0, 'titlepage');
+		this.add.sprite(0, 0, 'title');
+
+    	var titleStyle = {font: 'Consolas', fontSize: '50px', fill: '#fff'};
+        var titleText = this.add.text(450, 400, '', titleStyle);
+        var subtitle = 'Tactical Schedule Management';
+        var charNum = 0;
+        this.game.time.events.add(1000, function(){
+	       	this.game.time.events.loop(100, function(){
+	        	if(charNum != subtitle.length){
+	        		titleText.text += subtitle[charNum];
+	        		charNum++;
+	        	}
+        	}, this);
+        }, this);
+      
+		var startStyle = {font: 'Trebuchet MS', fontSize: '32px', fill: '#51FFD4'};
+        var startText = this.add.text(this.world.width/2, 550, '-Press SPACEBAR to Start-', startStyle);
+        startText.anchor.set(0.5);
+        startText.visible = false;
+      	this.game.time.events.add(5000, function(){
+			this.game.time.events.loop(1000, function(){
+        	startText.visible = (startText.visible == false? true : false);
+        	}, this);
+      	}, this);
 
 		// Capture certain keys to prevent their default actions in the browser.
         this.input.keyboard.addKeyCapture([
@@ -32,12 +54,16 @@ BasicGame.TitleScreen.prototype = {
             Phaser.Keyboard.SPACEBAR, Phaser.Keyboard.ENTER,
             Phaser.Keyboard.SHIFT
         ]);
+
+        // fade transition (It has to be placed at the end for layering reasons)
+        var fade = new TransitionFade(game, 1000);
 	},
 	update: function () {
-		// start the game with the cutscene of Case 0
+		// start the game with the cutscene of Intro_0
 		if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
 			this.camera.fade('#000');
 			this.camera.onFadeComplete.add(function(){
+				// this.state.start('ActivityDecision', true, false);
                 this.state.start('Cutscene', true, false, 'Case0_Start');
                 // this.state.start('Bedtime', true, false);
 			}, this);

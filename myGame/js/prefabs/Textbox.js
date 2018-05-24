@@ -21,11 +21,16 @@ function Textbox(game, changeState, scene, lines) {
     // create SFX
     this.textScrollSfx = game.add.audio('sfx_text_scroll');
     // add the left character (usually locke)
-    this.leftChara = this.callbackGame.add.sprite(150, this.callbackGame.world.height, this.scene.sprite_left, "");
-    this.leftChara.anchor.setTo(0, 1);
+    this.leftChara = this.callbackGame.add.sprite(350, this.callbackGame.world.height, this.scene.sprite_left, "");
+    this.leftChara.anchor.setTo(0.5, 1);
     // add the right character (usually the-one-who-is-not-locke)
-    this.rightChara = this.callbackGame.add.sprite(this.callbackGame.world.width - 150, this.callbackGame.world.height, this.scene.sprite_right);
-    this.rightChara.anchor.setTo(1, 1);
+    this.rightChara = this.callbackGame.add.sprite(this.callbackGame.world.width - 350, this.callbackGame.world.height, this.scene.sprite_right);
+    this.rightChara.anchor.setTo(0.5, 1);
+
+    // a black screen for reasons
+    this.black = this.callbackGame.add.sprite(0, 0, 'bg_black');
+    this.black.scale.setTo(this.callbackGame.world.width, this.callbackGame.world.height);
+    this.black.visible = false;
 
     //add textbox to game (here for layering purposes)
     game.add.existing(this);
@@ -36,6 +41,13 @@ function Textbox(game, changeState, scene, lines) {
     var textStyle = { font: 'Trebuchet MS', fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: this.width - 200 };
     this.bodyText = this.callbackGame.add.text(this.left + 100, this.top + 60, '', textStyle);
     this.bodyText.lineSpacing = -8;
+    // initialize the ctc (aka a blinking spacebar text to indicate next line)
+    this.ctc = this.callbackGame.add.text(this.right-20, this.bottom-10, '[SPACEBAR]', textStyle);
+    this.ctc.anchor.set(1);
+    this.ctc.visible = false;
+    this.game.time.events.loop(1000, function(){
+        this.ctc.alpha = (this.ctc.alpha == 0? 1 : 0);
+    }, this);
 
     // Start the scene
     this.textLine = -1;// current line in the scene
@@ -53,13 +65,25 @@ Textbox.prototype.constructor = Textbox;
 Textbox.prototype.unfoldDialogue = function () {
     if (this.textRun == true) {
         var line = this.scene.lines[this.textLine];
+        var italcount;
         // show dialogue text
         if (line.text[this.charNum] != undefined) {
+            // check for text italics
+            if(line.text.substring(this.charNum, this.charNum+3) == '[i]'){
+                this.bodyText.addFontStyle('italic', this.charNum);
+                this.charNum += 3;
+            }else if(line.text.substring(this.charNum, this.charNum+4) == '[/i]'){
+                this.bodyText.addFontStyle('normal', this.charNum);
+                this.charNum += 4;
+            }
+
             this.bodyText.text += line.text[this.charNum];
             this.charNum++;
             this.textScrollSfx.stop();
             this.textScrollSfx.play();
         } else {
+            // add space to continue indicator
+            this.ctc.visible = true;
             this.textRun = false;
         }
     }
@@ -72,8 +96,10 @@ Textbox.prototype.advance = function () {
         this.textRun = false;
     }
     else if (this.scene.lines[this.textLine + 1] != undefined) { // else load next line
+        this.ctc.visible = false;
         this.textLine++;
         this.charNum = 0;
+        this.bodyText.addFontStyle('normal', 0); // reverting the styles back 
         var line = this.scene.lines[this.textLine];
         this.bodyText.text = "";
         this.nameText.text = line.name;
