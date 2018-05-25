@@ -15,21 +15,258 @@
 	],
 	[
 		{
-		"condition":"BasicGame.global.case == 0;",
 		"icon": "icon_tai",
-		"text":"If there were two guys were on the moon, and one killed the other with a rock, would that be fucked up or what?"
-		},
-		{
-		"icon": "icon_keyna",
-		"text":"It's no use, you were born a shitter."
-		},
-		{
-		"icon": "icon_locke",
-		"text":"Heads up this is all debug text my dude..."
+		"text":"True to the rumors, the library cafe's Froggo Donuts are really good!"
 		},
 		{
 		"icon": "icon_lynn",
-		"text":"What the fuck did you just fucking say about me, you little bitch? I'll have you know I graduated top of my class in the Navy Seals, and I've been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills."
+		"text":"YEAHHH NO WORK! SATURDAYZ R THE BEST!"
+		},
+		{
+		"icon": "icon_keyna",
+		"text":"Urghafjewkl... How do I give relationship advice??"
+		}
+	],
+	[],
+	[
+		{
+		"icon": "icon_keyna",
+		"text":"I'm so sick of couples. I never want to see a couple in my life every again."
+		},
+		{
+		"icon": "icon_keyna",
+		"text":"Thank goodness I have a day off tomorrow."
+		},
+		{
+		"icon": "icon_lynn",
+		"text":"i hate mondays i hate mondays i hate mondays Why do people have to work on Mondays?"
+		}
+	],
+	[
+		{
+		"condition":"BasicGame.global.case == 0;",
+		"icon": "icon_tai",
+		"text":""
+		},
+		{
+		"icon": "icon_lynn",
+		"text":"Boss wants me to work all week. Well then, wheres my raise?"
+		},
+		{
+		"icon": "icon_keyna",
+		"text":""
+		}
+	],
+	[
+		{
+		"icon": "icon_tai",
+		"text":""
+		},
+		{
+		"icon": "icon_lynn",
+		"text":""
+		},
+		{
+		"icon": "icon_tai",
+		"text":"My dayoff on Friday feels so long away..."
+		}
+	],
+	[
+		{
+		"icon": "icon_locke",
+		"text":"OH SWEET! My favorite writer's having a autograph signing!"
+		},
+		{
+		"icon": "icon_lynn",
+		"text":""
+		},
+		{
+		"icon": "icon_keyna",
+		"text":""
+		}
+	],
+	[
+		{
+		"icon": "icon_tai",
+		"text":""
+		},
+		{
+		"icon": "icon_lynn",
+		"text":""
+		},
+		{
+		"icon": "icon_keyna",
+		"text":"Something to look forward to: My favorite mystery novel author is having a signing soon!"
+		}
+	],
+		[
+		{
+		"icon": "icon_fedelynn",
+		"text":""
+		},
+		{
+		"icon": "icon_tai",
+		"text":"Power Traingers is not a kid's show!"
+		},
+		{
+		"icon": "icon_keyna",
+		"text":""
+		}
+	],
+	[],
+	[
+		{
+		"icon": "icon_tai",
+		"text":""
+		},
+		{
+		"icon": "icon_lynn",
+		"text":"Chief says I didn't meet my arrest quota :("
+		},
+		{
+		"icon": "icon_tai",
+		"text":"OK even if it IS a show targetted towards kids, that doesn't mean adults can't watch them!"
+		}
+	],
+	[
+		{
+		"icon": "icon_tai",
+		"text":"Oh wow, I suddenly got the day off tomorrow."
+		},
+		{
+		"icon": "icon_tai",
+		"text":"If you think about it, it's amazing that Power Traingers is a show that can appeal to BOTH kids and adults!"
+		},
+		{
+		"icon": "icon_keyna",
+		"text":"I can't believe I got to meet another fan of my favorite author... but of all people."
+		}
+	],
+	[
+		{
+		"icon": "icon_tai",
+		"text":""
+		},
+		{
+		"icon": "icon_lynn",
+		"text":""
+		},
+		{
+		"icon": "icon_keyna",
+		"text":""
+		}
+	],
+	[
+		{
+		"icon": "icon_lynn",
+		"text":"I know it's a cliche, but I might not be able to go on without Froggo Donuts."
+		},
+		{
+		"icon": "icon_lynn",
+		"text":""
+		},
+		{
+		"icon": "icon_tai",
+		"text":"There's a Power Traingers eevnt at the amusement park. I have to go."
+		}
+	],
+	[
+		{
+		"icon": "icon_keyna",
+		"text":"I can't believe I'll to go THERE for a case."
+		},
+		{
+		"icon": "icon_lynn",
+		"text":""
+		},
+		{
+		"icon": "icon_keyna",
+		"text":""
+		}
+	],
+	[],
+	[
+		{
+		"icon": "icon_keyna",
+		"text":"Looks like I'll have a lot of work this upcoming week."
+		},
+		{
+		"icon": "icon_lynn",
+		"text":""
+		},
+		{
+		"icon": "icon_keyna",
+		"text":""
+		}
+	],
+		[
+		{
+		"icon": "icon_keyna",
+		"text":""
+		},
+		{
+		"icon": "icon_keyna",
+		"text":"I don't know what to do..."
+		},
+		{
+		"icon": "icon_tai",
+		"text":"Saw a cop cruising on her motorcycle today and it was super cool! ...I want a morotcyle."
+		}
+	],
+	[
+		{
+		"icon": "icon_keyna",
+		"text":""
+		},
+		{
+		"icon": "icon_lynn",
+		"text":""
+		},
+		{
+		"icon": "icon_keyna",
+		"text":""
+		}
+	],
+	[
+		{
+		"icon": "icon_keyna",
+		"text":"Maybe... I'll take a break tomorrow..."
+		},
+		{
+		"icon": "icon_lynn",
+		"text":""
+		},
+		{
+		"icon": "icon_keyna",
+		"text":""
+		}
+	],
+	[
+		{
+		"icon": "icon_keyna",
+		"text":""
+		},
+		{
+		"icon": "icon_lynn",
+		"text":""
+		},
+		{
+		"icon": "icon_tai",
+		"text":"There's somewhere I want to go..."
+		}
+	],
+	[
+		{
+		"icon": "icon_keyna",
+		"text":""
+		},
+		{
+		"icon": "icon_lynn",
+		"text":""
+		},
+		{
+		"icon": "icon_keyna",
+		"text":""
 		}
 	]
 ]

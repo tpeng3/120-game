@@ -101,8 +101,10 @@ BasicGame.Bedtime.prototype = {
 	 	textStyle = { font: 'Trebuchet MS', fontSize: '18px', fill: '#333', wordWrap: true, wordWrapWidth: 64*7 };
 
 	 	var prevHeight = 240;
+	 	var ribbitCount = 0; // max ribbits per day is 3
 	 	for(i=0; i<this.ribbits[date].length; i++){
-	 		if(this.ribbits[date][i].condition == null || eval(this.ribbits[date][i].condition)){
+	 		if( (this.ribbits[date][i].condition == null || eval(this.ribbits[date][i].condition) 
+	 			&& ribbitCount < 3)){
 		 		var handle, icon = this.ribbits[date][i].icon;
 		 		var ribbitIcon = this.add.sprite(500, prevHeight, icon);
 		 		if(icon == 'icon_locke') handle = '@5urelocke';
@@ -124,6 +126,7 @@ BasicGame.Bedtime.prototype = {
 		        this.ribbitter.add(ribbitHandle);
 		        this.ribbitter.add(ribbitText);
 		        this.ribbitter.add(ribbitDividier);
+		        ribbitCount++;
 		    }
 	    }
 	    this.ribbitter.visible = false;
