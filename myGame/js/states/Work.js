@@ -84,7 +84,7 @@ BasicGame.Work.prototype = {
         this.game.time.events.add(45000, this.workEnd, this);
     },
     update: function () {
-        this.test.tilePosition.y -= 1;
+        // this.test.tilePosition.y -= 1;
 
         // debug information
         this.game.debug.text(this.time.fps || '--', 2, 14, "#00ff00");

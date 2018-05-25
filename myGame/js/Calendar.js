@@ -75,6 +75,10 @@ Calendar.prototype = {
     print: function () {
         return (this.date.getMonth() + 1) + '/' + this.date.getDate() + ' ' + this.date.toLocaleString('en-us', { weekday: 'long' });
     },
+    // Prints the date 3/X
+    printDate: function() {
+        return (this.date.getDate());
+    },
     // Prints the current day of the week
     printDay: function () {
         return (this.date.toLocaleString('en-us', { weekday: 'long' }));

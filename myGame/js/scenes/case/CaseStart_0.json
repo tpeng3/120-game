@@ -1,18 +1,24 @@
 {
-  "scene_name": "casestart_0",
   "bg": "bg_agency",
-  "bgm": "bgm_temp_locke",
-  "sprite_left": "locke_default",
-  "sprite_right": "",
-  "next_state": "Work",
-  "lines": [
-    {
-      "name": "Locke",
-      "text": "Thanks for the case crazy cat lady!"
-    },
-    {
-      "name": "Crazy Cat Lady",
-      "text": "You better find him whippersnapper"
-    }
-  ]
+  "sprite_left": "Locke",
+  "sprite_right": "Tai",
+  "next_state":"Wonderzone",
+  "lines":[
+    {"name":"Locke", "expression": "confident",
+      "text":"Of course. Now if you could please leave the room for like 15 minutes, I'll get right on the case.",
+      "functions": ["this.rightChara.visible = false;"]},
+    {"name":"Allie",
+      "text":"Oh! Well, okay."},
+    {"name":"Tai", "expression":"surprised",
+      "text":"Fifteen minutes?",
+      "functions": ["this.rightChara.visible = true;"]},
+    {"name":"Locke", "expression":"posing",
+      "text":"I just need time to focus. I need as much quiet as possible to initiate my WONDER ZONE."},
+    {"name":"Tai", "expression": "worried",
+      "text":"You mean that thing where you pose and get really quiet?"},
+    {"name":"Locke", "expression": "confident",
+      "text":"Yeah that! Just gimme a moment."},
+    {"name":"Locke", "expression": "posing",
+      "text":"Accessing the WONDER ZONE: FULL DIVE. START!"}
+  ] 
 }

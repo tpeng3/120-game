@@ -64,7 +64,7 @@ BasicGame.TitleScreen.prototype = {
 			this.camera.fade('#000');
 			this.camera.onFadeComplete.add(function(){
 				// this.state.start('ActivityDecision', true, false);
-                this.state.start('Cutscene', true, false, 'Case0_Start');
+                this.state.start('Cutscene', true, false, 'Intro');
                 // this.state.start('Bedtime', true, false);
 			}, this);
 		}

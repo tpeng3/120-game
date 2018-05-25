@@ -14,11 +14,10 @@ BasicGame.Cutscene.prototype = {
         // load backgrounds
         this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
 
-        // load the sprites
-        // this.load.image('locke_default', 'assets/img/characters/vn_locke.png');
-        // this.load.spritesheet('Locke', 'assets/img/characters/sprite_locke.png', 584, 637);
+        // load the sprite atlases
         this.load.atlas('Locke', 'assets/img/characters/sprite_locke.png', 'assets/img/characters/sprite_locke.json');
-        this.load.image('locke_posing', 'assets/img/characters/vn_locke2draft.png');
+        this.load.atlas('Tai', 'assets/img/characters/sprite_tai.png', 'assets/img/characters/sprite_tai.json');
+
         this.load.image('keyna_default', 'assets/img/characters/vn_keyna.png');
         this.load.image('tai_default', 'assets/img/characters/vn_tai.png');
         this.load.image('fedelynn_default', 'assets/img/characters/vn_fedelynn.png');

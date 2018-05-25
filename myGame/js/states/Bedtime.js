@@ -15,7 +15,7 @@ BasicGame.Bedtime.prototype = {
         this.load.image('icon_tai', 'assets/img/ui/icon_tai.png');
         this.load.image('icon_keyna', 'assets/img/ui/icon_keyna.png');
         this.load.image('icon_lynn', 'assets/img/ui/icon_lynn.png');
-        this.load.text('scene', 'js/scenes/' + 'Ribbits' + '.json');
+        this.load.text('scene', 'js/scenes/ribbits/Ribbits.json');
 
         // load sprite furniture and locke
         this.load.spritesheet('sprite_locke', 'assets/img/bedtime/sprite_locke.png', 64, 64);
@@ -95,14 +95,15 @@ BasicGame.Bedtime.prototype = {
 
 	 	// parse those ribbits
         this.ribbits = JSON.parse(this.game.cache.getText('scene'));
+        var date = calendar.printDate() - 1;
 
 	 	titleStyle = { font: 'bold Trebuchet MS', fontSize: '22px', fill: '#333'};
 	 	textStyle = { font: 'Trebuchet MS', fontSize: '18px', fill: '#333', wordWrap: true, wordWrapWidth: 64*7 };
 
 	 	var prevHeight = 240;
-	 	for(i=0; i<this.ribbits.length; i++){
-	 		if(this.ribbits[i].condition == null || eval(this.ribbits[i].condition)){
-		 		var handle, icon = this.ribbits[i].icon;
+	 	for(i=0; i<this.ribbits[date].length; i++){
+	 		if(this.ribbits[date][i].condition == null || eval(this.ribbits[date][i].condition)){
+		 		var handle, icon = this.ribbits[date][i].icon;
 		 		var ribbitIcon = this.add.sprite(500, prevHeight, icon);
 		 		if(icon == 'icon_locke') handle = '@5urelocke';
 				else if(icon == 'icon_tai') handle = '@trainger_yellow';
@@ -110,10 +111,10 @@ BasicGame.Bedtime.prototype = {
 				else if(icon == 'icon_lynn') handle = '@tiredmomcop';
 				var ribbitHandle = this.add.text(545, prevHeight, handle, titleStyle);
 		        prevHeight = prevHeight + ribbitHandle.height;
-		        var ribbitText = this.add.text(540, prevHeight, this.ribbits[i].text, textStyle);
+		        var ribbitText = this.add.text(540, prevHeight, this.ribbits[date][i].text, textStyle);
 		        ribbitText.lineSpacing = -4;
 		        prevHeight = prevHeight + ribbitText.height + 8;
-		        if(i != this.ribbits.length-1){
+		        if(i != this.ribbits[date].length-1){
 			        var ribbitDividier = this.add.sprite(492, prevHeight, 'bg_grey');
 			        ribbitDividier.scale.setTo(512, 2);
 			        prevHeight = prevHeight + ribbitDividier.height + 12;

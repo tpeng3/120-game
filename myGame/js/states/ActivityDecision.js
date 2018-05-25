@@ -17,6 +17,10 @@ BasicGame.ActivityDecision.prototype = {
 		this.load.image('button_work', 'assets/img/ui/button_work.png');
         this.load.image('button_hangout', 'assets/img/ui/button_hangout.png');
         this.load.image('button_hangout_no_option', 'assets/img/ui/button_hangout_no_option.png');
+        this.load.image('ui_wonderzone', 'assets/img/ui/ui_wonderzone.png');
+        this.load.image('ui_wonderzone2', 'assets/img/ui/ui_wonderzone2.png');
+
+
 	},
     create: function () {
 		console.log('ActivityDecision: create');
@@ -25,12 +29,6 @@ BasicGame.ActivityDecision.prototype = {
         this.add.sprite(0, 0, 'bg_agency');
 
         var textbox = new Textbox(game, false, null, [{ name: "", text: 'Use Arrow Keys or WASD to navigate. Press SPACEBAR to select choice and advance text.' }]);
-        // add textbox and text, we don't have to keep this but for now give some explanations to the players
-        //var textbox = this.add.sprite(this.world.width/2, this.world.height - 10, 'textbox');
-        //textbox.anchor.setTo(0.5, 1);
-        //textbox.alpha = 0.75;
-        //var textStyle = { font: 'Trebuchet MS', fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: textbox.width-200 };
-        //var text = this.add.text(textbox.left + 60, textbox.top + 40, 'Use Arrow Keys or WASD to navigate. Press SPACEBAR to select choice and advance text.', textStyle);
 
         // place the dateTimeBox
         var dateBox = this.add.sprite(textbox.left, 20, 'textbox');

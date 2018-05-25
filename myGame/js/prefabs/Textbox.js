@@ -5,7 +5,7 @@ function Textbox(game, changeState, scene, lines) {
     Phaser.Sprite.call(this, game, game.world.width / 2, game.world.height - 10, 'textbox', 0);
     //Sprite stuff
     this.anchor.setTo(0.5, 1);
-    this.alpha = 0.75
+    this.alpha = 0.85;
     //Game and scene stuff
     this.callbackGame = game;
     //set scene of make dummy scene if null
@@ -69,13 +69,14 @@ Textbox.prototype.unfoldDialogue = function () {
         // show dialogue text
         if (line.text[this.charNum] != undefined) {
             // check for text italics
-            if(line.text.substring(this.charNum, this.charNum+3) == '[i]'){
-                this.bodyText.addFontStyle('italic', this.charNum);
-                this.charNum += 3;
-            }else if(line.text.substring(this.charNum, this.charNum+4) == '[/i]'){
-                this.bodyText.addFontStyle('normal', this.charNum);
-                this.charNum += 4;
-            }
+            // jk italics was a mistake, it's not noticeable enough for all the effort
+            // if(line.text.substring(this.charNum, this.charNum+3) == '[i]'){
+            //     this.bodyText.addFontStyle('italic bold', this.charNum);
+            //     this.charNum += 3;
+            // }else if(line.text.substring(this.charNum, this.charNum+4) == '[/i]'){
+            //     this.bodyText.addFontStyle('normal', this.charNum);
+            //     this.charNum += 4;
+            // }
 
             this.bodyText.text += line.text[this.charNum];
             this.charNum++;
@@ -99,9 +100,9 @@ Textbox.prototype.advance = function () {
         this.ctc.visible = false;
         this.textLine++;
         this.charNum = 0;
-        this.bodyText.addFontStyle('normal', 0); // reverting the styles back 
         var line = this.scene.lines[this.textLine];
         this.bodyText.text = "";
+        // this.bodyText.addFontStyle('normal', 0); // reverting the styles back 
         this.nameText.text = line.name;
         // Call all funtions (currently happens at line beginning)
         if (line.functions != undefined) {
@@ -116,8 +117,9 @@ Textbox.prototype.advance = function () {
         }
         // sprite dimming
         var dimColor = 0x555555;
-        this.leftChara.tint = (this.scene.lines[this.textLine].name == this.firstTalker ? 0xffffff : dimColor);
-        this.rightChara.tint = (this.scene.lines[this.textLine].name == this.firstTalker ? dimColor : 0xffffff);
+        var name = this.scene.lines[this.textLine].name;
+        this.leftChara.tint = ( (name == "") || (name == this.scene.sprite_left) ? 0xffffff : dimColor);
+        this.rightChara.tint = ( (name == "") || (name == this.scene.sprite_right) ? 0xffffff : dimColor);
         this.textRun = true;
     } else { // else end conversation (if no more lines)
         if (this.changeState) {
