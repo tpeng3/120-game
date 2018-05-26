@@ -6,7 +6,8 @@ BasicGame.Work.prototype = {
         this.time.advancedTiming = true;
 
         // load images (no sprite atlas right now)
-        this.load.image('bh_locke', 'assets/img/bh/bh_locke.png');
+        this.load.spritesheet('bh_locke', 'assets/img/bh/bh_locke.png', 64, 64);
+        this.load.image('bh_locke_core', 'assets/img/bh/bh_locke_core.png');
         this.load.image('locke_bullet', 'assets/img/bh/bh_bullet_locke.png');
         this.load.image('enemy_bullet', 'assets/img/bh/bh_bullet_bright.png');
         this.load.image('enemy_bullet_l', 'assets/img/bh/bh_bullet_lbright.png');
@@ -139,7 +140,7 @@ BasicGame.Work.prototype = {
         if(this.player.showHitbox)
             game.debug.body(this.player);
 
-        game.debug.body(this.player);
+        // game.debug.body(this.player);
 
         //Create some debug health text
         game.debug.text('Health = ' + this.player.currHealth, this.player.x, this.player.y, { fontSize: '32px', fill: '#00ee00' });
