@@ -41,16 +41,22 @@ BasicGame.Boot.prototype = {
     },
 
     preload: function () {
+        console.log('Boot: preload');
         //  Here we load the assets required for our preloader (in this case a background and a loading bar)
         //this.load.image('preloaderBackground', 'images/preloader_background.jpg');
         //this.load.image('preloaderBar', 'images/preloadr_bar.png');
+
     },
 
     create: function () {
+        console.log('Boot: create');
         //BasicGame.global.case = JSON.parse(this.game.cache.getText('starting_case'))
         //  So now let's start the real preloader going
+        this.state.start('Preloader');
+    },
+    update: function () {
+        //if (Phaser.Loader.hasLoaded)
         //this.state.start('Preloader');
-        this.state.start('TitleScreen');
     }
 
 };

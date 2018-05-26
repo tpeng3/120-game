@@ -28,11 +28,7 @@ BasicGame.Cutscene.prototype = {
         // load script
         this.load.text('scene', 'js/scenes/' + this.sceneName + '.json');
 
-        // load music and sfx
-        this.load.audio('bgm_temp_locke', 'assets/audio/bgm/Locke_And_Load.ogg');
-        this.load.audio('bgm_oldtemp_locke', 'assets/audio/bgm/old_Locke_And_Load.ogg');
-        this.load.audio('bgm_temp_talk', 'assets/audio/bgm/yoiyaminoseaside.ogg');
-        this.load.audio('sfx_text_scroll', 'assets/audio/sfx/sfx_text_scroll4.ogg');
+
 	},
     create: function () {
         console.log('Cutscene: create');
@@ -45,8 +41,10 @@ BasicGame.Cutscene.prototype = {
         this.scene = JSON.parse(this.game.cache.getText('scene'));
 
         // add music, it'll be late but I'm lazy rn to change that
-        var bgm = game.add.audio(this.scene.bgm);
-        bgm.loopFull();
+        if (this.scene.bgm != undefined) {
+            var bgm = game.add.audio(this.scene.bgm);
+            bgm.loopFull();
+        }
 
         // add the initial bg
         bg = this.add.sprite(0, 0, this.scene.bg);

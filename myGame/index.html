@@ -14,6 +14,7 @@
     <script src="js/prefabs/Textbox.js"></script>
     <script src="js/Transition.js"></script>
     <script src="js/states/Boot.js"></script>
+    <script src="js/states/Preloader.js"></script>
     <script src="js/states/TitleScreen.js"></script>
     <script src="js/states/ActivityDecision.js"></script>
     <script src="js/states/CharacterDecision.js"></script>
@@ -37,6 +38,7 @@
 
         // Add the states to the StateManager.
         game.state.add('Boot', BasicGame.Boot);
+        game.state.add('Preloader', BasicGame.Preloader);
         game.state.add('TitleScreen', BasicGame.TitleScreen);
         game.state.add('ActivityDecision', BasicGame.ActivityDecision);
         game.state.add('CharacterDecision', BasicGame.CharacterDecision);
