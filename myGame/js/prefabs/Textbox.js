@@ -45,9 +45,11 @@ function Textbox(game, changeState, scene, lines) {
     this.ctc = this.callbackGame.add.text(this.right-20, this.bottom-10, '[SPACEBAR]', textStyle);
     this.ctc.anchor.set(1);
     this.ctc.visible = false;
-    this.game.time.events.loop(1000, function(){
-        this.ctc.alpha = (this.ctc.alpha == 0? 1 : 0);
-    }, this);
+    // this.callbackGame.add.tween(this.ctc).to( { y: this.ctc.y-10 }, 200, Phaser.Easing.Linear.None, true, 0, 400, true);
+
+    // this.game.time.events.loop(1000, function(){
+    //     this.ctc.alpha = (this.ctc.alpha == 0? 1 : 0);
+    // }, this);
 
     // Start the scene
     this.textLine = -1;// current line in the scene

@@ -42,16 +42,32 @@ BasicGame.Bedtime.prototype = {
 		var bg = this.add.sprite(128, 64, 'bg_bedroom');
 
 		// add some instruction text
-	 	instrStyle = { font: 'bold Trebuchet MS', fontSize: '22px', fill: '#fff'};
+	 	instrStyle = { font: 'bold Trebuchet MS', fontSize: '22px', fill: '#fff', wordWrap: true, wordWrapWidth: 800, boundsAlignH: 'center' };
 		this.add.text(10, 10, 'Use Arrow Keys or WASD to move. Press SPACEBAR at the Bed to sleep.', instrStyle);
-		this.ribbitInstr = this.add.text(game.width/2, game.height - 60, 'Press SPACEBAR to close window.', instrStyle);
-		this.ribbitInstr.anchor.set(0.5, 1);
-		this.ribbitInstr.visible = false;
 
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 
 		// add room objects
 		this.addFurniture();
+
+		// set up furniture flavor text
+		var flavor = this.add.text(game.width/2, game.height - 100, '', instrStyle);
+		flavor.anchor.setTo(0.5, 0);
+		// flavor.setTextBounds(300, 100, 800, 100);
+		this.flavorText = '';
+
+		var charNum = 0;
+	    this.game.time.events.loop(10, function(){
+	    	if(this.flavorText != ''){
+	        	if(charNum != this.flavorText.length){
+	        		flavor.text += this.flavorText[charNum];
+	        		charNum++;
+	        	}
+	        }else{
+	        	flavor.text = '';
+	        	charNum = 0;
+	        }
+      	}, this);
 
 		// add locke
 		sprite = this.add.sprite(game.width/2, game.height/2, 'sprite_locke');
@@ -89,12 +105,17 @@ BasicGame.Bedtime.prototype = {
 
 	 	// add ribbitter
 	 	this.ribbitter = this.add.group();
-	 	this.ui_ribbitter = this.add.sprite(256, 120, 'ui_ribbitter');
-	 	this.ui_ribbitter.alpha = 0.97;
-	 	this.ribbitter.add(this.ui_ribbitter);
+	 	var ui_ribbitter = this.add.sprite(256, 120, 'ui_ribbitter');
+	 	ui_ribbitter.alpha = 0.97;
+	 	this.ribbitter.add(ui_ribbitter);
+
+	 	// add ribbit instructions
+	 	var ribbitInstr = this.add.text(game.width/2, game.height - 60, 'Press SPACEBAR to close window.', instrStyle);
+		ribbitInstr.anchor.set(0.5, 1);
+		this.ribbitter.add(ribbitInstr);
 
 	 	// parse those ribbits
-        this.ribbits = JSON.parse(this.game.cache.getText('scene'));
+        var ribbits = JSON.parse(this.game.cache.getText('scene'));
         var date = calendar.printDate() - 1;
 
 	 	titleStyle = { font: 'bold Trebuchet MS', fontSize: '22px', fill: '#333'};
@@ -102,10 +123,10 @@ BasicGame.Bedtime.prototype = {
 
 	 	var prevHeight = 240;
 	 	var ribbitCount = 0; // max ribbits per day is 3
-	 	for(i=0; i<this.ribbits[date].length; i++){
-	 		if( (this.ribbits[date][i].condition == null || eval(this.ribbits[date][i].condition) 
+	 	for(i=0; i<ribbits[date].length; i++){
+	 		if( (ribbits[date][i].condition == null || eval(ribbits[date][i].condition) 
 	 			&& ribbitCount < 3)){
-		 		var handle, icon = this.ribbits[date][i].icon;
+		 		var handle, icon = ribbits[date][i].icon;
 		 		var ribbitIcon = this.add.sprite(500, prevHeight, icon);
 		 		if(icon == 'icon_locke') handle = '@5urelocke';
 				else if(icon == 'icon_tai') handle = '@trainger_yellow';
@@ -113,10 +134,10 @@ BasicGame.Bedtime.prototype = {
 				else if(icon == 'icon_lynn') handle = '@tiredmomcop';
 				var ribbitHandle = this.add.text(545, prevHeight, handle, titleStyle);
 		        prevHeight = prevHeight + ribbitHandle.height;
-		        var ribbitText = this.add.text(540, prevHeight, this.ribbits[date][i].text, textStyle);
+		        var ribbitText = this.add.text(540, prevHeight, ribbits[date][i].text, textStyle);
 		        ribbitText.lineSpacing = -4;
 		        prevHeight = prevHeight + ribbitText.height + 8;
-		        if(i != this.ribbits[date].length-1){
+		        if(i != ribbits[date].length-1){
 			        var ribbitDividier = this.add.sprite(492, prevHeight, 'bg_grey');
 			        ribbitDividier.scale.setTo(512, 2);
 			        prevHeight = prevHeight + ribbitDividier.height + 12;
@@ -181,24 +202,28 @@ BasicGame.Bedtime.prototype = {
             sprite.animations.play('right');
             this.spriteDirection = 7;
             sensor.anchor.setTo(.25, .5);
+            this.flavorText = '';
         }
 	    else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) ||
             game.input.keyboard.isDown(Phaser.Keyboard.A)) {
             sprite.animations.play('left');
             this.spriteDirection = 4;
             sensor.anchor.setTo(.75, .5);
+            this.flavorText = '';
         }
 	    else if (game.input.keyboard.isDown(Phaser.Keyboard.UP) ||
 	    	game.input.keyboard.isDown(Phaser.Keyboard.W)) {
 	    	sprite.animations.play('up');
 	    	this.spriteDirection = 10;
             sensor.anchor.setTo(.5, .75);
+            this.flavorText = '';
 		}
 	    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) ||
 	    	game.input.keyboard.isDown(Phaser.Keyboard.S)) {
 	    	sprite.animations.play('down');
 	    	this.spriteDirection = 1;
 	        sensor.anchor.setTo(.5,.25);
+	        this.flavorText = '';
 	    }
 	    else{
 	    	sprite.animations.stop();
@@ -304,7 +329,7 @@ BasicGame.Bedtime.prototype = {
 		this.armrest2.body.immovable = true;
 
 		this.sofasensor = this.add.sprite(this.sofa.x, this.sofa.y+this.sofa.height+0, 'bg_black');
-		this.sofasensor.scale.setTo(this.sofa.width, 20);
+		this.sofasensor.scale.setTo(this.sofa.width, 40);
 		this.sofasensor.alpha = 0;
 		this.physics.arcade.enable(this.sofasensor);
 		this.sofasensor.body.immovable = true;
@@ -322,63 +347,14 @@ BasicGame.Bedtime.prototype = {
 	 	this.tv.body.immovable = true;
 	},
 	checkFurniture: function(){
-	    // if player checks bed, go to sleep and proceed to NextDay
+	    // set all the furniture collisions
         this.physics.arcade.collide(sprite, this.bed);
-        if (((this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && 
-            (game.physics.arcade.overlap(sensor, this.bedframe)) ))
-            || this.input.keyboard.justPressed(Phaser.Keyboard.ENTER)) {
-            bgm.fadeOut(500);
-            this.camera.fade('#000', 500);
-            this.camera.onFadeComplete.addOnce(function () {
-                	this.state.start('NextDay');
-            }, this);
-        }
-        // fun bed layering effect
         this.physics.arcade.collide(sprite, this.bedframe);
-        if(game.physics.arcade.overlap(sensor, this.bedsensor)){
-			this.world.bringToTop(sprite);
-			this.world.bringToTop(this.notification);
-        }else{
-        	if(this.fadeIn == true){
-        		this.world.bringToTop(this.bed);
-				this.world.bringToTop(this.frontFurniture);
-			}
-        }
-
-	    // if player check laptop, opens up social media
-        this.physics.arcade.collide(sprite, this.laptop);
-	    if(this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && game.physics.arcade.overlap(sensor, this.laptop)){
-	    	if(this.ribbitter.visible == false){
-	    		this.ribbitter.visible = true;
-	    		this.ribbitInstr.visible = true;
-	    		sprite.body.moves = false;
-	    		this.notification.visible = false;
-	    	}else{
-	    		this.ribbitter.visible = false;
-	    		this.ribbitInstr.visible = false;
-	    		sprite.body.moves = true;
-	    	}
-	    }
-
-        // fun sofa layering effect
         this.physics.arcade.collide(sprite, this.sofa);
         this.physics.arcade.collide(sprite, this.armrest1);
         this.physics.arcade.collide(sprite, this.armrest2);
-        if(game.physics.arcade.overlap(sprite, this.sofasensor)){
-			this.world.bringToTop(sprite);
-        }else{
-        	if(this.fadeIn == true){
-	        	this.world.bringToTop(this.sofa);
-				this.world.bringToTop(this.frontFurniture);
-        	}
-        }
-
-        // you can dim the room lighting
+        this.physics.arcade.collide(sprite, this.laptop);
         this.physics.arcade.collide(sprite, this.lamp);
-	    if(this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && game.physics.arcade.overlap(sensor, this.lamp)){
-            this.lighting.visible = (this.lighting.visible? false : true);
-	    }
- 
         this.physics.arcade.collide(sprite, this.bookshelf1);
         this.physics.arcade.collide(sprite, this.bookshelf2);
         this.physics.arcade.collide(sprite, this.cabinet);
@@ -394,6 +370,92 @@ BasicGame.Bedtime.prototype = {
         this.physics.arcade.collide(sprite, this.trashcan);
         this.physics.arcade.collide(sprite, this.tv);
 
+        // fun bed layering effect
+        if(game.physics.arcade.overlap(sensor, this.bedsensor)){
+			this.world.bringToTop(sprite);
+			this.world.bringToTop(this.notification);
+        }else{
+        	if(this.fadeIn == true){
+        		this.world.bringToTop(this.bed);
+				this.world.bringToTop(this.frontFurniture);
+			}
+        }
+
+        // fun sofa layering effect
+        if(game.physics.arcade.overlap(sprite, this.sofasensor)){
+			this.world.bringToTop(sprite);
+        }else{
+        	if(this.fadeIn == true){
+	        	this.world.bringToTop(this.sofa);
+				this.world.bringToTop(this.frontFurniture);
+        	}
+        }
+
+        // check for interactions with furniture
+        if (this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
+        	// if colliding with bed
+        	if(game.physics.arcade.overlap(sensor, this.bedframe)){
+	            bgm.fadeOut(500);
+	            this.camera.fade('#000', 500);
+	            this.camera.onFadeComplete.addOnce(function () {
+	                	this.state.start('NextDay');
+	            }, this);
+        	}
+        	// if player check laptop, opens up social media
+        	else if(game.physics.arcade.overlap(sensor, this.laptop)){
+		    	if(this.ribbitter.visible == false){
+		    		this.ribbitter.visible = true;
+		    		sprite.body.moves = false;
+		    		this.notification.visible = false;
+		    	}else{
+		    		this.ribbitter.visible = false;
+		    		sprite.body.moves = true;
+		    	}
+	    	}
+	    	// you can dim the room lighting
+	    	else if(game.physics.arcade.overlap(sensor, this.lamp)){
+            	this.lighting.visible = (this.lighting.visible? false : true);
+	    	}
+	    	// now for furniture that has flavor text
+	    	else if(game.physics.arcade.overlap(sensor, this.hat)){
+            	this.flavorText = 'You got this hat from Tai as a birthday present, but you\'ve yet to find a good opportunity to wear it.';
+	    	}
+	    	else if(game.physics.arcade.overlap(sensor, this.bookshelf1)){
+            	this.flavorText = 'A bookshelf full of your favorite mystery novels.';
+	    	}
+	    	else if(game.physics.arcade.overlap(sensor, this.bookshelf2)){
+            	this.flavorText = 'A bookshelf full of your favorite non-mystery novels.';
+	    	}
+	    	else if(game.physics.arcade.overlap(sensor, this.cabinet)){
+            	this.flavorText = 'It\'s a shoe cabinet!';
+	    	}
+	    	else if(game.physics.arcade.overlap(sensor, this.calendar)){
+            	this.flavorText = 'Today is ' + calendar.printDay() + '.';
+	    	}
+	    	else if(game.physics.arcade.overlap(sensor, this.filecab)){
+            	this.flavorText = 'You bought this file cabinet to store old cases, but lately it\'s been more of a stationary cabinet.';
+	    	}
+	    	else if(game.physics.arcade.overlap(sensor, this.friend)){
+            	this.flavorText = 'Dr. Watsy has always been the bravest and truest of friends.';
+	    	}
+	    	else if(game.physics.arcade.overlap(sensor, this.plant1)){
+            	this.flavorText = 'A housewarming present from Tai. It\'s fake because he knows you well.';
+	    	}
+	    	else if(game.physics.arcade.overlap(sensor, this.table)){
+            	this.flavorText = 'It\'s a table.';
+	    	}
+	    	else if(game.physics.arcade.overlap(sensor, this.trashcan)){
+            	this.flavorText = 'The trash can is empty.';
+	    	}
+	    	else if(game.physics.arcade.overlap(sensor, this.tv)){
+            	this.flavorText = 'You\'re too tired to watch tv today.';
+	    	}else{
+		        // Pressing SPACEBAR also deletes flavortext
+			    this.flavorText = '';	
+		    }
+		}
+
+		// extra layering stuff
         this.world.bringToTop(this.lighting);
         this.world.bringToTop(this.ribbitter);
 	},
@@ -403,13 +465,13 @@ BasicGame.Bedtime.prototype = {
 		// game.debug.body(sensor);
 		// game.debug.body(this.lamp);
 		// // game.debug.body(this.sofa);
-		// // game.debug.body(this.plant1);
-		// // game.debug.body(this.trashcan);
-		// // game.debug.body(this.filecab);
+		// game.debug.body(this.plant1);
+		// game.debug.body(this.trashcan);
+		// game.debug.body(this.filecab);
 		// // game.debug.body(this.armrest1);
 		// // game.debug.body(this.armrest2);
 		// game.debug.body(this.bed);
 		// game.debug.body(this.bedframe);
-		// game.debug.body(this.be);
+		// game.debug.body(this.bookshelf1);
 	}
 };
