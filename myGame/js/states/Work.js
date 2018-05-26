@@ -13,9 +13,7 @@ BasicGame.Work.prototype = {
         this.load.image('enemy', 'assets/img/bh/bh_enemy.png');
         this.load.image('boss', 'assets/img/bh/' + BasicGame.global.case.boss.sprite + '.png');
         this.load.image('frame', 'assets/img/ui/ui_bhframe.png');
-
-        this.load.image('test', 'assets/img/bg/bg_test.png');
-
+        this.load.image('hexagons', 'assets/img/bg/bg_hexagons.png');
 
         // load bgm and sfx
         this.load.audio('bgm_touhou_stolen', 'assets/audio/bgm/ravel_nightstar_the_drums_and_bass_of_flower_bless.ogg');
@@ -34,9 +32,12 @@ BasicGame.Work.prototype = {
         // this.test = this.add.tileSprite(0, 0, this.world.width, this.world.height, 'test');
 
         // add background/frame, I'm actually going to seperate this into two images later I think
-        this.add.sprite(0, 0, 'frame');
-        game.physics.arcade.setBounds(80, 60, 900, 600); // gonna change these to parameters later when I redraw the bg
+        this.frame = this.add.sprite(200, 16, 'frame');
+        this.frame.tint = '0xffaaaa';
+        this.hexagons = this.add.tileSprite(200, 16, 808, 688, 'hexagons');
+        this.hexagons.alpha = 0.6;
 
+        game.physics.arcade.setBounds(this.frame.x, this.frame.y, this.frame.width, this.frame.height);
 
         // create enemy group
         this.enemyGroup = this.add.group();
@@ -84,7 +85,8 @@ BasicGame.Work.prototype = {
         this.game.time.events.add(45000, this.workEnd, this);
     },
     update: function () {
-        // this.test.tilePosition.y -= 1;
+        this.hexagons.tilePosition.x += .1;
+        this.hexagons.tilePosition.y += 1;
 
         // debug information
         this.game.debug.text(this.time.fps || '--', 2, 14, "#00ff00");

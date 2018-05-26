@@ -35,7 +35,7 @@ Bullet.prototype.constructor = Bullet;
 Bullet.prototype.update = function () {
     var collided = game.physics.arcade.overlap(this, this.targetGroup, this.onCollideWithTarget, null, this);
     //Delete bullets if they go out of world bounds
-    if (collided || this.x <= 75 || this.x >= game.world.width - 300 || this.y <= 60 || this.y >= game.world.height - 60)
+    if (collided || this.x <= 200 || this.x >= 808 || this.y <= 16 || this.y >= 688)
         this.destroy();
 }
 //This happens when the bullet collides with its target
