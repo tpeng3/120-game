@@ -16,10 +16,10 @@ BasicGame.Work.prototype = {
         // this.load.image('frame', 'assets/img/ui/ui_bhframe_test.png');
         this.load.image('hexagons', 'assets/img/bg/bg_hexagons.png');
 
-        // load bgm and sfx
-        this.load.audio('bgm_touhou_stolen', 'assets/audio/bgm/ravel_nightstar_the_drums_and_bass_of_flower_bless.ogg');
-        this.load.audio('bgm_wonder_zone', 'assets/audio/bgm/Enter_the_WONDER_ZONE.ogg');
-        this.load.audio('sfx_player_laser', 'assets/audio/sfx/sfx_player_shot_laser.ogg');
+        // load bgm and sfx (now loaded in boot)
+        //this.load.audio('bgm_touhou_stolen', 'assets/audio/bgm/ravel_nightstar_the_drums_and_bass_of_flower_bless.ogg');
+        //this.load.audio('bgm_wonder_zone', 'assets/audio/bgm/Enter_the_WONDER_ZONE.ogg');
+        //this.load.audio('sfx_player_laser', 'assets/audio/sfx/sfx_player_shot_laser.ogg');
         this.load.audio('sfx_enemy_death', 'assets/audio/sfx/sfx_enemy_death.ogg');
     },
     create: function () {
@@ -77,7 +77,7 @@ BasicGame.Work.prototype = {
         this.spawnEnemy = function () {
             let xPos = game.rnd.integerInRange(80, game.width - 300);
             let yPos = game.rnd.integerInRange(60, game.height - 500);
-            //Movement patter of null makes the enemy stay still
+            //Movement pattern of null makes the enemy stay still
             var enemy = new EnemyShooter(game, xPos, yPos, 'enemy', 3, this.player, null, EnemyShooter.shootingPattern_spiral, 150, 100);
             this.add.existing(enemy);
             this.enemyGroup.add(enemy);
@@ -88,9 +88,6 @@ BasicGame.Work.prototype = {
             this.add.existing(enemy);
             this.enemyGroup.add(enemy);
         }
-
-        // spawn debug enemies (on a timer) (NOT ON A TIMER RIGHT NOW FOR OTHER DEBUG REASONS)
-        // this.game.time.events.add(1000, this.spawnEnemy, this);
 
         game.sound.stopAll();
         bgm = game.add.audio(BasicGame.global.case.bgm);
@@ -117,7 +114,7 @@ BasicGame.Work.prototype = {
         this.add.text(this.frame.x+this.frame.width+10, 40, 'Use arrow keys to move, SPACEBAR to shoot. Move to next stage via death or after 15 seconds.', textStyle);
 
         // timer before going on to the next stage
-        this.game.time.events.add(45000, this.workEnd, this);
+        this.game.time.events.add(60000, this.workEnd, this);
     },
     update: function () {
         this.hexagons.tilePosition.x += .1;

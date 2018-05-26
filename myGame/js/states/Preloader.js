@@ -10,7 +10,8 @@ BasicGame.Preloader = function (game) {
 
 BasicGame.Preloader.prototype = {
 
-	preload: function () {
+    preload: function () {
+        console.log('Preloader: preload');
 		//	These are the assets we loaded in Boot.js
 		//	A nice sparkly background and a loading progress bar
 		//this.background = this.add.sprite(0, 0, 'preloaderBackground');
@@ -23,18 +24,24 @@ BasicGame.Preloader.prototype = {
 
 		//	Here we load the rest of the assets our game needs.
 		//	As this is just a Project Template I've not provided these assets, swap them for your own.
-		//this.load.image('titlepage', 'images/title.jpg');
-		//this.load.atlas('playButton', 'images/play_button.png', 'images/play_button.json');
-		//this.load.audio('titleMusic', ['audio/main_menu.mp3']);
-		//this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
+        // load bgm and sfx
+        //BGM
+        this.load.audio('bgm_temp_locke', 'assets/audio/bgm/Locke_And_Load.ogg');
+        this.load.audio('bgm_oldtemp_locke', 'assets/audio/bgm/old_Locke_And_Load.ogg');
+        this.load.audio('bgm_temp_talk', 'assets/audio/bgm/yoiyaminoseaside.ogg');
+        this.load.audio('bgm_touhou_stolen', 'assets/audio/bgm/ravel_nightstar_the_drums_and_bass_of_flower_bless.ogg');
+        this.load.audio('bgm_wonder_zone', 'assets/audio/bgm/Enter_the_WONDER_ZONE.ogg');
+        //SFX
+        this.load.audio('sfx_player_laser', 'assets/audio/sfx/sfx_player_shot_laser.ogg');
+        this.load.audio('sfx_text_scroll', 'assets/audio/sfx/sfx_text_scroll4.ogg');
 		//	+ lots of other required assets here
 
 	},
 
-	create: function () {
+    create: function () {
+        console.log('Preloader: create');
 		//	Once the load has finished we disable the crop because we're going to sit in the update loop for a short while as the music decodes
-		// this.preloadBar.cropEnabled = false;
-
+        // this.preloadBar.cropEnabled = false;
 	},
 
 	update: function () {
@@ -50,9 +57,10 @@ BasicGame.Preloader.prototype = {
 		//if (this.cache.isSoundDecoded('titleMusic') && this.ready == false)
 		//{
 		//	this.ready = true;
-			this.state.start('MainMenu');
+		//	this.state.start('MainMenu');
 		//}
-
-	}
-
+        if (game.cache.isSoundDecoded('bgm_oldtemp_locke')) {//&& game.cache.isSoundDecoded('sfx_type')) {
+            game.state.start('TitleScreen', true, false);
+        }
+    }
 };

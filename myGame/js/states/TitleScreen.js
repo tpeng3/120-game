@@ -7,14 +7,14 @@ BasicGame.TitleScreen.prototype = {
 		console.log('TitleScreen: preload');
 		// basically load a title screen image and assets
 		this.load.image('title', 'assets/img/ui/ui_title.png');
-
 		// this is just for transitions
-		this.load.image('bg_black', 'assets/img/bg/bg_black.png');
+        this.load.image('bg_black', 'assets/img/bg/bg_black.png');
+        this.load.audio('sfx_type', 'assets/audio/sfx/sfx_type3.ogg');
 	},
 	create: function() {
 		console.log('TitleScreen: create');
 		this.stage.backgroundColor = "#000";
-
+        this.typeSfx = game.add.audio('sfx_type');
 		// set fullscreen when you click on the game window
 		// I'll keep this commented out while debugging because otherwise it's a pain
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -31,7 +31,11 @@ BasicGame.TitleScreen.prototype = {
         var charNum = 0;
         this.game.time.events.add(1000, function(){
 	       	this.game.time.events.loop(100, function(){
-	        	if(charNum != subtitle.length){
+                if (charNum != subtitle.length) {
+                    if (subtitle[charNum] != ' ') {
+                        this.typeSfx.stop();
+                        this.typeSfx.play();
+                    }
 	        		titleText.text += subtitle[charNum];
 	        		charNum++;
 	        	}
@@ -44,7 +48,7 @@ BasicGame.TitleScreen.prototype = {
         startText.visible = false;
       	this.game.time.events.add(5000, function(){
 			this.game.time.events.loop(1000, function(){
-        	startText.visible = (startText.visible == false? true : false);
+                startText.visible = (startText.visible == false ? true : false);
         	}, this);
       	}, this);
 
@@ -63,8 +67,8 @@ BasicGame.TitleScreen.prototype = {
 		if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
 			this.camera.fade('#000');
 			this.camera.onFadeComplete.add(function(){
-				this.state.start('ActivityDecision', true, false);
-                // this.state.start('Cutscene', true, false, 'Intro');
+				//this.state.start('ActivityDecision', true, false);
+                this.state.start('Cutscene', true, false, 'Intro');
                 // this.state.start('Bedtime', true, false);
 			}, this);
 		}
