@@ -1,7 +1,7 @@
 {
   "case_name": "The Catalyst",
   "bg": "",
-  "bgm": "bgm_touhou_stolen",
+  "bgm": "bgm_wonder_zone",
   "boss": {
     "max_health": 50,
     "curr_health": 50,

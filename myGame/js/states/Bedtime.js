@@ -110,7 +110,7 @@ BasicGame.Bedtime.prototype = {
 	 	this.ribbitter.add(ui_ribbitter);
 
 	 	// add ribbit instructions
-	 	var ribbitInstr = this.add.text(game.width/2, game.height - 60, 'Press SPACEBAR to close window.', instrStyle);
+	 	var ribbitInstr = this.add.text(game.width/2, game.height - 60, 'Press SPACEBAR or move to close window.', instrStyle);
 		ribbitInstr.anchor.set(0.5, 1);
 		this.ribbitter.add(ribbitInstr);
 
@@ -203,6 +203,7 @@ BasicGame.Bedtime.prototype = {
             this.spriteDirection = 7;
             sensor.anchor.setTo(.25, .5);
             this.flavorText = '';
+            this.ribbitter.visible = (this.ribbitter.visible ? false : false);
         }
 	    else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) ||
             game.input.keyboard.isDown(Phaser.Keyboard.A)) {
@@ -217,6 +218,7 @@ BasicGame.Bedtime.prototype = {
 	    	this.spriteDirection = 10;
             sensor.anchor.setTo(.5, .75);
             this.flavorText = '';
+            this.ribbitter.visible = (this.ribbitter.visible ? false : false);
 		}
 	    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) ||
 	    	game.input.keyboard.isDown(Phaser.Keyboard.S)) {
@@ -224,6 +226,7 @@ BasicGame.Bedtime.prototype = {
 	    	this.spriteDirection = 1;
 	        sensor.anchor.setTo(.5,.25);
 	        this.flavorText = '';
+            this.ribbitter.visible = (this.ribbitter.visible ? false : false);
 	    }
 	    else{
 	    	sprite.animations.stop();
@@ -245,7 +248,7 @@ BasicGame.Bedtime.prototype = {
 		this.bed.body.immovable = true;
 
 		this.bedframe = this.add.sprite(this.bed.x, this.bed.y, 'bg_black');
-		this.bedframe.scale.setTo(this.bed.width, 12);
+		this.bedframe.scale.setTo(this.bed.width-20, 12);
 		this.bedframe.alpha = 0;
 		this.physics.arcade.enable(this.bedframe);
 		this.bedframe.body.immovable = true;
@@ -297,6 +300,12 @@ BasicGame.Bedtime.prototype = {
 	 	this.lamp = this.add.sprite(64*4+4, 64*3+0, 'furniture', 'sprite_lamp');
 		this.physics.arcade.enable(this.lamp);
 	 	this.lamp.body.immovable = true;
+
+	 	this.lampsensor = this.add.sprite(64*4+8, 64*3+0, 'bg_black');
+	 	this.lampsensor.scale.setTo(this.lamp.width-8, 40);
+		this.lampsensor.alpha = 0;
+		this.physics.arcade.enable(this.lampsensor);
+	 	this.lampsensor.body.immovable = true;
 
 	 	this.laptop = this.add.sprite(64*2+2, 64*6+44, 'furniture', 'sprite_laptop');
 		this.physics.arcade.enable(this.laptop);
@@ -393,8 +402,12 @@ BasicGame.Bedtime.prototype = {
 
         // check for interactions with furniture
         if (this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
+        	// you can dim the room lighting
+	    	if(game.physics.arcade.overlap(sensor, this.lampsensor)){
+            	this.lighting.visible = (this.lighting.visible? false : true);
+	    	}
         	// if colliding with bed
-        	if(game.physics.arcade.overlap(sensor, this.bedframe)){
+        	else if(game.physics.arcade.overlap(sensor, this.bedframe)){
 	            bgm.fadeOut(500);
 	            this.camera.fade('#000', 500);
 	            this.camera.onFadeComplete.addOnce(function () {
@@ -405,16 +418,10 @@ BasicGame.Bedtime.prototype = {
         	else if(game.physics.arcade.overlap(sensor, this.laptop)){
 		    	if(this.ribbitter.visible == false){
 		    		this.ribbitter.visible = true;
-		    		sprite.body.moves = false;
 		    		this.notification.visible = false;
 		    	}else{
 		    		this.ribbitter.visible = false;
-		    		sprite.body.moves = true;
 		    	}
-	    	}
-	    	// you can dim the room lighting
-	    	else if(game.physics.arcade.overlap(sensor, this.lamp)){
-            	this.lighting.visible = (this.lighting.visible? false : true);
 	    	}
 	    	// now for furniture that has flavor text
 	    	else if(game.physics.arcade.overlap(sensor, this.hat)){
@@ -450,8 +457,9 @@ BasicGame.Bedtime.prototype = {
 	    	else if(game.physics.arcade.overlap(sensor, this.tv)){
             	this.flavorText = 'You\'re too tired to watch tv today.';
 	    	}else{
-		        // Pressing SPACEBAR also deletes flavortext
+		        // Some extra measures to make sure things stay not visible 
 			    this.flavorText = '';	
+            	this.ribbitter.visible = (this.ribbitter.visible ? false : false);
 		    }
 		}
 
@@ -461,7 +469,7 @@ BasicGame.Bedtime.prototype = {
 	},
 	render: function(){
 		// game.debug.body(sprite);
-		// game.debug.body(this.sofasensor);
+		// game.debug.body(this.lampsensor);
 		// game.debug.body(sensor);
 		// game.debug.body(this.lamp);
 		// // game.debug.body(this.sofa);

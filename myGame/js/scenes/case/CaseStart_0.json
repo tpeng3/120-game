@@ -7,7 +7,7 @@
     {"name":"Locke", "expression": "confident",
       "text":"Of course. Now if you could please leave the room for like 15 minutes, I'll get right on the case.",
       "functions": ["this.rightChara.visible = false;"]},
-    {"name":"Allie",
+    {"name":"Allie Catt",
       "text":"Oh! Well, okay."},
     {"name":"Tai", "expression":"surprised",
       "text":"Fifteen minutes?",

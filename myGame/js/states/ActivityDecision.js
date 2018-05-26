@@ -30,6 +30,16 @@ BasicGame.ActivityDecision.prototype = {
 
         var textbox = new Textbox(game, false, null, [{ name: "", text: 'Use Arrow Keys or WASD to navigate. Press SPACEBAR to select choice and advance text.' }]);
 
+        console.log(BasicGame.global.player_stats.fatigue);
+
+        if(BasicGame.global.player_stats.fatigue == -1){
+            textbox.text = 'Alright! I\'m feeling motivated to work today!';
+        }else if(BasicGame.global.player_stats.fatigue == 1){
+            textbox.text = 'I feel a bit tired today. It\'s going to be hard to concentrate if I work';
+        }else if(BasicGame.global.player_stats.fatigue == 2){
+            textbox.text = 'I don\'t feel too well today. Maybe I should take it easy.';
+        }
+
         // place the dateTimeBox
         var dateBox = this.add.sprite(textbox.left, 20, 'textbox');
         dateBox.anchor.setTo(0, 0);
