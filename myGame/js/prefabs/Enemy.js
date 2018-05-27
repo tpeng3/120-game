@@ -68,7 +68,7 @@ Enemy.movementPattern_followTarget = function () {
 //firingDelay: delay between actual executions of this.shootingPattern (milliseconds) <optional, default = 1000 + (100 * Math.random())>
 function EnemyShooter(game, xPos, yPos, imageKey, startingHealth, target, movementPattern, shootingPattern, bulletSpeed, firingDelay) {
     Enemy.call(this, game, xPos, yPos, imageKey, startingHealth, target, movementPattern) //call base class constructor
-    this.tint = 0x9999ff
+    // this.tint = 0x9999ff;
     //set shooting pattern and sfx
     this.shootingPattern = shootingPattern;
     this.shotSfx = game.add.audio('sfx_player_laser');
