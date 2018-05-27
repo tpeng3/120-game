@@ -45,7 +45,7 @@ Enemy.prototype.update = function () {
 Enemy.prototype.damage = function (numDamage) {
     this.currHealth -= numDamage;
     if (this.currHealth <= 0) {
-        this.deathSfx.play();
+        this.deathSfx.play('',0,0.75);
         this.destroy();
     }
 }
