@@ -31,9 +31,14 @@ BasicGame.Preloader.prototype = {
         this.load.audio('bgm_temp_talk', 'assets/audio/bgm/yoiyaminoseaside.ogg');
         this.load.audio('bgm_touhou_stolen', 'assets/audio/bgm/ravel_nightstar_the_drums_and_bass_of_flower_bless.ogg');
         this.load.audio('bgm_wonder_zone', 'assets/audio/bgm/Enter_the_WONDER_ZONE.ogg');
+        this.load.audio('bgm_temp_detective', 'assets/audio/bgm/bgm_detective_1.ogg');
         //SFX
         this.load.audio('sfx_player_laser', 'assets/audio/sfx/sfx_player_shot_laser.ogg');
-        this.load.audio('sfx_text_scroll', 'assets/audio/sfx/sfx_text_scroll4.ogg');
+        this.load.audio('sfx_text_scroll_locke', 'assets/audio/sfx/sfx_text_scroll6.ogg');
+        this.load.audio('sfx_text_scroll_tai', 'assets/audio/sfx/sfx_ts_tai2.ogg');
+        this.load.audio('sfx_text_scroll_keyna', 'assets/audio/sfx/sfx_ts_keyna1.ogg');
+        this.load.audio('sfx_text_scroll_fedelynn', 'assets/audio/sfx/sfx_text_scroll6.ogg');
+        this.load.audio('sfx_text_scroll_default', 'assets/audio/sfx/sfx_ts_rando2.ogg');
 		//	+ lots of other required assets here
 
 	},
@@ -59,7 +64,7 @@ BasicGame.Preloader.prototype = {
 		//	this.ready = true;
 		//	this.state.start('MainMenu');
 		//}
-        if (game.cache.isSoundDecoded('bgm_oldtemp_locke')) {//&& game.cache.isSoundDecoded('sfx_type')) {
+        if (game.cache.isSoundDecoded('bgm_temp_detective')) {//&& game.cache.isSoundDecoded('sfx_type')) {
             game.state.start('TitleScreen', true, false);
         }
     }

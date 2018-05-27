@@ -20,7 +20,8 @@ BasicGame.CharacterDecision.prototype = {
         this.bg = this.add.sprite(0, 0, 'bg_agency');
         this.selected = 0;
         this.exit = false;
-        this.dimColor = 0x444444;
+        this.dimColor = 0x111111;
+        this.unDimColor = 0x777777;
         // some text for the players
         var textStyle = { fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: 700 };
         this.add.text(200, 40, 'CharacterDecision:', textStyle);
@@ -40,7 +41,7 @@ BasicGame.CharacterDecision.prototype = {
             this.characterSprites[2].x += 75;
             this.selected = 1;
         }
-        this.characterSprites[this.selected].tint = 0xffffff;
+        this.characterSprites[this.selected].tint = this.unDimColor;
         this.characterSprites[this.selected].scale = new Phaser.Point(1.05, 1.05);
 
         // add textbox and text, we don't have to keep this but for now give some explanations to the players
@@ -64,7 +65,7 @@ BasicGame.CharacterDecision.prototype = {
             this.characterSprites[this.selected].tint = this.dimColor;
             this.characterSprites[this.selected].scale = new Phaser.Point(1, 1);
             this.selected--;
-            this.characterSprites[this.selected].tint = 0xffffff;
+            this.characterSprites[this.selected].tint = this.unDimColor;
             this.characterSprites[this.selected].scale = new Phaser.Point(1.05, 1.05);
             this.textbox.startNewScene(false, null, [{ name: '', text: 'Hang out with ' + this.characters[this.selected] + '?' }]);
         }
@@ -74,7 +75,7 @@ BasicGame.CharacterDecision.prototype = {
             this.characterSprites[this.selected].tint = this.dimColor;
             this.characterSprites[this.selected].scale = new Phaser.Point(1, 1);
             this.selected++;
-            this.characterSprites[this.selected].tint = 0xffffff;
+            this.characterSprites[this.selected].tint = this.unDimColor;
             this.characterSprites[this.selected].scale = new Phaser.Point(1.05, 1.05);
             this.textbox.startNewScene(false, null, [{ name: '', text: 'Hang out with ' + this.characters[this.selected] + '?' }]);
         }

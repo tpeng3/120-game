@@ -20,8 +20,8 @@ BasicGame.TitleScreen.prototype = {
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 		game.input.onDown.add(this.goFullscreen, this);
 
-		//this.music = this.add.audio('titleMusic');
-		//this.music.play();
+		var bgm = this.add.audio('bgm_temp_detective');
+		bgm.loopFull();
 
 		this.add.sprite(0, 0, 'title');
 

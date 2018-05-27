@@ -45,7 +45,7 @@ Enemy.prototype.update = function () {
 Enemy.prototype.damage = function (numDamage) {
     this.currHealth -= numDamage;
     if (this.currHealth <= 0) {
-        this.deathSfx.play();
+        this.deathSfx.play('',0,0.75);
         this.destroy();
     }
 }
@@ -117,7 +117,7 @@ EnemyShooter.prototype.shoot = function (isDestructible) {
     } else {
         bullet = new Bullet(game, 'enemy_bullet', this.x, this.y, this.bulletDamage, this.bulletSpeed, this.bulletAngle, this.target, Enemy.bulletGroup);
     }
-    this.shotSfx.play();
+    //this.shotSfx.play();
 }
 //Finish shooting and start the delay (CALL AT THE END OF ALL SHOOTING PATTERN FUNCTIONS)
 EnemyShooter.prototype.finishShooting = function() {
