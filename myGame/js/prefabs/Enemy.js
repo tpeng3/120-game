@@ -117,7 +117,7 @@ EnemyShooter.prototype.shoot = function (isDestructible) {
     } else {
         bullet = new Bullet(game, 'enemy_bullet', this.x, this.y, this.bulletDamage, this.bulletSpeed, this.bulletAngle, this.target, Enemy.bulletGroup);
     }
-    this.shotSfx.play();
+    //this.shotSfx.play();
 }
 //Finish shooting and start the delay (CALL AT THE END OF ALL SHOOTING PATTERN FUNCTIONS)
 EnemyShooter.prototype.finishShooting = function() {

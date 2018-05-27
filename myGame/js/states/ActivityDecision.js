@@ -62,6 +62,7 @@ BasicGame.ActivityDecision.prototype = {
         else
             info = 'Case: ' + BasicGame.global.case.case_name + ' (' + (((BasicGame.global.case.boss.max_health - BasicGame.global.case.boss.curr_health) / BasicGame.global.case.boss.max_health) * 100) + '% done)';      
         this.caseInfoText = this.add.text(textbox.left + 60, 60, info, { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
+        caseInfo.width = this.caseInfoText.width + 70;
 
         //get scene data
         this.sceneData = calendar.getSceneData();
@@ -70,12 +71,13 @@ BasicGame.ActivityDecision.prototype = {
         // add choice buttons
 		this.work = this.add.sprite(this.world.width/2 - 200, this.world.height/2 - 50, 'button_work');
         this.work.anchor.setTo(0.5);
+        this.work.scale.setTo(0.85, 0.85);
         if (this.sceneData == 'no_option')
             this.hangout = this.add.sprite(this.world.width / 2 + 200, this.world.height / 2 - 50, 'button_hangout_no_option');
         else
             this.hangout = this.add.sprite(this.world.width / 2 + 200, this.world.height / 2 - 50, 'button_hangout');
         this.hangout.anchor.setTo(0.5);
-
+        this.hangout.scale.setTo(0.85, 0.85);
 		// default choice
 		this.selectWork = true;
 

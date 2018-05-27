@@ -13,6 +13,7 @@ BasicGame.Cutscene.prototype = {
 		console.log('Cutscene: preload');
         // load backgrounds
         this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
+        this.load.image('bg_cafe', 'assets/img/bg/bg_cafe.png');
 
         // load the sprite atlases
         this.load.atlas('Locke', 'assets/img/characters/sprite_locke.png', 'assets/img/characters/sprite_locke.json');
@@ -33,9 +34,6 @@ BasicGame.Cutscene.prototype = {
     create: function () {
         console.log('Cutscene: create');
         game.sound.stopAll(); 
-
-        // create SFX
-        this.textScrollSfx = game.add.audio('sfx_text_scroll');
 
 		// parse the scene script
         this.scene = JSON.parse(this.game.cache.getText('scene'));
@@ -72,5 +70,5 @@ BasicGame.Cutscene.prototype = {
 	},
     update: function () {
 
-	},
+    },
 };

@@ -19,7 +19,15 @@ function Textbox(game, changeState, scene, lines) {
         }
     }
     // create SFX
-    this.textScrollSfx = game.add.audio('sfx_text_scroll');
+    this.textScrollKeys = {
+        Locke: 'sfx_text_scroll_locke',
+        Tai: 'sfx_text_scroll_tai',
+        Keyna: 'sfx_text_scroll_keyna',
+        Fedelynn: 'sfx_text_scroll_fedelynn',
+        default: 'sfx_text_scroll_default'
+    }
+    this.skipNum = 4;
+    this.playsfx = this.skipNum;
     // add the left character (usually locke)
     this.leftChara = this.callbackGame.add.sprite(350, this.callbackGame.world.height, this.scene.sprite_left, "");
     this.leftChara.anchor.setTo(0.5, 1);
@@ -56,9 +64,9 @@ function Textbox(game, changeState, scene, lines) {
     this.charNum = 0; // current char of the line text
     this.textRun = false; // text scrolling
     this.firstTalker = this.scene.lines[0].name; // To get rid of that l/r pos thing
+    this.advance(); // show the first line of text (and trigger functions, and stuff)
     //Bind the text scrolling event to a timed event
     this.callbackGame.time.events.loop(Settings.TEXT_SCROLL_DELAY, this.unfoldDialogue, this);
-    this.advance(); // show the first line of text (and trigger functions, and stuff)
 }
 // explicitly define prefab's prototype (Phaser.Sprite) and constructor (Textbox)
 Textbox.prototype = Object.create(Phaser.Sprite.prototype);
@@ -82,8 +90,15 @@ Textbox.prototype.unfoldDialogue = function () {
 
             this.bodyText.text += line.text[this.charNum];
             this.charNum++;
-            this.textScrollSfx.stop();
-            this.textScrollSfx.play();
+            if (this.playsfx >= this.skipNum) {
+                if (this.textScrollSfx.isPlaying)
+                    this.textScrollSfx.restart()
+                else
+                    this.textScrollSfx.play('', 0, 1, false, true);
+                this.playsfx = 0;
+            }
+            else
+                ++this.playsfx;
         } else {
             // add space to continue indicator
             this.ctc.visible = true;
@@ -96,6 +111,7 @@ Textbox.prototype.advance = function () {
     // if there is still text unfolding, just load the whole thing
     if (this.textRun == true) {
         this.bodyText.text = this.scene.lines[this.textLine].text;
+        this.ctc.visible = true;
         this.textRun = false;
     }
     else if (this.scene.lines[this.textLine + 1] != undefined) { // else load next line
@@ -123,6 +139,12 @@ Textbox.prototype.advance = function () {
         this.leftChara.tint = ( (name == "") || (name == this.scene.sprite_left) ? 0xffffff : dimColor);
         this.rightChara.tint = ( (name == "") || (name == this.scene.sprite_right) ? 0xffffff : dimColor);
         this.textRun = true;
+        //set talk sfx
+        this.playsfx = this.skipNum;
+        if (this.textScrollKeys[name] == undefined)
+            this.textScrollSfx = game.add.audio(this.textScrollKeys['default']);
+        else
+            this.textScrollSfx = game.add.audio(this.textScrollKeys[name]);
     } else { // else end conversation (if no more lines)
         if (this.changeState) {
             this.callbackGame.camera.fade('#000');
