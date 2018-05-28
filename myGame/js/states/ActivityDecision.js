@@ -28,17 +28,30 @@ BasicGame.ActivityDecision.prototype = {
         // add agency background. It feels weird loading it twice but this is just FOR NOW.
         this.add.sprite(0, 0, 'bg_agency');
 
-        var textbox = new Textbox(game, false, null, [{ name: "", text: 'Use Arrow Keys or WASD to navigate. Press SPACEBAR to select choice and advance text.' }]);
+        var fatigue = BasicGame.global.player_stats.fatigue;
+        var text = '';
+        var name = 'Locke';
 
-        console.log(BasicGame.global.player_stats.fatigue);
-
-        if(BasicGame.global.player_stats.fatigue == -1){
-            textbox.text = 'Alright! I\'m feeling motivated to work today!';
-        }else if(BasicGame.global.player_stats.fatigue == 1){
-            textbox.text = 'I feel a bit tired today. It\'s going to be hard to concentrate if I work';
-        }else if(BasicGame.global.player_stats.fatigue == 2){
-            textbox.text = 'I don\'t feel too well today. Maybe I should take it easy.';
+        // first time instruction text
+        if(BasicGame.global.case_number == -1){
+            name = '';
+            text = 'Use WASD or Arrow Keys to select a choice. Press SPACEBAR to confirm. For right now, only \'WORK\' is an available option.'
         }
+        // text depending on locke's fatigue
+        // we should talk about how to balance this
+        if(fatigue == -1){
+            text = 'Alright! I\'m feeling extra motivated to work today!';
+        }else if(fatigue == 0){
+            text = 'Time for another day of work as an awesome detective.';
+        }else if(fatigue == 1){
+            text = 'I feel a bit tired today. It\'s going to be hard to concentrate if I try to work.';
+        }else if(fatigue == 2){
+            text = 'I really don\'t feel too well today. Maybe I should take it easy, my head kinda hurts.';
+        }
+
+        var textbox = new Textbox(game, false, null, [{ name: name, text: text  }]);
+
+        console.log("Fatigue: " + BasicGame.global.player_stats.fatigue);
 
         // place the dateTimeBox
         var dateBox = this.add.sprite(textbox.left, 20, 'textbox');
@@ -60,7 +73,10 @@ BasicGame.ActivityDecision.prototype = {
         else if (BasicGame.global.case == 'final')
             info = '???';
         else
-            info = 'Case: ' + BasicGame.global.case.case_name + ' (' + (((BasicGame.global.case.boss.max_health - BasicGame.global.case.boss.curr_health) / BasicGame.global.case.boss.max_health) * 100) + '% done)';      
+            info = 'Case: ' + BasicGame.global.case.case_name + ' (' + 
+            (((BasicGame.global.case.boss.max_health - BasicGame.global.case.boss.curr_health)
+             / BasicGame.global.case.boss.max_health) * 100);
+            + '% done)';      
         this.caseInfoText = this.add.text(textbox.left + 60, 60, info, { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
         caseInfo.width = this.caseInfoText.width + 70;
 

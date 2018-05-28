@@ -37,7 +37,7 @@ BasicGame.Work.prototype = {
 
         // add background/frame
         this.frame = this.add.sprite(200, 16, 'frame');
-        this.frame.tint = '0xfacade';
+        // this.frame.tint = '0xfacade';
         this.hexagons = this.add.tileSprite(204, 20, 804, 684, 'hexagons');
         this.hexagons.alpha = 0.6;
 
@@ -105,7 +105,7 @@ BasicGame.Work.prototype = {
         black3.scale.setTo(black2.x-black1.width, 20);
         this.blackframes.add(black3);
         var black4 = this.add.sprite(black1.x+black1.width, this.frame.y+this.frame.height-6, 'bg_black');
-        black4.scale.setTo(black3.width, black3.height);
+        black4.scale.setTo(black3.width, game.height - black4.y);
         this.blackframes.add(black4);
 
         this.blackframes.alpha = 0.85;

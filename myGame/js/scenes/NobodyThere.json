@@ -1,11 +1,15 @@
 {
-	"scene_name":"nobody_there",
-	"bg": "bg_agency",
-	"bgm": "bgm_temp_talk",
-	"sprite_left": "locke_default",
-	"sprite_right": "",
-	"next_state":"Bedtime",
-	"lines":[
-		{"name":"Locke","text":"Nuh. I Guess nobody was around today"}
-	]
+  "bg": "bg_agency",
+  "sprite_left": "Locke",
+  "sprite_right": "",
+  "next_state":"Bedtime",
+  "lines":[
+    {"name":"Locke", "expression": "confident",
+      "text":"Yup. I'm just going to take it easy in the office today."},
+    {"name":"Locke", "expression": "default",
+      "text":"It doesn't look like anyone else was free to hang out with me today either."},
+    {"name":"",
+      "text":"And so nothing productive was done.",
+      "functions": ["this.black.visible = true;"]}
+  ] 
 }
