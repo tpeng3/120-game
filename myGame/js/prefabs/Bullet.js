@@ -27,6 +27,7 @@ function Bullet(game, imageKey, x, y, damage, bulletSpeed, angleVec2d, targetGro
     //angle stuff (scale normalized vector by bulletSpeed)
     this.body.velocity.x = angleVec2d.x * bulletSpeed;
     this.body.velocity.y = angleVec2d.y * bulletSpeed * -1;
+    this.body.setSize(this.width - (this.width / 6), this.height - (this.height / 6), this.width / 12, (this.height/ 12)+3 );
 }
 // explicitly define prefab's prototype (Phaser.Sprite) and constructor (Bullet)
 Bullet.prototype = Object.create(Phaser.Sprite.prototype);

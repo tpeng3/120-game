@@ -136,7 +136,8 @@ BasicGame.Work.prototype = {
     render: function () {
         if(this.player.showHitbox)
             game.debug.body(this.player);
-
+        //if (Enemy.bulletGroup != null)
+        //    game.debug.physicsGroup(Enemy.bulletGroup); 
         // game.debug.body(this.player);
 
         //Create some debug health text
