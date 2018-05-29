@@ -2,8 +2,8 @@
 // Args: game (Phaser.Game), startingHealth (due to fatigue can be lower, usually 3)
 // enemyGroup: 
 function Player(game, startingHealth, enemyGroup) {
-	// call to Phaser.Sprite // new Sprite(game, x, y, key, frame)
-    Phaser.Sprite.call(this, game, game.world.width / 2, game.world.height/2, 'bh_locke', 0);
+    // call to Phaser.Sprite // new Sprite(game, x, y, key, frame)
+    Phaser.Sprite.call(this, game, game.world.width / 2, game.world.height - (game.world.height / 8), 'bh_locke', 0);
     // game.add.existing(this);
     this.core = game.add.sprite(this.x, this.y+12, 'bh_locke_core', 0);
     this.core.anchor.setTo(0.5);

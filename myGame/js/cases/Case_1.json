@@ -6,6 +6,6 @@
     "max_health": 200,
     "curr_health": 200,
     "sprite": "bh_boss_cat",
-    "ai_pattern":  "ai_boss_cat"
+    "ai_pattern":  "boss_cat"
   }
 }

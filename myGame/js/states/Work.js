@@ -69,7 +69,7 @@ BasicGame.Work.prototype = {
         this.player.body.collideWorldBounds = true; // player can't move outside of frame
 
         // create and spawn the boss enemy
-        this.boss = new EnemyShooter(game, this.world.width / 2, -300, 'boss', BasicGame.global.case.boss.curr_health, this.player, null, EnemyShooter.shootingPattern_flower, 150, 1500);
+        this.boss = new EnemyAI(game, this.world.width / 2, -300, 'boss', BasicGame.global.case.boss.curr_health, this.player, 150, 1500, EnemyAI['AI_' + BasicGame.global.case.boss.ai_pattern]);
         this.add.existing(this.boss);
         this.enemyGroup.add(this.boss);
 

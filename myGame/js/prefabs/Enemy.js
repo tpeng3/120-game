@@ -39,7 +39,7 @@ Enemy.bulletGroup = null; //Initialize the enemy bullet group (static)
 //Call the movement pattern, and damage the player if the player is hit (can change any value of enemy)
 Enemy.prototype.update = function () {
     this.movementPattern.call(this);
-    game.physics.arcade.overlap(this, this.target, function (self, player) { player.damage(1); self.kill(); });
+    game.physics.arcade.overlap(this, this.target, function (self, player) { player.damage(1); self.damage(1)});
 }
 //take damage and die if necessary
 Enemy.prototype.damage = function (numDamage) {
@@ -60,7 +60,7 @@ Enemy.movementPattern_followTarget = function () {
     game.physics.arcade.moveToObject(this, this.target, this.speed);
 }
 
-//EnemyShooter prefab (shootingPattern is a function that determines the shooting patters)
+//EnemyShooter prefab (shootingPattern is a function that determines the shooting patterns)
 //Has all the features that enemy does, but shoots bullets in variable pattern, at a variable speed
 //Args: see Enemy Constructor (above in this file) +
 //shootingPattern: an AI movement shooting that is run in update but only actually executes after waiting for firingDelay (function object) use EnemyShooter.shootingPattern_functionName (static functions defined in this file)
@@ -88,7 +88,7 @@ function EnemyShooter(game, xPos, yPos, imageKey, startingHealth, target, moveme
 }
 //Finish prefab stuff
 EnemyShooter.prototype = Object.create(Enemy.prototype);
-Enemy.prototype.constructor = EnemyShooter;
+EnemyShooter.prototype.constructor = EnemyShooter;
 
 //Call shooting pattern if ready to shoot
 EnemyShooter.prototype.update = function () {
@@ -161,4 +161,27 @@ EnemyShooter.shootingPattern_spiral = function () {
     this.setAngle(this.modAngle);
     this.shoot(this.Destructible);
     this.finishShooting();
+}
+
+function EnemyAI(game, xPos, yPos, imageKey, startingHealth, target, bulletSpeed, firingDelay, AI) {
+    EnemyShooter.call(this, game, xPos, yPos, imageKey, startingHealth, target, AI.initMP, AI.initSP, bulletSpeed, firingDelay); //call base class constructor
+    this.AI = AI;
+}
+//Finish prefab stuff
+EnemyAI.prototype = Object.create(EnemyShooter.prototype);
+EnemyAI.prototype.constructor = EnemyAI;
+//AI UPDATE LOOP
+EnemyAI.prototype.update = function () {
+    this.AI.update.call(this);
+    EnemyShooter.prototype.update.call(this);//call the base update
+}
+
+//AI patterns here
+EnemyAI.AI_boss_cat = {
+    initMP: Enemy.movementPattern_doNothing,
+    initSP: EnemyShooter.shootingPattern_flower,
+    state: "init",
+    update: function () {
+
+    }
 }
