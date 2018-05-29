@@ -70,7 +70,10 @@ BasicGame.TitleScreen.prototype = {
                 this.state.start('Cutscene', true, false, 'Intro');
                 // this.state.start('Bedtime', true, false);
 			}, this);
-		}
+        }
+        if (this.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+            this.state.start('ActivityDecision', true, false);
+        }
 	},
 	goFullscreen: function(){
 		if(game.scale.isFullScreen){

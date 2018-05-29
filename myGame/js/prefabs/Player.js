@@ -16,9 +16,6 @@ function Player(game, startingHealth, enemyGroup) {
     //Player stuff
     this.maxHealth = 3;
     this.currHealth = startingHealth;
-    this.maxSpeed = 250;
-    this.currSpeed = this.maxSpeed;
-    this.shiftSpeed = 100;
     this.showHitbox = false;
     //Bullet Stuff
     if (Player.bulletGroup == null)
@@ -33,6 +30,10 @@ function Player(game, startingHealth, enemyGroup) {
 	game.physics.enable(this);
     this.body.collideWorldBounds = true;
     this.body.setSize(12, 12, 26, 38);
+    this.maxSpeedNormal = new Phaser.Point(250, 250);
+    this.body.maxVelocity = this.maxSpeedNormal;
+    this.maxSpeedShift = new Phaser.Point(100, 100);
+    this.accel = 1500;
 }
 // explicitly define prefab's prototype (Phaser.Sprite) and constructor (Player)
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -43,36 +44,40 @@ Player.bulletGroup = null;
 Player.prototype.update = function () {
     if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)) {
         this.bulletDamage = 2;
-        this.currSpeed = this.shiftSpeed;
+        this.body.maxVelocity = this.maxSpeedShift;
         this.core.visible = true;
     } else {
         this.bulletDamage = 1;
-        this.currSpeed = this.maxSpeed;
+        this.body.maxVelocity = this.maxSpeedNormal;
         this.core.visible = false;
     }
     //Movement code
-    var xVel = 0;
-    var yVel = 0;
+    var xAcc = 0;
+    var yAcc = 0;
     if (game.input.keyboard.isDown(Phaser.Keyboard.UP) ||
         game.input.keyboard.isDown(Phaser.Keyboard.W)){
-        yVel -= this.currSpeed;
+        yAcc -= this.accel;
 	}
     if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) ||
         game.input.keyboard.isDown(Phaser.Keyboard.S)){
-        yVel += this.currSpeed;
+        yAcc += this.accel;
     }
     if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ||
         game.input.keyboard.isDown(Phaser.Keyboard.D)){
-        xVel += this.currSpeed;
+        xAcc += this.accel;
         this.animations.play('right');
     }
     if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) ||
         game.input.keyboard.isDown(Phaser.Keyboard.A)){
-        xVel -= this.currSpeed;
+        xAcc -= this.accel;
         this.animations.play('left');
     }
-    this.body.velocity.x = xVel;
-    this.body.velocity.y = yVel;
+    this.body.acceleration.x = xAcc;
+    this.body.acceleration.y = yAcc;
+    if (xAcc == 0)
+        this.body.velocity.x = 0;
+    if (yAcc == 0)
+        this.body.velocity.y = 0;
     
     // update core position
     this.core.x = this.x;
