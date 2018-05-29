@@ -19,8 +19,6 @@ BasicGame.ActivityDecision.prototype = {
         this.load.image('button_hangout_no_option', 'assets/img/ui/button_hangout_no_option.png');
         this.load.image('ui_wonderzone', 'assets/img/ui/ui_wonderzone.png');
         this.load.image('ui_wonderzone2', 'assets/img/ui/ui_wonderzone2.png');
-
-
 	},
     create: function () {
 		console.log('ActivityDecision: create');
@@ -39,7 +37,7 @@ BasicGame.ActivityDecision.prototype = {
         }
         // text depending on locke's fatigue
         // we should talk about how to balance this
-        if(fatigue == -1){
+        else if(fatigue == -1){
             text = 'Alright! I\'m feeling extra motivated to work today!';
         }else if(fatigue == 0){
             text = 'Time for another day of work as an awesome detective.';
@@ -60,7 +58,7 @@ BasicGame.ActivityDecision.prototype = {
         dateBox.alpha = 0.75;
         // initialize the dateTime text
         this.dateText = this.add.text(textbox.left + 60, 20, calendar.print(), { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
-
+        dateBox.width = this.dateText.width + 90;
         // place the case info box
         var caseInfo = this.add.sprite(textbox.left, 60, 'textbox');
         caseInfo.anchor.setTo(0, 0);
@@ -73,12 +71,11 @@ BasicGame.ActivityDecision.prototype = {
         else if (BasicGame.global.case == 'final')
             info = '???';
         else
-            info = 'Case: ' + BasicGame.global.case.case_name + ' (' + 
-            (((BasicGame.global.case.boss.max_health - BasicGame.global.case.boss.curr_health)
-             / BasicGame.global.case.boss.max_health) * 100);
-            + '% done)';      
+            info = 'Case: ' + BasicGame.global.case.case_name + ' (' +
+                (Math.round(((BasicGame.global.case.boss.max_health - BasicGame.global.case.boss.curr_health)
+                / BasicGame.global.case.boss.max_health) * 100)) + '% done)';      
         this.caseInfoText = this.add.text(textbox.left + 60, 60, info, { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
-        caseInfo.width = this.caseInfoText.width + 70;
+        caseInfo.width = this.caseInfoText.width + 90;
 
         //get scene data
         this.sceneData = calendar.getSceneData();

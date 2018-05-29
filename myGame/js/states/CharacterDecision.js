@@ -53,6 +53,7 @@ BasicGame.CharacterDecision.prototype = {
         dateBox.alpha = 0.75;
         // initialize the dateTime text
         this.dateText = this.add.text(this.textbox.left + 60, 20, calendar.print(), { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
+        dateBox.width = this.dateText.width + 90;
         // fade transition (It has to be placed at the end for layering reasons)
         var fade = new TransitionFade(game);
     },

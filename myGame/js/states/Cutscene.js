@@ -55,10 +55,9 @@ BasicGame.Cutscene.prototype = {
         dateBox.anchor.setTo(0, 0);
         dateBox.scale.setTo(0.27, 0.25);
         dateBox.alpha = 0.75
-
         // initialize the dateTime text
         this.dateText = this.add.text(textbox.left + 60, 20, calendar.print(), { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
-
+        dateBox.width = this.dateText.width + 90;
         //Bind the line advancing function to the spacebar
         var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(textbox.advance, textbox);

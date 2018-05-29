@@ -9,12 +9,11 @@ BasicGame.TitleScreen.prototype = {
 		this.load.image('title', 'assets/img/ui/ui_title.png');
 		// this is just for transitions
         this.load.image('bg_black', 'assets/img/bg/bg_black.png');
-        this.load.audio('sfx_type', 'assets/audio/sfx/sfx_type3.ogg');
 	},
 	create: function() {
 		console.log('TitleScreen: create');
 		this.stage.backgroundColor = "#000";
-        this.typeSfx = game.add.audio('sfx_type');
+        this.typeSfx = game.add.audio('sfx_text_scroll_default');
 		// set fullscreen when you click on the game window
 		// I'll keep this commented out while debugging because otherwise it's a pain
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
