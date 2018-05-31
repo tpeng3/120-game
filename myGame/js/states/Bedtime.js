@@ -103,6 +103,9 @@ BasicGame.Bedtime.prototype = {
 		this.notification = this.add.sprite(64*2+10, 64*6+0, 'furniture', 'sprite_notification');
 		this.add.tween(this.notification).to( { y: 64*6+6 }, 500, Phaser.Easing.Linear.None, true, 0, 500, true);
 
+		// add arrow pointing to directed furniture
+		this.arrow = "";
+
 	 	// add ribbitter
 	 	this.ribbitter = this.add.group();
 	 	var ui_ribbitter = this.add.sprite(256, 120, 'ui_ribbitter');
@@ -400,68 +403,111 @@ BasicGame.Bedtime.prototype = {
         	}
         }
 
-        // check for interactions with furniture
-        if (this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
-        	// you can dim the room lighting
-	    	if(game.physics.arcade.overlap(sensor, this.lampsensor)){
-            	this.lighting.visible = (this.lighting.visible? false : true);
-	    	}
-        	// if colliding with bed
-        	else if(game.physics.arcade.overlap(sensor, this.bedframe)){
-	            bgm.fadeOut(500);
-	            this.camera.fade('#000', 500);
-	            this.camera.onFadeComplete.addOnce(function () {
-	                	this.state.start('NextDay');
-	            }, this);
+	    // check for sensor overlap
+	    if(game.physics.arcade.overlap(sensor, this.lampsensor)){
+            this.arrow = "lampsensor";
+	    }else if(game.physics.arcade.overlap(sensor, this.bedframe)){
+	        this.arrow = "bedframe";
+        }else if(game.physics.arcade.overlap(sensor, this.laptop)){
+			this.arrow = "laptop";
+	    }else if(game.physics.arcade.overlap(sensor, this.hat)){
+            this.arrow = "hat";
+	    }else if(game.physics.arcade.overlap(sensor, this.bookshelf1)){
+            this.arrow = "bookshelf1";
+	    }else if(game.physics.arcade.overlap(sensor, this.bookshelf2)){
+            this.arrow = "bookshelf2";
+        }else if(game.physics.arcade.overlap(sensor, this.cabinet)){
+            this.arrow = "cabinet";
+	    }else if(game.physics.arcade.overlap(sensor, this.calendar)){
+            this.arrow = "calendar";
+	    }else if(game.physics.arcade.overlap(sensor, this.filecab)){
+            this.arrow = "filecab";
+	    }else if(game.physics.arcade.overlap(sensor, this.friend)){
+            this.arrow = "friend";
+	    }else if(game.physics.arcade.overlap(sensor, this.plant1)){
+            this.arrow = "plant1";
+	    }else if(game.physics.arcade.overlap(sensor, this.table)){
+            this.arrow = "table";
+	    }else if(game.physics.arcade.overlap(sensor, this.trashcan)){
+            this.arrow = "trashcan";
+        }else if(game.physics.arcade.overlap(sensor, this.tv)){
+            this.arrow = "tv";
+        }else{
+        	if(this.arrow != ""){
+				eval("var furnx = this."+this.arrow+".x");
+	        	eval("var furny = this."+this.arrow+".y");
+	        	var diff1 = (sprite.x - furnx);
+				var diff2 = (sprite.y - furny);
+			    if( Math.sqrt( (diff1*diff1)+(diff2*diff2) ) > 32){
+			    	// this.arrow = "";
+			    	console.log(this.poop);
+			    }
         	}
-        	// if player check laptop, opens up social media
-        	else if(game.physics.arcade.overlap(sensor, this.laptop)){
-		    	if(this.ribbitter.visible == false){
-		    		this.ribbitter.visible = true;
-		    		this.notification.visible = false;
-		    	}else{
-		    		this.ribbitter.visible = false;
-		    	}
-	    	}
-	    	// now for furniture that has flavor text
-	    	else if(game.physics.arcade.overlap(sensor, this.hat)){
-            	this.flavorText = 'You got this hat from Tai as a birthday present, but you\'ve yet to find a good opportunity to wear it.';
-	    	}
-	    	else if(game.physics.arcade.overlap(sensor, this.bookshelf1)){
-            	this.flavorText = 'A bookshelf full of your favorite mystery novels.';
-	    	}
-	    	else if(game.physics.arcade.overlap(sensor, this.bookshelf2)){
-            	this.flavorText = 'A bookshelf full of your favorite non-mystery novels.';
-	    	}
-	    	else if(game.physics.arcade.overlap(sensor, this.cabinet)){
-            	this.flavorText = 'It\'s a shoe cabinet!';
-	    	}
-	    	else if(game.physics.arcade.overlap(sensor, this.calendar)){
-            	this.flavorText = 'Today is ' + calendar.printDay() + '.';
-	    	}
-	    	else if(game.physics.arcade.overlap(sensor, this.filecab)){
-            	this.flavorText = 'You bought this file cabinet to store old cases, but lately it\'s been more of a stationary cabinet.';
-	    	}
-	    	else if(game.physics.arcade.overlap(sensor, this.friend)){
-            	this.flavorText = 'Dr. Watsy has always been the bravest and truest of friends.';
-	    	}
-	    	else if(game.physics.arcade.overlap(sensor, this.plant1)){
-            	this.flavorText = 'A housewarming present from Tai. It\'s fake because he knows you well.';
-	    	}
-	    	else if(game.physics.arcade.overlap(sensor, this.table)){
-            	this.flavorText = 'It\'s a table.';
-	    	}
-	    	else if(game.physics.arcade.overlap(sensor, this.trashcan)){
-            	this.flavorText = 'The trash can is empty.';
-	    	}
-	    	else if(game.physics.arcade.overlap(sensor, this.tv)){
-            	this.flavorText = 'You\'re too tired to watch tv today.';
-	    	}else{
-		        // Some extra measures to make sure things stay not visible 
-			    this.flavorText = '';	
-            	this.ribbitter.visible = (this.ribbitter.visible ? false : false);
-		    }
 		}
+
+
+  //       // check for interactions with furniture
+  //       if (this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
+  //       	// you can dim the room lighting
+	 //    	if(game.physics.arcade.overlap(sensor, this.lampsensor)){
+  //           	this.lighting.visible = (this.lighting.visible? false : true);
+	 //    	}
+  //       	// if colliding with bed
+  //       	else if(game.physics.arcade.overlap(sensor, this.bedframe)){
+	 //            bgm.fadeOut(500);
+	 //            this.camera.fade('#000', 500);
+	 //            this.camera.onFadeComplete.addOnce(function () {
+	 //                	this.state.start('NextDay');
+	 //            }, this);
+  //       	}
+  //       	// if player check laptop, opens up social media
+  //       	else if(game.physics.arcade.overlap(sensor, this.laptop)){
+		//     	if(this.ribbitter.visible == false){
+		//     		this.ribbitter.visible = true;
+		//     		this.notification.visible = false;
+		//     	}else{
+		//     		this.ribbitter.visible = false;
+		//     	}
+	 //    	}
+	 //    	// now for furniture that has flavor text
+	 //    	else if(game.physics.arcade.overlap(sensor, this.hat)){
+  //           	this.flavorText = 'You got this hat from Tai as a birthday present, but you\'ve yet to find a good opportunity to wear it.';
+	 //    	}
+	 //    	else if(game.physics.arcade.overlap(sensor, this.bookshelf1)){
+  //           	this.flavorText = 'A bookshelf full of your favorite mystery novels.';
+	 //    	}
+	 //    	else if(game.physics.arcade.overlap(sensor, this.bookshelf2)){
+  //           	this.flavorText = 'A bookshelf full of your favorite non-mystery novels.';
+	 //    	}
+	 //    	else if(game.physics.arcade.overlap(sensor, this.cabinet)){
+  //           	this.flavorText = 'It\'s a shoe cabinet!';
+	 //    	}
+	 //    	else if(game.physics.arcade.overlap(sensor, this.calendar)){
+  //           	this.flavorText = 'Today is ' + calendar.printDay() + '.';
+	 //    	}
+	 //    	else if(game.physics.arcade.overlap(sensor, this.filecab)){
+  //           	this.flavorText = 'You bought this file cabinet to store old cases, but lately it\'s been more of a stationary cabinet.';
+	 //    	}
+	 //    	else if(game.physics.arcade.overlap(sensor, this.friend)){
+  //           	this.flavorText = 'Dr. Watsy has always been the bravest and truest of friends.';
+	 //    	}
+	 //    	else if(game.physics.arcade.overlap(sensor, this.plant1)){
+  //           	this.flavorText = 'A housewarming present from Tai. It\'s fake because he knows you well.';
+	 //    	}
+	 //    	else if(game.physics.arcade.overlap(sensor, this.table)){
+  //           	this.flavorText = 'It\'s a table.';
+	 //    	}
+	 //    	else if(game.physics.arcade.overlap(sensor, this.trashcan)){
+  //           	this.flavorText = 'The trash can is empty.';
+	 //    	}
+	 //    	else if(game.physics.arcade.overlap(sensor, this.tv)){
+  //           	this.flavorText = 'You\'re too tired to watch tv today.';
+	 //    	}else{
+		//         // Some extra measures to make sure things stay not visible 
+		// 	    this.flavorText = '';	
+  //           	this.ribbitter.visible = (this.ribbitter.visible ? false : false);
+		//     }
+		// }
 
 		// extra layering stuff
         this.world.bringToTop(this.lighting);
