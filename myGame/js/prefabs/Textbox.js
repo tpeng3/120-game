@@ -5,7 +5,7 @@ function Textbox(game, changeState, scene, lines) {
     Phaser.Sprite.call(this, game, game.world.width / 2, game.world.height - 25, 'bg_black', 0);
     //Sprite stuff
     this.anchor.setTo(0.5, 1);
-    this.scale.setTo(1252, 160);
+    this.scale.setTo(1252, 200);
     this.alpha = 0.85;
     //Game and scene stuff
     this.callbackGame = game;
@@ -47,7 +47,8 @@ function Textbox(game, changeState, scene, lines) {
     game.add.existing(this);
 
     // initialize the nameTag text
-    this.nameText = this.callbackGame.add.text(this.left + 80, this.top + 20, '', { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
+    this.nameText = this.callbackGame.add.text(this.left + 100, this.top + 20, '', { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
+    this.nameText.anchor.setTo(0.5, 0);
     // initialize the textbox text
     var textStyle = { font: 'Trebuchet MS', fontSize: '28px', fill: '#fff', wordWrap: true, wordWrapWidth: this.width - 200 };
     this.bodyText = this.callbackGame.add.text(this.left + 150, this.top + 60, '', textStyle);
