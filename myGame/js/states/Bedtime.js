@@ -21,6 +21,7 @@ BasicGame.Bedtime.prototype = {
         this.load.spritesheet('sprite_locke', 'assets/img/bedtime/sprite_locke.png', 64, 64);
         this.load.image('bg_bedroom', 'assets/img/bedtime/bg_bedroom.png');
         this.load.image('bg_grey', 'assets/img/bedtime/bg_grey.png');
+        this.load.image('arrow', 'assets/img/bedtime/temp_arrow.png');
         this.load.atlas('furniture', 'assets/img/bedtime/bedroom.png', 'assets/img/bedtime/bedroom.json');
 
         // load music and sfx
@@ -43,7 +44,7 @@ BasicGame.Bedtime.prototype = {
 
 		// add some instruction text
 	 	instrStyle = { font: 'bold Trebuchet MS', fontSize: '22px', fill: '#fff', wordWrap: true, wordWrapWidth: 800, boundsAlignH: 'center' };
-		this.add.text(10, 10, 'Use Arrow Keys or WASD to move. Press SPACEBAR at the Bed to sleep.', instrStyle);
+		this.add.text(16, 16, 'Use Arrow Keys or WASD to move. Press SPACEBAR at the Bed to sleep.', instrStyle);
 
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -55,11 +56,16 @@ BasicGame.Bedtime.prototype = {
 		flavor.anchor.setTo(0.5, 0);
 		// flavor.setTextBounds(300, 100, 800, 100);
 		this.flavorText = '';
+		var oldText = '';
 
 		var charNum = 0;
 	    this.game.time.events.loop(10, function(){
-	    	if(this.flavorText != ''){
-	        	if(charNum != this.flavorText.length){
+	    	if(this.flavorText != oldText){
+	    		oldText = this.flavorText;
+	    		flavor.text = '';
+	    		charNum = 0;
+	    	}else if(this.flavorText != ''){
+	        	if(charNum < this.flavorText.length){
 	        		flavor.text += this.flavorText[charNum];
 	        		charNum++;
 	        	}
@@ -103,8 +109,10 @@ BasicGame.Bedtime.prototype = {
 		this.notification = this.add.sprite(64*2+10, 64*6+0, 'furniture', 'sprite_notification');
 		this.add.tween(this.notification).to( { y: 64*6+6 }, 500, Phaser.Easing.Linear.None, true, 0, 500, true);
 
-		// add arrow pointing to directed furniture
-		this.arrow = "";
+		// add arrow pointing to focused furniture
+		this.focus = "";
+		this.arrow = this.add.sprite(-50, -50, 'arrow');
+		// this.arrowTween = this.add.tween(this.arrow).to( { y: this.arrow.y+16 }, 500, Phaser.Easing.Linear.None, true, 0, 500, true);
 
 	 	// add ribbitter
 	 	this.ribbitter = this.add.group();
@@ -205,7 +213,6 @@ BasicGame.Bedtime.prototype = {
             sprite.animations.play('right');
             this.spriteDirection = 7;
             sensor.anchor.setTo(.25, .5);
-            this.flavorText = '';
             this.ribbitter.visible = (this.ribbitter.visible ? false : false);
         }
 	    else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) ||
@@ -213,14 +220,12 @@ BasicGame.Bedtime.prototype = {
             sprite.animations.play('left');
             this.spriteDirection = 4;
             sensor.anchor.setTo(.75, .5);
-            this.flavorText = '';
         }
 	    else if (game.input.keyboard.isDown(Phaser.Keyboard.UP) ||
 	    	game.input.keyboard.isDown(Phaser.Keyboard.W)) {
 	    	sprite.animations.play('up');
 	    	this.spriteDirection = 10;
             sensor.anchor.setTo(.5, .75);
-            this.flavorText = '';
             this.ribbitter.visible = (this.ribbitter.visible ? false : false);
 		}
 	    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) ||
@@ -228,7 +233,6 @@ BasicGame.Bedtime.prototype = {
 	    	sprite.animations.play('down');
 	    	this.spriteDirection = 1;
 	        sensor.anchor.setTo(.5,.25);
-	        this.flavorText = '';
             this.ribbitter.visible = (this.ribbitter.visible ? false : false);
 	    }
 	    else{
@@ -348,6 +352,7 @@ BasicGame.Bedtime.prototype = {
 	 	
 	 	this.table = this.add.sprite(64*17+4, 64*4+42, 'furniture', 'sprite_table');
 		this.physics.arcade.enable(this.table);
+		this.table.body.setSize(this.table.width, this.table.height-16, 0, 0);
 	 	this.table.body.immovable = true;
 
 	 	this.trashcan = this.add.sprite(64*4+12, 64*8+14, 'furniture', 'sprite_trashcan');
@@ -405,123 +410,154 @@ BasicGame.Bedtime.prototype = {
 
 	    // check for sensor overlap
 	    if(game.physics.arcade.overlap(sensor, this.lampsensor)){
-            this.arrow = "lampsensor";
+            this.focus = "lampsensor";
+			this.arrow.x = this.lampsensor.x+(this.lampsensor.width/2) - 6;
+			this.arrow.y = this.lampsensor.y - 20;
 	    }else if(game.physics.arcade.overlap(sensor, this.bedframe)){
-	        this.arrow = "bedframe";
+	        this.focus = "bedframe";
+	        this.arrow.x = this.bedframe.x+(this.bedframe.width/2) + 2;
+			this.arrow.y = this.bedframe.y - 72;
         }else if(game.physics.arcade.overlap(sensor, this.laptop)){
-			this.arrow = "laptop";
+			this.focus = "laptop";
+			this.arrow.x = this.laptop.x+(this.laptop.width/2) - 2;
+			this.arrow.y = this.laptop.y - 10;
 	    }else if(game.physics.arcade.overlap(sensor, this.hat)){
-            this.arrow = "hat";
+            this.focus = "hat";
+            this.arrow.x = this.hat.x+(this.hat.width/2) - 4;
+			this.arrow.y = this.hat.y - 16;
+		}else if(game.physics.arcade.overlap(sensor, this.calendar)){
+            this.focus = "calendar";
+            this.arrow.x = this.calendar.x+(this.calendar.width/2) - 6;
+			this.arrow.y = this.calendar.y - 16;
 	    }else if(game.physics.arcade.overlap(sensor, this.bookshelf1)){
-            this.arrow = "bookshelf1";
+            this.focus = "bookshelf1";
+            this.arrow.x = this.bookshelf1.x+(this.bookshelf1.width/2) - 4;
+			this.arrow.y = this.bookshelf1.y - 16;
 	    }else if(game.physics.arcade.overlap(sensor, this.bookshelf2)){
-            this.arrow = "bookshelf2";
+            this.focus = "bookshelf2";
+            this.arrow.x = this.bookshelf2.x+(this.bookshelf2.width/2) - 4;
+			this.arrow.y = this.bookshelf2.y - 16;
         }else if(game.physics.arcade.overlap(sensor, this.cabinet)){
-            this.arrow = "cabinet";
-	    }else if(game.physics.arcade.overlap(sensor, this.calendar)){
-            this.arrow = "calendar";
+            this.focus = "cabinet";
+            this.arrow.x = this.cabinet.x+(this.cabinet.width/2) - 6;
+			this.arrow.y = this.cabinet.y;
 	    }else if(game.physics.arcade.overlap(sensor, this.filecab)){
-            this.arrow = "filecab";
+            this.focus = "filecab";
+            this.arrow.x = this.filecab.x+(this.filecab.width/2) - 4;
+			this.arrow.y = this.filecab.y - 16;
 	    }else if(game.physics.arcade.overlap(sensor, this.friend)){
-            this.arrow = "friend";
+            this.focus = "friend";
+            this.arrow.x = this.friend.x+(this.friend.width/2);
+			this.arrow.y = this.friend.y - 16;
 	    }else if(game.physics.arcade.overlap(sensor, this.plant1)){
-            this.arrow = "plant1";
+            this.focus = "plant1";
+            this.arrow.x = this.plant1.x+(this.plant1.width/2) - 6;
+			this.arrow.y = this.plant1.y - 20;
 	    }else if(game.physics.arcade.overlap(sensor, this.table)){
-            this.arrow = "table";
+            this.focus = "table";
+            this.arrow.x = this.table.x+(this.table.width/2) - 6;
+			this.arrow.y = this.table.y - 8;
 	    }else if(game.physics.arcade.overlap(sensor, this.trashcan)){
-            this.arrow = "trashcan";
+            this.focus = "trashcan";
+            this.arrow.x = this.trashcan.x+(this.trashcan.width/2) - 6;
+			this.arrow.y = this.trashcan.y - 20;
         }else if(game.physics.arcade.overlap(sensor, this.tv)){
-            this.arrow = "tv";
+            this.focus = "tv";
+            this.arrow.x = this.tv.x+(this.tv.width/2) - 6;
+			this.arrow.y = this.tv.y - 16;
         }else{
-        	if(this.arrow != ""){
-				eval("var furnx = this."+this.arrow+".x");
-	        	eval("var furny = this."+this.arrow+".y");
+        	if(this.focus != ""){
+				eval("var furnx = this."+this.focus+".x");
+	        	eval("var furny = this."+this.focus+".y");
 	        	var diff1 = (sprite.x - furnx);
 				var diff2 = (sprite.y - furny);
-			    if( Math.sqrt( (diff1*diff1)+(diff2*diff2) ) > 32){
-			    	// this.arrow = "";
-			    	console.log(this.poop);
+			    if( Math.sqrt( (diff1*diff1)+(diff2*diff2) ) > 64){
+			    	console.log("facing away?");
+			    	this.focus = "";
+        			this.flavorText = "";
+			    	this.arrow.x = -50;
+			    	this.arrow.y = -50;
 			    }
         	}
+        	this.ribbitter.visible = (this.ribbitter.visible ? false : false);
 		}
 
-
-  //       // check for interactions with furniture
-  //       if (this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
-  //       	// you can dim the room lighting
-	 //    	if(game.physics.arcade.overlap(sensor, this.lampsensor)){
-  //           	this.lighting.visible = (this.lighting.visible? false : true);
-	 //    	}
-  //       	// if colliding with bed
-  //       	else if(game.physics.arcade.overlap(sensor, this.bedframe)){
-	 //            bgm.fadeOut(500);
-	 //            this.camera.fade('#000', 500);
-	 //            this.camera.onFadeComplete.addOnce(function () {
-	 //                	this.state.start('NextDay');
-	 //            }, this);
-  //       	}
-  //       	// if player check laptop, opens up social media
-  //       	else if(game.physics.arcade.overlap(sensor, this.laptop)){
-		//     	if(this.ribbitter.visible == false){
-		//     		this.ribbitter.visible = true;
-		//     		this.notification.visible = false;
-		//     	}else{
-		//     		this.ribbitter.visible = false;
-		//     	}
-	 //    	}
-	 //    	// now for furniture that has flavor text
-	 //    	else if(game.physics.arcade.overlap(sensor, this.hat)){
-  //           	this.flavorText = 'You got this hat from Tai as a birthday present, but you\'ve yet to find a good opportunity to wear it.';
-	 //    	}
-	 //    	else if(game.physics.arcade.overlap(sensor, this.bookshelf1)){
-  //           	this.flavorText = 'A bookshelf full of your favorite mystery novels.';
-	 //    	}
-	 //    	else if(game.physics.arcade.overlap(sensor, this.bookshelf2)){
-  //           	this.flavorText = 'A bookshelf full of your favorite non-mystery novels.';
-	 //    	}
-	 //    	else if(game.physics.arcade.overlap(sensor, this.cabinet)){
-  //           	this.flavorText = 'It\'s a shoe cabinet!';
-	 //    	}
-	 //    	else if(game.physics.arcade.overlap(sensor, this.calendar)){
-  //           	this.flavorText = 'Today is ' + calendar.printDay() + '.';
-	 //    	}
-	 //    	else if(game.physics.arcade.overlap(sensor, this.filecab)){
-  //           	this.flavorText = 'You bought this file cabinet to store old cases, but lately it\'s been more of a stationary cabinet.';
-	 //    	}
-	 //    	else if(game.physics.arcade.overlap(sensor, this.friend)){
-  //           	this.flavorText = 'Dr. Watsy has always been the bravest and truest of friends.';
-	 //    	}
-	 //    	else if(game.physics.arcade.overlap(sensor, this.plant1)){
-  //           	this.flavorText = 'A housewarming present from Tai. It\'s fake because he knows you well.';
-	 //    	}
-	 //    	else if(game.physics.arcade.overlap(sensor, this.table)){
-  //           	this.flavorText = 'It\'s a table.';
-	 //    	}
-	 //    	else if(game.physics.arcade.overlap(sensor, this.trashcan)){
-  //           	this.flavorText = 'The trash can is empty.';
-	 //    	}
-	 //    	else if(game.physics.arcade.overlap(sensor, this.tv)){
-  //           	this.flavorText = 'You\'re too tired to watch tv today.';
-	 //    	}else{
-		//         // Some extra measures to make sure things stay not visible 
-		// 	    this.flavorText = '';	
-  //           	this.ribbitter.visible = (this.ribbitter.visible ? false : false);
-		//     }
-		// }
+        // check for interactions with furniture
+        if (this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) && this.focus != ""){
+        	// this.flavorText = "";
+        	switch(this.focus){
+        		// you can dim the room lighting
+        		case "lampsensor":
+	            	this.lighting.visible = (this.lighting.visible? false : true);
+	            	break;
+	        	// if colliding with bed
+	        	case "bedframe":
+		            bgm.fadeOut(500);
+		            this.camera.fade('#000', 500);
+		            this.camera.onFadeComplete.addOnce(function () {
+		                	this.state.start('NextDay');
+		            }, this);
+        			break;
+        		// if player check laptop, opens up social media
+        		case "laptop":
+			    	if(this.ribbitter.visible == false){
+			    		this.ribbitter.visible = true;
+			    		this.notification.visible = false;
+			    	}else{
+			    		this.ribbitter.visible = false;
+			    	}
+			    	break;
+	    		// now for furniture that has flavor text
+	    		case "hat":
+          		  	this.flavorText = 'You got this hat from Tai as a birthday present, but you\'ve yet to find a good opportunity to wear it.';
+          		  	break;
+          		case "bookshelf1":
+            		this.flavorText = 'A bookshelf full of your favorite mystery novels.';
+            		break;
+            	case "bookshelf2":
+	            	this.flavorText = 'A bookshelf full of your favorite non-mystery novels.';
+	            	break;
+	            case "cabinet":
+            		this.flavorText = 'It\'s a shoe cabinet!';
+            		break;
+            	case "calendar":
+	            	this.flavorText = 'Today is ' + calendar.printDay() + '.';
+	            	break;
+	            case "filecab":
+	            	this.flavorText = 'You bought this file cabinet to store old cases, but lately it\'s been more of a stationary cabinet.';
+	            	break;
+	            case "friend":
+	            	this.flavorText = 'Dr. Watsy has always been the bravest and truest of friends.';
+	            	break;
+	            case "plant1":
+	            	this.flavorText = 'A housewarming present from Tai. It\'s fake because he knows you well.';
+	            	break;
+	            case "table":
+	            	this.flavorText = 'It\'s a table.';
+	            	break;
+	            case "trashcan":
+	            	this.flavorText = 'The trash can is empty.';
+	            	break;
+	            case "tv":
+	            	this.flavorText = 'You\'re too tired to watch tv today.';
+	            	break;
+	        }
+	    }
 
 		// extra layering stuff
+        this.world.bringToTop(this.arrow);
         this.world.bringToTop(this.lighting);
         this.world.bringToTop(this.ribbitter);
 	},
 	render: function(){
-		// game.debug.body(sprite);
+		game.debug.body(sprite);
 		// game.debug.body(this.lampsensor);
-		// game.debug.body(sensor);
+		game.debug.body(sensor);
 		// game.debug.body(this.lamp);
 		// // game.debug.body(this.sofa);
 		// game.debug.body(this.plant1);
 		// game.debug.body(this.trashcan);
-		// game.debug.body(this.filecab);
+		game.debug.body(this.table);
 		// // game.debug.body(this.armrest1);
 		// // game.debug.body(this.armrest2);
 		// game.debug.body(this.bed);
