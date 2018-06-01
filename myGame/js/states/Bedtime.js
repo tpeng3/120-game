@@ -19,9 +19,9 @@ BasicGame.Bedtime.prototype = {
 
         // load sprite furniture and locke
         this.load.spritesheet('sprite_locke', 'assets/img/bedtime/sprite_locke.png', 64, 64);
+        this.load.spritesheet('arrow', 'assets/img/bedtime/temp_arrow.png', 12, 16);
         this.load.image('bg_bedroom', 'assets/img/bedtime/bg_bedroom.png');
         this.load.image('bg_grey', 'assets/img/bedtime/bg_grey.png');
-        this.load.image('arrow', 'assets/img/bedtime/temp_arrow.png');
         this.load.atlas('furniture', 'assets/img/bedtime/bedroom.png', 'assets/img/bedtime/bedroom.json');
 
         // load music and sfx
@@ -112,7 +112,8 @@ BasicGame.Bedtime.prototype = {
 		// add arrow pointing to focused furniture
 		this.focus = "";
 		this.arrow = this.add.sprite(-50, -50, 'arrow');
-		// this.arrowTween = this.add.tween(this.arrow).to( { y: this.arrow.y+16 }, 500, Phaser.Easing.Linear.None, true, 0, 500, true);
+		this.arrow.animations.add('default', [0, 1], 2, true);
+		this.arrow.animations.play('default');
 
 	 	// add ribbitter
 	 	this.ribbitter = this.add.group();
@@ -550,14 +551,14 @@ BasicGame.Bedtime.prototype = {
         this.world.bringToTop(this.ribbitter);
 	},
 	render: function(){
-		game.debug.body(sprite);
+		// game.debug.body(sprite);
 		// game.debug.body(this.lampsensor);
-		game.debug.body(sensor);
+		// game.debug.body(sensor);
 		// game.debug.body(this.lamp);
 		// // game.debug.body(this.sofa);
 		// game.debug.body(this.plant1);
 		// game.debug.body(this.trashcan);
-		game.debug.body(this.table);
+		// game.debug.body(this.table);
 		// // game.debug.body(this.armrest1);
 		// // game.debug.body(this.armrest2);
 		// game.debug.body(this.bed);
