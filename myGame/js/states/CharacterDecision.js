@@ -8,7 +8,6 @@ BasicGame.CharacterDecision.prototype = {
     },
     preload: function () {
         this.characterSprites = [];
-        this.load.image('textbox', 'assets/img/ui/textbox.png');
         this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
         for (let i = 0; i < this.characters.lenth; ++i) {
             this.load.image(this.characters[i].toLowerCase() + '_default', 'assets/img/characters/vn_' + this.characters[i].toLowerCase() + '.png');
@@ -47,13 +46,11 @@ BasicGame.CharacterDecision.prototype = {
         // add textbox and text, we don't have to keep this but for now give some explanations to the players
         this.textbox = new Textbox(game, false, null, [{ name: '', text: 'Hang out with ' + this.characters[this.selected] + '?' }]);
         // place the dateTimeBox
-        var dateBox = this.add.sprite(this.textbox.left, 20, 'textbox');
-        dateBox.anchor.setTo(0, 0);
-        dateBox.scale.setTo(0.27, 0.25);
+        var dateBox = this.add.sprite(this.textbox.left, 20, 'bg_black');
         dateBox.alpha = 0.75;
         // initialize the dateTime text
         this.dateText = this.add.text(this.textbox.left + 60, 20, calendar.print(), { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
-        dateBox.width = this.dateText.width + 90;
+        dateBox.scale.setTo(this.dateText.width+90, this.dateText.height+6);
         // fade transition (It has to be placed at the end for layering reasons)
         var fade = new TransitionFade(game);
     },

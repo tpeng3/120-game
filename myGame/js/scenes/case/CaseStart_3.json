@@ -1,30 +1,60 @@
 {
-  "scene_name": "casestart_0",
   "bg": "bg_agency",
-  "bgm": "bgm_temp_locke",
-  "sprite_left": "locke_default",
+  "sprite_left": "Locke",
   "sprite_right": "",
-  "next_state": "Work",
-  "lines": [
-    {
-      "name": "Locke",
-      "text": "..."
-    },
-    {
-      "name": "Crazy Cat Lady",
-      "text": "..."
-    },
-    {
-      "name": "Locke",
-      "text": "............................."
-    },
-    {
-      "name": "Crazy Cat Lady",
-      "text": "...Sooooooo"
-    },
-    {
-      "name": "Locke",
-      "text": "...I understand"
-    }
-  ]
+  "next_state":"Wonderzone",
+  "lines":[
+    {"name":"???",
+      "text":"I'm back."},
+    {"name":"Locke", "expression": "surprised",
+      "text":"W-who are you?"},
+    {"name":"Allie Catt",
+      "text":"Don't you remember your deal ol' granny Allie Catt?"},
+    {"name":"Locke", "expression": "thinking",
+      "text":"N-no, don't tell me."},
+    {"name":"Allie Catt",
+      "text":"THAT'S RIGHT. I'VE SET ALL MY CATS LOOSE."},
+    {"name":"Locke", "expression": "surprised",
+      "text":"WHY. WHY WOULD YOU DO THAT."},
+    {"name":"Locke",
+      "text":"There'll be absolute chaos in the streets!"},
+    {"name":"Allie Catt",
+      "text":"EXACTLY. The time has come... for my CAT REVOLUTION."},
+    {"name":"Locke",
+      "text":"No! No more cats! Someone's seriously going to get hurt!"},
+    {"name":"Locke",
+      "text":"If not the cat, it'll be some kid running to save a cat that's crossing during a red light!"},
+    {"name":"Allie Catt",
+      "text":"Well then... There's only one thing  you can do."},
+    {"name":"Locke", "expression": "thinking",
+      "text":"I have to... I have to find all the cats."},
+    {"name":"Locke", "expression": "surprised",
+      "text":"I have to FIGHT all the cats."},
+    {"name":"Allie Catt",
+      "text":"That's right, Locke Enloade. You were born for this very moment."},
+    {"name":"Allie Catt",
+      "text":"For these past 6 months, my colleagues and I have made you search for our cats in the highest of trees and darkest of alleyways."},
+    {"name":"Allie Catt",
+      "text":"We have trained you to become the ULTIMATE cat finder. And now, it's time to put your true strength TO THE TEST."},
+    {"name":"Locke",
+      "text":"You! You manipulated me!"},
+    {"name":"Locke", "expression":"annoyed",
+      "text":"I never asked for this cat hunting life... I just wanted to be a normal detective, with normal cases."},
+    {"name":"Allie Catt",
+      "text":"Locke, you never were a NORMAL detective. You weren't even a GOOD detective."},
+    {"name":"Locke", "expression":"surprised",
+      "text":"You take that back!"},
+    {"name":"Allie Catt",
+      "text":"HAHAHA. Maybe if you find all the cats..."},
+    {"name":"Locke", "expression":"annoyed",
+      "text":"...Fine! But I'm not doing this for you..."},
+    {"name":"Locke", "expression":"posing",
+      "text":"I'm doing this FOR THE CATS."},
+    {"name":"Locke", "expression":"nervous",
+      "text":"(I'm going to need to stock up on more cat food...)",
+       "functions": ["this.bodyText.style.fill = '#ccc';"]},
+    {"name":"Locke", "expression":"posing",
+      "text":"Let's do this. Initiating WONDER ZONE: FULL DIVE. START!",
+       "functions": ["this.bodyText.style.fill = '#ccc';"]}
+  ] 
 }

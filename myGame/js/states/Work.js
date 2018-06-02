@@ -37,7 +37,7 @@ BasicGame.Work.prototype = {
 
         // add background/frame
         this.frame = this.add.sprite(200, 16, 'frame');
-        // this.frame.tint = '0xfacade';
+        this.frame.tint = Math.random() * 0xffffff;
         this.hexagons = this.add.tileSprite(204, 20, 804, 684, 'hexagons');
         this.hexagons.alpha = 0.6;
 

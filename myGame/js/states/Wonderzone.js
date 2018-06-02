@@ -15,18 +15,21 @@ BasicGame.Wonderzone.prototype = {
         var tweenCutin = game.add.tween(this.cutin1).to( { y: 150 }, 300, Phaser.Easing.Linear.None, true);
 
         tweenCutin.onComplete.add(this.timeToWork, this);
+
+        var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        spaceKey.onDown.add(this.advanceState, this);
     },
     timeToWork: function() {
         this.game.time.events.add(500, function(){
-            // idk we can add some sort of transition here?
             game.add.tween(this.cutin2).to( { alpha: 1 }, 200, Phaser.Easing.Linear.None, true);
             
             this.game.time.events.add(1000, function () {
                 this.camera.fade();
-                this.camera.onFadeComplete.addOnce(function () {
-                    this.state.start('Work', true, false);
-                }, this);
+                this.camera.onFadeComplete.addOnce(this.advanceState, this);
             }, this);
         }, this);
+    },
+    advanceState: function() {
+        this.state.start('Work', true, false);
     }
 };

@@ -6,8 +6,12 @@
   "lines":[
     {"name":"Locke", "expression": "confident",
       "text":"Yup. I'm just going to take it easy in the office today."},
+    {"name":"",
+      "text":"..........................."},
     {"name":"Locke", "expression": "default",
       "text":"It doesn't look like anyone else was free to hang out with me today either."},
+    {"name":"Locke", "expression": "nervous",
+      "text":"I guess I should check on their schedules more carefully next time."},
     {"name":"",
       "text":"And so nothing productive was done.",
       "functions": ["this.black.visible = true;"]}

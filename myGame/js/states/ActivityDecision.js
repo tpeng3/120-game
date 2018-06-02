@@ -13,8 +13,8 @@ BasicGame.ActivityDecision.prototype = {
 		
         // load background assets of a generic daytime place and the textbox
 		this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
-		this.load.image('textbox', 'assets/img/ui/textbox.png');
 		this.load.image('button_work', 'assets/img/ui/button_work.png');
+        this.load.image('button_work_no_option', 'assets/img/ui/button_work_no_option.png');
         this.load.image('button_hangout', 'assets/img/ui/button_hangout.png');
         this.load.image('button_hangout_no_option', 'assets/img/ui/button_hangout_no_option.png');
         this.load.image('ui_wonderzone', 'assets/img/ui/ui_wonderzone.png');
@@ -39,11 +39,11 @@ BasicGame.ActivityDecision.prototype = {
         // we should talk about how to balance this
         else if(fatigue == -1){
             text = 'Alright! I\'m feeling extra motivated to work today!';
-        }else if(fatigue == 0){
-            text = 'Time for another day of work as an awesome detective.';
-        }else if(fatigue == 1){
-            text = 'I feel a bit tired today. It\'s going to be hard to concentrate if I try to work.';
+        }else if(fatigue == 0 || fatigue == 1){
+            text = 'Time for another day of life as an awesome detective.';
         }else if(fatigue == 2){
+            text = 'I feel a bit tired today. It\'s going to be hard to concentrate if I try to work.';
+        }else if(fatigue == 3){
             text = 'I really don\'t feel too well today. Maybe I should take it easy, my head kinda hurts.';
         }
 
@@ -52,17 +52,13 @@ BasicGame.ActivityDecision.prototype = {
         console.log("Fatigue: " + BasicGame.global.player_stats.fatigue);
 
         // place the dateTimeBox
-        var dateBox = this.add.sprite(textbox.left, 20, 'textbox');
-        dateBox.anchor.setTo(0, 0);
-        dateBox.scale.setTo(0.27, 0.25);
+        var dateBox = this.add.sprite(textbox.left, 20, 'bg_black');
         dateBox.alpha = 0.75;
         // initialize the dateTime text
         this.dateText = this.add.text(textbox.left + 60, 20, calendar.print(), { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
-        dateBox.width = this.dateText.width + 90;
+        dateBox.scale.setTo(this.dateText.width+90, this.dateText.height);
         // place the case info box
-        var caseInfo = this.add.sprite(textbox.left, 60, 'textbox');
-        caseInfo.anchor.setTo(0, 0);
-        caseInfo.scale.setTo(0.5, 0.25);
+        var caseInfo = this.add.sprite(textbox.left, 65, 'bg_black');
         caseInfo.alpha = 0.75
         // initialize the caseInfo text
         var info = '';
@@ -70,12 +66,14 @@ BasicGame.ActivityDecision.prototype = {
             info = 'No active case: work to find a client!';
         else if (BasicGame.global.case == 'final')
             info = '???';
-        else
-            info = 'Case: ' + BasicGame.global.case.case_name + ' (' +
-                (Math.round(((BasicGame.global.case.boss.max_health - BasicGame.global.case.boss.curr_health)
-                / BasicGame.global.case.boss.max_health) * 100)) + '% done)';      
-        this.caseInfoText = this.add.text(textbox.left + 60, 60, info, { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
-        caseInfo.width = this.caseInfoText.width + 90;
+        else{
+            let percentWork = Math.round(
+                ((BasicGame.global.case.boss.max_health - BasicGame.global.case.boss.curr_health)
+                / BasicGame.global.case.boss.max_health) * 100);
+            info = 'Case: ' + BasicGame.global.case.case_name + ' (' + percentWork + '% done)';      
+        }
+        this.caseInfoText = this.add.text(textbox.left + 60, 65, info, { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
+        caseInfo.scale.setTo(this.caseInfoText.width+90, this.caseInfoText.height);
 
         //get scene data
         this.sceneData = calendar.getSceneData();

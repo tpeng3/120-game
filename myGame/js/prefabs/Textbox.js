@@ -24,7 +24,7 @@ function Textbox(game, changeState, scene, lines) {
         Locke: 'sfx_text_scroll_locke',
         Tai: 'sfx_text_scroll_tai',
         Keyna: 'sfx_text_scroll_keyna',
-        Fedelynn: 'sfx_text_scroll_fedelynn',
+        Lynn: 'sfx_text_scroll_fedelynn',
         'Allie Catt': 'sfx_text_scroll_client_f',
         default: 'sfx_text_scroll_default'
     }
@@ -47,11 +47,11 @@ function Textbox(game, changeState, scene, lines) {
     game.add.existing(this);
 
     // initialize the nameTag text
-    this.nameText = this.callbackGame.add.text(this.left + 100, this.top + 20, '', { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
-    this.nameText.anchor.setTo(0.5, 0);
+    this.nameText = this.callbackGame.add.text(this.left + 250, this.top + 20, '', { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
+    this.nameText.anchor.setTo(0.75, 0);
     // initialize the textbox text
-    var textStyle = { font: 'Trebuchet MS', fontSize: '28px', fill: '#fff', wordWrap: true, wordWrapWidth: this.width - 200 };
-    this.bodyText = this.callbackGame.add.text(this.left + 150, this.top + 60, '', textStyle);
+    var textStyle = { font: 'Trebuchet MS', fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: this.width - 400 };
+    this.bodyText = this.callbackGame.add.text(this.left + 220, this.top + 60, '', textStyle);
     this.bodyText.lineSpacing = -8;
     // initialize the ctc (aka a blinking spacebar text to indicate next line)
     this.ctc = this.callbackGame.add.text(this.right-20, this.bottom-10, '[SPACEBAR]', textStyle);
@@ -134,7 +134,7 @@ Textbox.prototype.advance = function () {
         }
         // change character sprite expression
         if(line.expression != undefined){
-            var chara = (line.name == this.leftChara.key? this.leftChara : this.rightChara);
+            let chara = (line.name == this.leftChara.key? this.leftChara : this.rightChara);
             chara.frameName = line.name + '_' + line.expression;
         }
         // sprite dimming

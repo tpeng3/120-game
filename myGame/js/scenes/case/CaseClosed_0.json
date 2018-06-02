@@ -61,7 +61,7 @@
       "text":"Anyways, sorry I didn't get to hang out with you today after all. I'll definitely be free tomorrow since it's Saturday and all."},
     {"name":"Tai", "expression":"surprised",
       "text":"Hm? Oh, it's no biggie."},
-    {"name":"Locke",
+    {"name":"Locke", "expression":"serious",
       "text":"Strange though. You usually only drop by the office. It's been a while since I've seen you stick around for the whole day."},
     {"name":"Locke",
       "text":"Is something up?"},
