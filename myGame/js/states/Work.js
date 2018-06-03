@@ -93,15 +93,15 @@ BasicGame.Work.prototype = {
         this.blackframes.alpha = 0.85;
 
         // some text for the players
-        var textStyle = { fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: 200 };
-        this.add.text(this.frame.x+this.frame.width+10, 40, 'Use arrow keys to move, SPACEBAR to shoot. Move to next stage via death or after 15 seconds.', textStyle);
+        //var textStyle = { fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: 600 };
+        //this.add.text(this.frame.x + this.frame.width + 10, 40, 'Use arrow keys to move, SPACEBAR to shoot. Move to next stage via death or after 15 seconds.', textStyle);
 
-        // timer before going on to the next stage
-        this.game.time.events.add(60000, this.workEnd, this);
+        let pos = new Phaser.Point(this.world.width/2, this.world.height - this.world.height / 3)
+        this.introText = new Textbox(game, false, null, [{ name: '', text: 'Arrow keys or WASD to move, hold [SPACEBAR] to shoot' }], pos, new Phaser.Point(0.5,0.5), new Phaser.Point(1000, 200));
 
         //Bind the line advancing function to the spacebar
         var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        spaceKey.onDown.addOnce(function() { this.player.pause = false; this.boss.pause = false; }, this);
+        spaceKey.onDown.addOnce(this.workStart, this);
     },
     update: function () {
         this.hexagons.tilePosition.x += .1;
@@ -131,6 +131,13 @@ BasicGame.Work.prototype = {
 
         //Create some debug health text
         game.debug.text('Boss Health = ' + this.boss.currHealth, this.boss.x, this.boss.y, { fontSize: '32px', fill: '#ff0000' });
+    },
+    workStart: function () {
+        // timer before going on to the next stage
+        this.game.time.events.add(60000, this.workEnd, this);
+        this.player.pause = false;
+        this.boss.pause = false;
+        this.introText.hide();
     },
     workEnd: function () {
         if (!this.boss.alive) {

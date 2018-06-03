@@ -50,7 +50,6 @@ BasicGame.Boot.prototype = {
 
     create: function () {
         console.log('Boot: create');
-        //BasicGame.global.case = JSON.parse(this.game.cache.getText('starting_case'))
         //  So now let's start the real preloader going
         this.state.start('Preloader');
     },

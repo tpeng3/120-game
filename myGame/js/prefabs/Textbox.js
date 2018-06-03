@@ -1,11 +1,18 @@
 // Textbox prefab constructor function
-function Textbox(game, changeState, scene, lines) {
+function Textbox(game, changeState, scene, lines, position, anchor, scale) {
     this.changeState = changeState;
     // call to Phaser.Sprite // new Sprite(game, x, y, key, frame)
-    Phaser.Sprite.call(this, game, game.world.width / 2, game.world.height - 25, 'bg_black', 0);
+    if (position == undefined || position == null)
+        Phaser.Sprite.call(this, game, game.world.width / 2, game.world.height - 25, 'bg_black', 0);
+    else
+        Phaser.Sprite.call(this, game, position.x, position.y, 'bg_black', 0);
     //Sprite stuff
-    this.anchor.setTo(0.5, 1);
-    this.scale.setTo(1252, 200);
+    if (anchor == null || anchor == undefined)
+        var anchor = new Phaser.Point(0.5, 1);
+    this.anchor.setTo(anchor.x, anchor.y);
+    if (scale == null || scale == undefined)
+        var scale = new Phaser.Point(1252, 200);
+    this.scale.setTo(scale.x, scale.y);
     this.alpha = 0.85;
     //Game and scene stuff
     this.callbackGame = game;
@@ -26,6 +33,7 @@ function Textbox(game, changeState, scene, lines) {
         Keyna: 'sfx_text_scroll_keyna',
         Lynn: 'sfx_text_scroll_fedelynn',
         'Allie Catt': 'sfx_text_scroll_client_f',
+        'Earl Leebird': 'sfx_text_scroll_client_m',
         default: 'sfx_text_scroll_default'
     }
     this.skipNum = 4;
@@ -187,4 +195,18 @@ Textbox.prototype.skipScene = function () {
     this.callbackGame.camera.onFadeComplete.add(function () {
         this.callbackGame.state.start(this.scene.next_state);
     }, this);
+}
+
+Textbox.prototype.hide = function () {
+    this.visible = false;
+    this.bodyText.visible = false;
+    this.nameText.visible = false;
+    this.ctc.visible = false;
+    this.textRun = false;
+}
+
+Textbox.prototype.show = function () {
+    this.visible = true;
+    this.bodyText.visible = true;
+    this.nameText.visible = true;
 }
