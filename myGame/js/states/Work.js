@@ -5,7 +5,7 @@ BasicGame.Work.prototype = {
         console.log('Work: preload');
         this.time.advancedTiming = true;
 
-        // load images (no sprite atlas right now)
+        // bullet hell images
         this.load.spritesheet('bh_locke', 'assets/img/bh/bh_locke.png', 64, 64);
         this.load.image('bh_locke_core', 'assets/img/bh/bh_locke_core.png');
         this.load.image('locke_bullet', 'assets/img/bh/bh_bullet_locke.png');
@@ -13,9 +13,18 @@ BasicGame.Work.prototype = {
         this.load.image('enemy_bullet_l', 'assets/img/bh/bh_bullet_lbright.png');
         this.load.image('enemy', 'assets/img/bh/bh_enemy.png');
         this.load.image('boss', 'assets/img/bh/' + BasicGame.global.case.boss.sprite + '.png');
+
         this.load.image('frame', 'assets/img/ui/ui_bhframe.png');
         // this.load.image('frame', 'assets/img/ui/ui_bhframe_test.png');
         this.load.image('hexagons', 'assets/img/bg/bg_hexagons.png');
+
+        // ui images
+        this.load.atlas('bh_sprite_locke', 'assets/img/bh/bh_sprite_locke.png', 'assets/img/bh/bh_sprite_locke.json');
+        this.load.image('bh_clock', 'assets/img/bh/bh_clock.png');
+        this.load.image('bh_tick', 'assets/img/bh/bh_tick.png');
+        this.load.image('bh_lives', 'assets/img/bh/bh_lives.png');
+        this.load.image('bh_boss_health', 'assets/img/bh/bh_boss_health.png');
+        this.load.image('bh_boss_hcontainer', 'assets/img/bh/bh_boss_health_container.png');
 
         // load bgm and sfx (now loaded in boot)
         //this.load.audio('bgm_touhou_stolen', 'assets/audio/bgm/ravel_nightstar_the_drums_and_bass_of_flower_bless.ogg');
@@ -24,6 +33,8 @@ BasicGame.Work.prototype = {
         this.load.audio('sfx_enemy_death', 'assets/audio/sfx/sfx_enemy_death.ogg');
     },
     create: function () {
+        this.BH_TIME = 60000; //time limit for the bullet hell is currently a minute
+
         console.log('Work: create');
         //Initialize lives based on the player's fatigue
         this.lives = Math.max(1, 3 - Math.floor((BasicGame.global.player_stats.fatigue - 1) / 2));
@@ -36,7 +47,7 @@ BasicGame.Work.prototype = {
 
         // add background/frame
         this.frame = this.add.sprite(200, 16, 'frame');
-        this.frame.tint = Math.random() * 0xffffff;
+        this.frame.tint = .8 * 0xffffff;
         this.hexagons = this.add.tileSprite(204, 20, 804, 684, 'hexagons');
         this.hexagons.alpha = 0.6;
 
@@ -92,6 +103,30 @@ BasicGame.Work.prototype = {
 
         this.blackframes.alpha = 0.85;
 
+        // add ui locke sprite
+        spriteLocke = this.add.sprite(1020, 100, 'bh_sprite_locke', 'bh_locke_'+this.player.currHealth);
+
+        // add bullet hell information
+        var clock = this.add.sprite(100, 150, 'bh_clock');
+        clock.anchor.setTo(0.5, 0.5);
+        clock.scale.setTo(2.5, 2.5);
+        this.tick = this.add.sprite(100, 150, 'bh_tick');
+        this.tick.anchor.setTo(0.5, 0.5);
+        this.tick.scale.setTo(2.5, 2.5);
+
+        lives = this.add.group();
+        for(let i=0; i<this.player.currHealth; i++){
+            lives.add(this.add.sprite(120, 410+(i*70), 'bh_lives'));
+        }
+
+        this.boss_health = this.add.group();
+        var bh_boss_hcontainer = this.add.sprite(220, 660, 'bh_boss_hcontainer');
+        bh_boss_hcontainer.scale.setTo(50, 1);
+        this.boss_health.add(bh_boss_hcontainer);
+        this.bh_boss_health = this.add.sprite(220, 660, 'bh_boss_health');
+        this.bh_boss_health.scale.setTo(45, 1);
+        this.boss_health.add(this.boss_health);
+
         // some text for the players
         //var textStyle = { fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: 600 };
         //this.add.text(this.frame.x + this.frame.width + 10, 40, 'Use arrow keys to move, SPACEBAR to shoot. Move to next stage via death or after 15 seconds.', textStyle);
@@ -110,6 +145,9 @@ BasicGame.Work.prototype = {
         // debug information
         this.game.debug.text(this.time.fps || '--', 2, 14, "#00ff00");
         this.physics.arcade.collide(this.player, this.frameBounds);
+
+        // update boss health bar?? I'll have it here for now
+        this.bh_boss_health.scale.x = this.boss.currHealth;
 
         if (!this.boss.alive) {
             this.workEndBossDeath();
@@ -134,7 +172,11 @@ BasicGame.Work.prototype = {
     },
     workStart: function () {
         // timer before going on to the next stage
-        this.game.time.events.add(60000, this.workEnd, this);
+        this.game.time.events.add(this.BH_TIME, this.workEnd, this);
+        // update clock/tick ui
+        this.game.time.events.loop(this.BH_TIME/360, function(){
+            this.tick.angle += 1;
+        }, this);
         this.player.pause = false;
         this.boss.pause = false;
         this.introText.hide();

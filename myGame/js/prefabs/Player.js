@@ -101,7 +101,12 @@ Player.prototype.readyToShoot = function () {
 }
 Player.prototype.damage = function (damage) {
     this.currHealth -= damage;
-    if (this.currHealth <= 0)
+    if(this.currHealth <= 0){
         this.kill();
+    }else{
+        // update expression on sprite
+        spriteLocke.frameName = 'bh_locke_' +this.currHealth;
+        (lives.getChildAt(this.currHealth)).kill();
+    }
 }
 
