@@ -45,7 +45,7 @@ BasicGame.TitleScreen.prototype = {
         var startText = this.add.text(this.world.width/2, 550, '-Press SPACEBAR to Start-', startStyle);
         startText.anchor.set(0.5);
         startText.visible = false;
-      	this.game.time.events.add(5000, function(){
+      	this.game.time.events.add(3000, function(){
 			this.game.time.events.loop(1000, function(){
                 startText.visible = (startText.visible == false ? true : false);
         	}, this);

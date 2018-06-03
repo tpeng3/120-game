@@ -25,7 +25,6 @@ BasicGame.Work.prototype = {
     },
     create: function () {
         console.log('Work: create');
-
         //Initialize lives based on the player's fatigue
         this.lives = Math.max(1, 3 - Math.floor((BasicGame.global.player_stats.fatigue - 1) / 2));
 
@@ -73,23 +72,6 @@ BasicGame.Work.prototype = {
         this.add.existing(this.boss);
         this.enemyGroup.add(this.boss);
 
-        // spawn an enemy (placement not final)
-        // EXAMPLE CODE FOR SPAWNING ENEMIES HERE
-        this.spawnEnemy = function () {
-            let xPos = game.rnd.integerInRange(80, game.width - 300);
-            let yPos = game.rnd.integerInRange(60, game.height - 500);
-            //Movement pattern of null makes the enemy stay still
-            var enemy = new EnemyShooter(game, xPos, yPos, 'enemy', 3, this.player, null, EnemyShooter.shootingPattern_spiral, 150, 100);
-            this.add.existing(enemy);
-            this.enemyGroup.add(enemy);
-            enemy = new EnemyShooter(game, xPos + 100, yPos, 'enemy', 3, this.player, Enemy.movementPattern_followTarget, EnemyShooter.shootingPattern_shootAtTarget, 150, 2000);
-            this.add.existing(enemy);
-            this.enemyGroup.add(enemy);
-            enemy = new Enemy(game, game.rnd.integerInRange(80, game.width - 300), game.rnd.integerInRange(60, game.height - 2000), 'enemy', 3, this.player, Enemy.movementPattern_followTarget);
-            this.add.existing(enemy);
-            this.enemyGroup.add(enemy);
-        }
-
         game.sound.stopAll();
         bgm = game.add.audio(BasicGame.global.case.bgm);
         bgm.loopFull()
@@ -116,6 +98,10 @@ BasicGame.Work.prototype = {
 
         // timer before going on to the next stage
         this.game.time.events.add(60000, this.workEnd, this);
+
+        //Bind the line advancing function to the spacebar
+        var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        spaceKey.onDown.addOnce(function() { this.player.pause = false; this.boss.pause = false; }, this);
     },
     update: function () {
         this.hexagons.tilePosition.x += .1;

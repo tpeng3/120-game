@@ -24,7 +24,7 @@ function Player(game, startingHealth, enemyGroup) {
     this.bulletSpeed = 700;
     this.bulletDamage = 1;
     this.bulletAngle = new Phaser.Point(0, 1); //angle of shots (as Vec2d (Phaser.Point))
-    this.firingDelay = 100;//fire every this amount of milliseconds
+    this.firingDelay = 110;//fire every this amount of milliseconds
     this.isReadyToShoot = true;
 	// put some physics on it
 	game.physics.enable(this);
@@ -34,6 +34,7 @@ function Player(game, startingHealth, enemyGroup) {
     this.body.maxVelocity = this.maxSpeedNormal;
     this.maxSpeedShift = new Phaser.Point(100, 100);
     this.accel = 1500;
+    this.pause = true;
 }
 // explicitly define prefab's prototype (Phaser.Sprite) and constructor (Player)
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -42,6 +43,8 @@ Player.bulletGroup = null;
 
 // override Phaser.Sprite update (to spin the diamond)
 Player.prototype.update = function () {
+    if (this.pause)
+        return;
     if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)) {
         this.bulletDamage = 2;
         this.body.maxVelocity = this.maxSpeedShift;

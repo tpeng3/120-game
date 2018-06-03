@@ -7,7 +7,6 @@
 function Enemy(game, xPos, yPos, imageKey, startingHealth, target, movementPattern) {
     // call to Phaser.Sprite // new Sprite(game, x, y, key, frame)
     Phaser.Sprite.call(this, game, xPos, yPos, imageKey);
-
     // Sprite stuff
     this.anchor.set(0.5, 0.5);
     //Scaling is temp
@@ -54,6 +53,12 @@ Enemy.prototype.damage = function (numDamage) {
 
 //DO nothing
 Enemy.movementPattern_doNothing = function () {
+}
+//Move hozontally
+Enemy.movementPattern_moveDirection = function () {
+    if (this.direction == undefined || this.direction == null)
+        return;
+    this.body.velocity = new Phaser.Point(this.direction.x * this.speed, this.direction.y * this.speed)
 }
 //Follow the target around
 Enemy.movementPattern_followTarget = function () {
@@ -129,9 +134,13 @@ EnemyShooter.prototype.finishShooting = function() {
 
 //Shoot a bullet at the target
 EnemyShooter.shootingPattern_shootAtTarget = function () {
-    let angle = Phaser.Point.angle(new Phaser.Point(this.x,this.y), new Phaser.Point(this.target.x, this.target.y));
+    let angle = Phaser.Point.angle(new Phaser.Point(this.x, this.y), new Phaser.Point(this.target.x, this.target.y));
     this.setAngle(angle);
-    this.shoot();
+    if (this.Destructible == undefined)
+        this.Destructible = false;
+    else
+        this.Destructible = !this.Destructible;
+    this.shoot(this.Destructible);
     this.finishShooting();
 }
 
@@ -166,12 +175,16 @@ EnemyShooter.shootingPattern_spiral = function () {
 function EnemyAI(game, xPos, yPos, imageKey, startingHealth, target, bulletSpeed, firingDelay, AI) {
     EnemyShooter.call(this, game, xPos, yPos, imageKey, startingHealth, target, AI.initMP, AI.initSP, bulletSpeed, firingDelay); //call base class constructor
     this.AI = AI;
+    this.state = 'init';
+    this.pause = true;
 }
 //Finish prefab stuff
 EnemyAI.prototype = Object.create(EnemyShooter.prototype);
 EnemyAI.prototype.constructor = EnemyAI;
 //AI UPDATE LOOP
 EnemyAI.prototype.update = function () {
+    if (this.pause)
+        return;
     this.AI.update.call(this);
     EnemyShooter.prototype.update.call(this);//call the base update
 }
@@ -179,9 +192,22 @@ EnemyAI.prototype.update = function () {
 //AI patterns here
 EnemyAI.AI_boss_cat = {
     initMP: Enemy.movementPattern_doNothing,
-    initSP: EnemyShooter.shootingPattern_flower,
-    state: "init",
+    initSP: EnemyShooter.shootingPattern_shootAtTarget,
     update: function () {
-
+        if (this.state == 'init') {
+            this.firingDelay = 1500;
+            this.speed = 75;
+            this.direction = new Phaser.Point(1, 0);
+            this.state = 'wait';
+            game.time.events.add(4000, function () { this.state = 'move'; }, this);
+        } else if (this.state == 'move') {
+            this.direction.x *= -1;
+            this.movementPattern = Enemy.movementPattern_moveDirection;
+            let timeToWait = (1900 * Math.random()) + 600;
+            if ((this.x > game.world.width * 0.66 && this.direction.x < 0) || (this.x < game.world.width * 0.33 && this.direction > 0))
+                timeToWait += 750;
+            game.time.events.add(timeToWait, function () { this.state = 'move'; }, this);
+            this.state = 'wait';
+        }
     }
 }
