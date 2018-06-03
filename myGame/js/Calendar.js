@@ -19,8 +19,7 @@ function Calendar() {
     },
     this.schedule = {
             '3/1 Friday': 'no_option',
-            '3/2 Saturday': ['Tai']//, 'Keyna'],
-
+            '3/2 Saturday': ['Tai', 'Keyna'],
             '3/4 Monday': 'nobody_there',
             '3/5 Tuesday': ['Keyna'],
             '3/6 Wednesday': 'nobody_there',

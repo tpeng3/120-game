@@ -8,10 +8,10 @@ BasicGame.CharacterDecision.prototype = {
     },
     preload: function () {
         this.characterSprites = [];
-        this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
-        for (let i = 0; i < this.characters.lenth; ++i) {
-            this.load.image(this.characters[i].toLowerCase() + '_default', 'assets/img/characters/vn_' + this.characters[i].toLowerCase() + '.png');
-        }
+        // this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
+        // for (let i = 0; i < this.characters.length; ++i) {
+        //     this.load.image(this.characters[i].toLowerCase() + '_default', 'assets/img/characters/vn_' + this.characters[i].toLowerCase() + '.png');
+        // }
     },
     create: function () {
         console.log('CharacterDecision!')
@@ -26,7 +26,7 @@ BasicGame.CharacterDecision.prototype = {
         this.add.text(200, 40, 'CharacterDecision:', textStyle);
 
         for (let i = 0; i < this.characters.length; ++i) {
-            let newSprite = this.add.sprite(0, this.world.height, this.characters[i].toLowerCase() + '_default');
+            let newSprite = this.add.sprite(0, this.world.height, this.characters[i], this.characters[i]+'_default');
             newSprite.anchor.setTo(0.5, 1);
             newSprite.x = ((this.world.width / (this.characters.length + 1)) * (i + 1));
             newSprite.tint = this.dimColor;
