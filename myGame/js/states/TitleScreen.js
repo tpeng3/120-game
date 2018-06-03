@@ -72,7 +72,7 @@ BasicGame.TitleScreen.prototype = {
 			}, this);
         }
         if (this.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-            this.state.start('ActivityDecision', true, false);
+            this.state.start('Cutscene', true, false, 'case/CaseClosed_1');
         }
 	},
 	goFullscreen: function(){

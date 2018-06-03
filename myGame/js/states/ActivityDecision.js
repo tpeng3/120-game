@@ -80,7 +80,13 @@ BasicGame.ActivityDecision.prototype = {
         this.exit = false;
 
         // add choice buttons
-		this.work = this.add.sprite(this.world.width/2 - 200, this.world.height/2 - 50, 'button_work');
+        if (calendar.print() == "3/2 Saturday") {
+            this.work = this.add.sprite(this.world.width / 2 - 200, this.world.height / 2 - 50, 'button_work_no_option');
+            this.noWorkOption = true;
+        } else {
+		    this.work = this.add.sprite(this.world.width/2 - 200, this.world.height/2 - 50, 'button_work');
+            this.noWorkOption = false;
+        }
         this.work.anchor.setTo(0.5);
         this.work.scale.setTo(0.85, 0.85);
         if (this.sceneData == 'no_option')
@@ -116,6 +122,8 @@ BasicGame.ActivityDecision.prototype = {
     	if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || 
         	this.input.keyboard.isDown(Phaser.Keyboard.ENTER)){
             if (this.selectWork) {
+                if (this.noWorkOption)
+                    return;
                 BasicGame.global.player_stats.fatigue++;
                 if (BasicGame.global.case == undefined) {
                     BasicGame.global.case_number++;
