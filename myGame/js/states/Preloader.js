@@ -36,7 +36,7 @@ BasicGame.Preloader.prototype = {
         this.load.audio('sfx_player_laser', 'assets/audio/sfx/sfx_player_shot_laser.ogg');
         this.load.audio('sfx_text_scroll_locke', 'assets/audio/sfx/sfx_text_scroll6.ogg');
         this.load.audio('sfx_text_scroll_tai', 'assets/audio/sfx/sfx_ts_tai2.ogg');
-        this.load.audio('sfx_text_scroll_keyna', 'assets/audio/sfx/sfx_ts_rando5.ogg');
+        this.load.audio('sfx_text_scroll_keyna', 'assets/audio/sfx/sfx_ts_keyna2.ogg');
         this.load.audio('sfx_text_scroll_fedelynn', 'assets/audio/sfx/sfx_text_scroll6.ogg');
         this.load.audio('sfx_text_scroll_client_f', 'assets/audio/sfx/sfx_ts_rando2.ogg');
         this.load.audio('sfx_text_scroll_client_m', 'assets/audio/sfx/sfx_ts_rando4.ogg');
