@@ -8,27 +8,20 @@ BasicGame.CharacterDecision.prototype = {
     },
     preload: function () {
         this.characterSprites = [];
-        // this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
-        // for (let i = 0; i < this.characters.length; ++i) {
-        //     this.load.image(this.characters[i].toLowerCase() + '_default', 'assets/img/characters/vn_' + this.characters[i].toLowerCase() + '.png');
-        // }
         this.load.image('button_Tai', 'assets/img/ui/button_tai.png');
         this.load.image('button_Keyna', 'assets/img/ui/button_keyna.png');
         this.load.image('button_Lynn', 'assets/img/ui/button_lynn.png');
     },
     create: function () {
         console.log('CharacterDecision!')
+        this.menuSelectSfx = this.add.audio('sfx_menu_select');
+        this.menuEnterGoodSfx = this.add.audio('sfx_menu_open');
         // add the initial bg
         this.bg = this.add.sprite(0, 0, 'bg_agency');
         this.selected = 0;
         this.exit = false;
-        // this.dimColor = 0x111111;
-        // this.unDimColor = 0x777777;
         this.dimColor = 0x555555;
         this.unDimColor = 0xffffff;
-        // some text for the players
-        // var textStyle = { fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: 700 };
-        // this.add.text(200, 40, 'CharacterDecision:', textStyle);
 
         for (let i = 0; i < this.characters.length; ++i) {
             // let newSprite = this.add.sprite(0, this.world.height, this.characters[i], this.characters[i]+'_default');
@@ -74,8 +67,12 @@ BasicGame.CharacterDecision.prototype = {
             this.characterSprites[this.selected].tint = this.unDimColor;
             this.characterSprites[this.selected].scale = new Phaser.Point(1, 1);
             this.textbox.startNewScene(false, null, [{ name: '', text: 'Hang out with ' + this.characters[this.selected] + '?' }]);
+            if (this.menuSelectSfx.isPlaying)
+                this.menuSelectSfx.restart()
+            else
+                this.menuSelectSfx.play('', 0, 0.5, false, true);
         }
-        if ((this.input.keyboard.justPressed(Phaser.Keyboard.D) ||
+        else if ((this.input.keyboard.justPressed(Phaser.Keyboard.D) ||
             this.input.keyboard.justPressed(Phaser.Keyboard.RIGHT)) &&
             this.selected < (this.characters.length - 1)) {
             this.characterSprites[this.selected].tint = this.dimColor;
@@ -84,6 +81,10 @@ BasicGame.CharacterDecision.prototype = {
             this.characterSprites[this.selected].tint = this.unDimColor;
             this.characterSprites[this.selected].scale = new Phaser.Point(1, 1);
             this.textbox.startNewScene(false, null, [{ name: '', text: 'Hang out with ' + this.characters[this.selected] + '?' }]);
+            if (this.menuSelectSfx.isPlaying)
+                this.menuSelectSfx.restart()
+            else
+                this.menuSelectSfx.play('', 0, 0.5, false, true);
         }
         //@Tina you don't need to change any of this code, just set this.selected appropriately
         if (this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) || this.input.keyboard.justPressed(Phaser.Keyboard.ENTER)) {
@@ -91,6 +92,7 @@ BasicGame.CharacterDecision.prototype = {
                 return;
             this.exit = true;
             this.camera.fade('#000', 1000);
+            this.menuEnterGoodSfx.play('', 0, 0.75);
             this.camera.onFadeComplete.addOnce(function () {
                 console.log('incrementing ' + this.characters[this.selected] + '_ind: ' + (calendar.scenes[this.characters[this.selected] + '_ind'] + 1));
                 calendar.scenes[this.characters[this.selected] + '_ind']++;

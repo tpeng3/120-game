@@ -25,6 +25,9 @@ BasicGame.ActivityDecision.prototype = {
 
         // add agency background. It feels weird loading it twice but this is just FOR NOW.
         this.add.sprite(0, 0, 'bg_agency');
+        this.menuSelectSfx = this.add.audio('sfx_menu_select');
+        this.menuEnterBadSfx = this.add.audio('sfx_menu_enter_bad');
+        this.menuEnterGoodSfx = this.add.audio('sfx_menu_open');
 
         var fatigue = BasicGame.global.player_stats.fatigue;
         var text = '';
@@ -90,7 +93,7 @@ BasicGame.ActivityDecision.prototype = {
         this.work.anchor.setTo(0.5);
         this.work.scale.setTo(0.85, 0.85);
         // just to have the positioning match character decision
-        var buttonX = (this.world.width / 2 * 2);
+        var buttonX = (this.world.width / 3 * 2);
         if (this.sceneData == 'no_option')
             this.hangout = this.add.sprite(buttonX, this.world.height / 2 - 50, 'button_hangout_no_option');
         else
@@ -109,41 +112,68 @@ BasicGame.ActivityDecision.prototype = {
         this.work.tint = (this.selectWork? 0xffffff : dimColor);
         this.hangout.tint = (this.selectWork? dimColor : 0xffffff);
         // button scaling
-        var scaleOn = (this.selectWork? 1 : 0.85);
-        var scaleOff = (this.selectWork? 0.85 : 1);
+        var scaleOn = (this.selectWork? 0.95 : 0.85);
+        var scaleOff = (this.selectWork? 0.85 : 0.95);
         this.work.scale.setTo(scaleOn, scaleOn);
         this.hangout.scale.setTo(scaleOff, scaleOff);
 
 		// choice selection
         if((this.input.keyboard.isDown(Phaser.Keyboard.A) || 
         	this.input.keyboard.isDown(Phaser.Keyboard.LEFT)) &&
-        	!this.selectWork){
+            !this.selectWork) {
+            if (this.menuSelectSfx.isPlaying)
+                this.menuSelectSfx.restart()
+            else
+                this.menuSelectSfx.play('', 0, 0.5, false, true);
         	this.selectWork = true;
     	}
     	if((this.input.keyboard.isDown(Phaser.Keyboard.D) || 
         	this.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) &&
-        	this.selectWork){
+            this.selectWork) {
+            if (this.menuSelectSfx.isPlaying)
+                this.menuSelectSfx.restart()
+            else
+                this.menuSelectSfx.play('', 0, 0.5, false, true);
         	this.selectWork = false;
     	}
         //Choice has been made
-    	if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) || 
-        	this.input.keyboard.isDown(Phaser.Keyboard.ENTER)){
+        if (this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) ||
+            this.input.keyboard.justPressed(Phaser.Keyboard.ENTER)) {
             if (this.selectWork) {
-                if (this.noWorkOption)
+                if (this.exit)
                     return;
+                if (this.noWorkOption) {
+                    this.menuEnterBadSfx.play('', 0, 0.5);
+                    return;
+                }
                 BasicGame.global.player_stats.fatigue++;
                 if (BasicGame.global.case == undefined) {
                     BasicGame.global.case_number++;
                     BasicGame.global.case = JSON.parse(this.game.cache.getText('next_case'));
-                    this.state.start('Cutscene', true, false, 'case/CaseStart_' + (BasicGame.global.case_number));
+                    this.exit = true;
+                    this.camera.fade('#000', 1000);
+                    this.menuEnterGoodSfx.play('', 0, 0.75);
+                    this.camera.onFadeComplete.addOnce(function () {
+                        this.state.start('Cutscene', true, false, 'case/CaseStart_' + (BasicGame.global.case_number));
+                    }, this);
                 }
                 else if (BasicGame.global.case == "final")
                     console.log('final case reached, not yet handled in code');//handle final case choosing here
-                else
-        		    this.state.start('Work', true, false);
-            }else{
-                if (this.sceneData == 'no_option' || this.exit)
+                else {
+                    this.exit = true;
+                    this.camera.fade('#000', 1000);
+                    this.menuEnterGoodSfx.play('', 0, 0.75);
+                    this.camera.onFadeComplete.addOnce(function () {
+                        this.state.start('Work', true, false);
+                    }, this);
+                }
+            } else {
+                if (this.exit)
+                    return;  
+                if (this.sceneData == 'no_option') {
+                    this.menuEnterBadSfx.play('', 0, 0.5);
                     return;
+                }  
                 BasicGame.global.player_stats.fatigue = 0;
                 this.camera.fade('#000', 1000);
                 if (this.sceneData == "nobody_there") {
@@ -153,6 +183,7 @@ BasicGame.ActivityDecision.prototype = {
                     }, this);
                 } else if (this.sceneData.length == 1) {
                     this.exit = true;
+                    this.menuEnterGoodSfx.play('', 0, 0.75);
                     this.camera.onFadeComplete.addOnce(function () {
                         console.log('incrementing ' + this.sceneData[0] + '_ind: ' + (calendar.scenes[this.sceneData[0] + '_ind'] + 1));
                         calendar.scenes[this.sceneData[0] + '_ind']++;
@@ -160,6 +191,7 @@ BasicGame.ActivityDecision.prototype = {
                     }, this);
                 } else {
                     this.exit = true;
+                    this.menuEnterGoodSfx.play('', 0, 0.75);
                     this.camera.onFadeComplete.addOnce(function () {
                         this.state.start('CharacterDecision', true, false, this.sceneData);
                     }, this);

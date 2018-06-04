@@ -38,6 +38,8 @@ BasicGame.Bedtime.prototype = {
         bgm = game.add.audio('bgm_temp_paino');
         bgm.loopFull()
 
+        this.exit = false;
+        this.bedtimeSfx = game.add.audio('sfx_bedtime');
         // add background
 		this.stage.backgroundColor = "#000";
 		var bg = this.add.sprite(128, 64, 'bg_bedroom');
@@ -491,12 +493,17 @@ BasicGame.Bedtime.prototype = {
 	            	this.lighting.visible = (this.lighting.visible? false : true);
 	            	break;
 	        	// if colliding with bed
-	        	case "bedframe":
-		            bgm.fadeOut(500);
-		            this.camera.fade('#000', 500);
-		            this.camera.onFadeComplete.addOnce(function () {
-		                	this.state.start('NextDay');
-		            }, this);
+                case "bedframe":
+                    if (this.exit == false) {
+                        this.exit = true;
+                        game.sound.stopAll(); 
+                        this.bedtimeSfx.play();
+                        bgm.fadeOut(2000);
+                        this.camera.fade('#000', 2000);
+                        this.camera.onFadeComplete.addOnce(function () {
+                            this.state.start('NextDay');
+                        }, this);
+                    }
         			break;
         		// if player check laptop, opens up social media
         		case "laptop":
