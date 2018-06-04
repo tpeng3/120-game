@@ -473,7 +473,6 @@ BasicGame.Bedtime.prototype = {
 	        	var diff1 = (sprite.x - furnx);
 				var diff2 = (sprite.y - furny);
 			    if( Math.sqrt( (diff1*diff1)+(diff2*diff2) ) > 64){
-			    	console.log("facing away?");
 			    	this.focus = "";
         			this.flavorText = "";
 			    	this.arrow.x = -50;

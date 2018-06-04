@@ -12,6 +12,9 @@ BasicGame.CharacterDecision.prototype = {
         // for (let i = 0; i < this.characters.length; ++i) {
         //     this.load.image(this.characters[i].toLowerCase() + '_default', 'assets/img/characters/vn_' + this.characters[i].toLowerCase() + '.png');
         // }
+        this.load.image('button_Tai', 'assets/img/ui/button_tai.png');
+        this.load.image('button_Keyna', 'assets/img/ui/button_keyna.png');
+        this.load.image('button_Lynn', 'assets/img/ui/button_lynn.png');
     },
     create: function () {
         console.log('CharacterDecision!')
@@ -19,29 +22,34 @@ BasicGame.CharacterDecision.prototype = {
         this.bg = this.add.sprite(0, 0, 'bg_agency');
         this.selected = 0;
         this.exit = false;
-        this.dimColor = 0x111111;
-        this.unDimColor = 0x777777;
+        // this.dimColor = 0x111111;
+        // this.unDimColor = 0x777777;
+        this.dimColor = 0x555555;
+        this.unDimColor = 0xffffff;
         // some text for the players
-        var textStyle = { fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: 700 };
-        this.add.text(200, 40, 'CharacterDecision:', textStyle);
+        // var textStyle = { fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: 700 };
+        // this.add.text(200, 40, 'CharacterDecision:', textStyle);
 
         for (let i = 0; i < this.characters.length; ++i) {
-            let newSprite = this.add.sprite(0, this.world.height, this.characters[i], this.characters[i]+'_default');
-            newSprite.anchor.setTo(0.5, 1);
+            // let newSprite = this.add.sprite(0, this.world.height, this.characters[i], this.characters[i]+'_default');
+            let newSprite = this.add.sprite(this.world.width / 2 - 200, this.world.height / 2 - 50, 'button_'+this.characters[i]);
+            // newSprite.anchor.setTo(0.5, 1);
+            newSprite.anchor.setTo(0.5);
+            newSprite.scale.setTo(0.85, 0.85);
             newSprite.x = ((this.world.width / (this.characters.length + 1)) * (i + 1));
             newSprite.tint = this.dimColor;
             this.characterSprites.push(newSprite);
         }
-        if (this.characters.length == 2) {
-            this.characterSprites[0].x -= 50;
-            this.characterSprites[1].x += 50;
-        } else {
-            this.characterSprites[0].x -= 75;
-            this.characterSprites[2].x += 75;
-            this.selected = 1;
-        }
+        // if (this.characters.length == 2) {
+        //     this.characterSprites[0].x -= 10;
+        //     this.characterSprites[1].x += 10;
+        // } else {
+        //     this.characterSprites[0].x -= 20;
+        //     this.characterSprites[2].x += 20;
+        //     this.selected = 1;
+        // }
         this.characterSprites[this.selected].tint = this.unDimColor;
-        this.characterSprites[this.selected].scale = new Phaser.Point(1.05, 1.05);
+        this.characterSprites[this.selected].scale = new Phaser.Point(1, 1);
 
         // add textbox and text, we don't have to keep this but for now give some explanations to the players
         this.textbox = new Textbox(game, false, null, [{ name: '', text: 'Hang out with ' + this.characters[this.selected] + '?' }]);
@@ -61,20 +69,20 @@ BasicGame.CharacterDecision.prototype = {
             this.input.keyboard.justPressed(Phaser.Keyboard.LEFT)) &&
             this.selected != 0) {
             this.characterSprites[this.selected].tint = this.dimColor;
-            this.characterSprites[this.selected].scale = new Phaser.Point(1, 1);
+            this.characterSprites[this.selected].scale = new Phaser.Point(0.85, 0.85);
             this.selected--;
             this.characterSprites[this.selected].tint = this.unDimColor;
-            this.characterSprites[this.selected].scale = new Phaser.Point(1.05, 1.05);
+            this.characterSprites[this.selected].scale = new Phaser.Point(1, 1);
             this.textbox.startNewScene(false, null, [{ name: '', text: 'Hang out with ' + this.characters[this.selected] + '?' }]);
         }
         if ((this.input.keyboard.justPressed(Phaser.Keyboard.D) ||
             this.input.keyboard.justPressed(Phaser.Keyboard.RIGHT)) &&
             this.selected < (this.characters.length - 1)) {
             this.characterSprites[this.selected].tint = this.dimColor;
-            this.characterSprites[this.selected].scale = new Phaser.Point(1, 1);
+            this.characterSprites[this.selected].scale = new Phaser.Point(0.85, 0.85);
             this.selected++;
             this.characterSprites[this.selected].tint = this.unDimColor;
-            this.characterSprites[this.selected].scale = new Phaser.Point(1.05, 1.05);
+            this.characterSprites[this.selected].scale = new Phaser.Point(1, 1);
             this.textbox.startNewScene(false, null, [{ name: '', text: 'Hang out with ' + this.characters[this.selected] + '?' }]);
         }
         //@Tina you don't need to change any of this code, just set this.selected appropriately

@@ -89,10 +89,12 @@ BasicGame.ActivityDecision.prototype = {
         }
         this.work.anchor.setTo(0.5);
         this.work.scale.setTo(0.85, 0.85);
+        // just to have the positioning match character decision
+        var buttonX = (this.world.width / 2 * 2);
         if (this.sceneData == 'no_option')
-            this.hangout = this.add.sprite(this.world.width / 2 + 200, this.world.height / 2 - 50, 'button_hangout_no_option');
+            this.hangout = this.add.sprite(buttonX, this.world.height / 2 - 50, 'button_hangout_no_option');
         else
-            this.hangout = this.add.sprite(this.world.width / 2 + 200, this.world.height / 2 - 50, 'button_hangout');
+            this.hangout = this.add.sprite(buttonX, this.world.height / 2 - 50, 'button_hangout');
         this.hangout.anchor.setTo(0.5);
         this.hangout.scale.setTo(0.85, 0.85);
 		// default choice
@@ -106,6 +108,11 @@ BasicGame.ActivityDecision.prototype = {
         var dimColor = 0x555555;
         this.work.tint = (this.selectWork? 0xffffff : dimColor);
         this.hangout.tint = (this.selectWork? dimColor : 0xffffff);
+        // button scaling
+        var scaleOn = (this.selectWork? 1 : 0.85);
+        var scaleOff = (this.selectWork? 0.85 : 1);
+        this.work.scale.setTo(scaleOn, scaleOn);
+        this.hangout.scale.setTo(scaleOff, scaleOff);
 
 		// choice selection
         if((this.input.keyboard.isDown(Phaser.Keyboard.A) || 
