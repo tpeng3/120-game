@@ -34,6 +34,11 @@ BasicGame.Preloader.prototype = {
         this.load.audio('bgm_temp_detective', 'assets/audio/bgm/bgm_detective_1.ogg');
         //SFX
         this.load.audio('sfx_player_laser', 'assets/audio/sfx/sfx_player_shot_laser.ogg');
+        this.load.audio('sfx_bedtime', 'assets/audio/sfx/sfx_bedtime.ogg');
+        this.load.audio('sfx_menu_select', 'assets/audio/sfx/sfx_menu_select.ogg');
+        this.load.audio('sfx_menu_open', 'assets/audio/sfx/sfx_menu_open.ogg');
+        this.load.audio('sfx_menu_close', 'assets/audio/sfx/sfx_menu_close.ogg');
+        this.load.audio('sfx_menu_enter_bad', 'assets/audio/sfx/sfx_menu_enter_bad.ogg');
         this.load.audio('sfx_text_scroll_locke', 'assets/audio/sfx/sfx_text_scroll6.ogg');
         this.load.audio('sfx_text_scroll_tai', 'assets/audio/sfx/sfx_ts_tai2.ogg');
         this.load.audio('sfx_text_scroll_keyna', 'assets/audio/sfx/sfx_ts_keyna2.ogg');

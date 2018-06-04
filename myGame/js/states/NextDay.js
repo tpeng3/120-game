@@ -2,7 +2,7 @@ BasicGame.NextDay = function (game) {};
 
 BasicGame.NextDay.prototype = {
     create: function () {
-        game.sound.stopAll(); 
+        //game.sound.stopAll(); 
         // text of the days for transition
         var dayTextStyle = { font: 'Trebuchet MS', fontSize: '60px', fill: '#fff' };
         this.today = this.add.text(this.world.width / 2, this.world.height / 2, calendar.printDay(), dayTextStyle);
