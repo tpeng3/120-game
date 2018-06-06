@@ -4,7 +4,7 @@
 // target: the target of this enemy, for tracking shots and movement patterns (usually the player, but doesn't have to be)
 // movementPattern: an AI movement pattern that is run every frame (in update) (function object). use Enemy.movementPattern_functionName (static functions defined in this file) (can be null/undefined)
 //     -example: Enemy.movementPatter_followTarget (track the player/target and follows them)
-function Enemy(game, xPos, yPos, imageKey, startingHealth, target, movementPattern) {
+function Enemy(game, xPos, yPos, imageKey, startingHealth, maxHealth, target, movementPattern) {
     // call to Phaser.Sprite // new Sprite(game, x, y, key, frame)
     Phaser.Sprite.call(this, game, xPos, yPos, imageKey);
     // Sprite stuff
@@ -24,11 +24,18 @@ function Enemy(game, xPos, yPos, imageKey, startingHealth, target, movementPatte
     this.deathSfx = game.add.audio('sfx_enemy_death');
     this.maxHealth = 3;
     this.currHealth = startingHealth;
+    this.initialHealth = maxHealth;
     this.speed = 100;
     this.target = target;
     //Enable physics
     game.physics.enable(this);
     this.body.collideWorldBounds = true;
+
+    // set up a health bar
+    this.bh_boss_hcontainer = game.add.sprite(220, 660, 'bh_boss_hcontainer');
+    this.bh_boss_health = game.add.sprite(this.bh_boss_hcontainer.x+4, this.bh_boss_hcontainer.y, 'bh_boss_health');
+    // this.bh_boss_health.cropEnabled = true;
+    this.bh_boss_health.width = (this.currHealth/this.initialHealth) * (this.bh_boss_hcontainer.width-8);
 }
 // explicitly define prefab's prototype (Phaser.Sprite) and constructor (Enemy)
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
@@ -43,6 +50,7 @@ Enemy.prototype.update = function () {
 //take damage and die if necessary
 Enemy.prototype.damage = function (numDamage) {
     this.currHealth -= numDamage;
+    this.bh_boss_health.width = (this.currHealth/this.initialHealth) * (this.bh_boss_hcontainer.width-4);
     if (this.currHealth <= 0) {
         this.deathSfx.play('',0,0.75);
         this.destroy();
@@ -71,8 +79,8 @@ Enemy.movementPattern_followTarget = function () {
 //shootingPattern: an AI movement shooting that is run in update but only actually executes after waiting for firingDelay (function object) use EnemyShooter.shootingPattern_functionName (static functions defined in this file)
 //bulletSpeed: speed of fired bullets (int) <optional, default = 400>
 //firingDelay: delay between actual executions of this.shootingPattern (milliseconds) <optional, default = 1000 + (100 * Math.random())>
-function EnemyShooter(game, xPos, yPos, imageKey, startingHealth, target, movementPattern, shootingPattern, bulletSpeed, firingDelay) {
-    Enemy.call(this, game, xPos, yPos, imageKey, startingHealth, target, movementPattern) //call base class constructor
+function EnemyShooter(game, xPos, yPos, imageKey, startingHealth, maxHealth, target, movementPattern, shootingPattern, bulletSpeed, firingDelay) {
+    Enemy.call(this, game, xPos, yPos, imageKey, startingHealth, maxHealth, target, movementPattern) //call base class constructor
     // this.tint = 0x9999ff;
     //set shooting pattern and sfx
     this.shootingPattern = shootingPattern;
@@ -172,8 +180,8 @@ EnemyShooter.shootingPattern_spiral = function () {
     this.finishShooting();
 }
 
-function EnemyAI(game, xPos, yPos, imageKey, startingHealth, target, bulletSpeed, firingDelay, AI) {
-    EnemyShooter.call(this, game, xPos, yPos, imageKey, startingHealth, target, AI.initMP, AI.initSP, bulletSpeed, firingDelay); //call base class constructor
+function EnemyAI(game, xPos, yPos, imageKey, startingHealth, maxHealth, target, bulletSpeed, firingDelay, AI) {
+    EnemyShooter.call(this, game, xPos, yPos, imageKey, startingHealth, maxHealth, target, AI.initMP, AI.initSP, bulletSpeed, firingDelay); //call base class constructor
     this.AI = AI;
     this.state = 'init';
     this.pause = true;

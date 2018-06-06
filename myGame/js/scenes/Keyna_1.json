@@ -80,11 +80,11 @@
     	"text":"Wait... Don't tell me..."},
     {"name":"Locke", "expression":"surprised",
     	"text":"You actually said yes to consulting ALL those couples?!"},
-    {"name":"Keyna", "expression":"uncertain",
+    {"name":"Keyna", "expression":"panic",
     	"text":"How could I refuse? I-I don't have the heart to turn them down."},
     {"name":"Keyna",
     	"text":"I tried to give them advice but..."},
-    {"name":"Keyna",
+    {"name":"Keyna", "expression":"nervous",
     	"text":"Oh I just hope that they didn't take it all to heart..."},
     {"name":"Keyna", "expression":"disgust",
     	"text":"This is all your fault!"},
@@ -100,11 +100,11 @@
     	"text":"Woah, hey! Quit grabbin' my arm!"},
     {"name":"Keyna", "expression":"annoyed",
     	"text":"And I expect all your flyers gone from town by tomorrow!"},
-	{"name":"Locke", "expression":"nervous",
+	{"name":"Locke", "expression":"surprised",
     	"text":"It took me three days to put those up!"},
     {"name":"Keyna", "expression":"sarcastic",
     	"text":"Well you'd better get them down in one."},
     {"name":"Locke", "expression":"thinking",
-    	"text":"So much for my rest day..."},
+    	"text":"So much for my rest day..."}
   ] 
 }

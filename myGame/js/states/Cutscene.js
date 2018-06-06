@@ -22,8 +22,7 @@ BasicGame.Cutscene.prototype = {
         this.load.atlas('Locke', 'assets/img/characters/sprite_locke.png', 'assets/img/characters/sprite_locke.json');
         this.load.atlas('Tai', 'assets/img/characters/sprite_tai.png', 'assets/img/characters/sprite_tai.json');
         this.load.atlas('Lynn', 'assets/img/characters/sprite_lynn.png', 'assets/img/characters/sprite_lynn.json');
-
-        this.load.image('keyna_default', 'assets/img/characters/vn_keyna.png');
+        this.load.atlas('Keyna', 'assets/img/characters/sprite_keyna.png', 'assets/img/characters/sprite_keyna.json');
 
         // load script
         this.load.text('scene', 'js/scenes/' + this.sceneName + '.json');

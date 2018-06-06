@@ -48,7 +48,7 @@ BasicGame.Work.prototype = {
         // add background/frame
         this.frame = this.add.sprite(200, 16, 'frame');
         this.frame.tint = .8 * 0xffffff;
-        this.hexagons = this.add.tileSprite(204, 20, 804, 684, 'hexagons');
+        this.hexagons = this.add.tileSprite(204, 20, 800, 680, 'hexagons');
         this.hexagons.alpha = 0.6;
 
         this.blackframes = this.add.group();
@@ -68,7 +68,7 @@ BasicGame.Work.prototype = {
         this.world.bringToTop(this.frame);
         this.world.bringToTop(this.hexagons);
 
-        game.physics.arcade.setBounds(this.frame.x+8, this.frame.y+16, this.frame.width-32, this.frame.height-32);
+        game.physics.arcade.setBounds(this.frame.x+24, this.frame.y+32, this.frame.width-48, this.frame.height-48);
 
         // create enemy group
         this.enemyGroup = this.add.group();
@@ -79,7 +79,7 @@ BasicGame.Work.prototype = {
         this.player.body.collideWorldBounds = true; // player can't move outside of frame
 
         // create and spawn the boss enemy
-        this.boss = new EnemyAI(game, this.world.width / 2, -300, 'boss', BasicGame.global.case.boss.curr_health, this.player, 150, 1500, EnemyAI['AI_' + BasicGame.global.case.boss.ai_pattern]);
+        this.boss = new EnemyAI(game, this.world.width / 2, -300, 'boss', BasicGame.global.case.boss.curr_health, BasicGame.global.case.boss.max_health, this.player, 150, 1500, EnemyAI['AI_' + BasicGame.global.case.boss.ai_pattern]);
         this.add.existing(this.boss);
         this.enemyGroup.add(this.boss);
 
@@ -119,14 +119,6 @@ BasicGame.Work.prototype = {
             lives.add(this.add.sprite(120, 410+(i*70), 'bh_lives'));
         }
 
-        this.boss_health = this.add.group();
-        var bh_boss_hcontainer = this.add.sprite(220, 660, 'bh_boss_hcontainer');
-        bh_boss_hcontainer.scale.setTo(50, 1);
-        this.boss_health.add(bh_boss_hcontainer);
-        this.bh_boss_health = this.add.sprite(220, 660, 'bh_boss_health');
-        this.bh_boss_health.scale.setTo(45, 1);
-        this.boss_health.add(this.boss_health);
-
         // some text for the players
         //var textStyle = { fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: 600 };
         //this.add.text(this.frame.x + this.frame.width + 10, 40, 'Use arrow keys to move, SPACEBAR to shoot. Move to next stage via death or after 15 seconds.', textStyle);
@@ -144,10 +136,11 @@ BasicGame.Work.prototype = {
 
         // debug information
         this.game.debug.text(this.time.fps || '--', 2, 14, "#00ff00");
-        this.physics.arcade.collide(this.player, this.frameBounds);
+        // this.physics.arcade.collide(this.player, this.frameBounds);
 
         // update boss health bar?? I'll have it here for now
-        this.bh_boss_health.scale.x = this.boss.currHealth;
+        // if()
+        // this.bh_boss_health.scale.x -= this.health_scale;
 
         if (!this.boss.alive) {
             this.workEndBossDeath();
@@ -158,17 +151,17 @@ BasicGame.Work.prototype = {
         }
     },
     render: function () {
-        if(this.player.showHitbox)
-            game.debug.body(this.player);
+        // if(this.player.showHitbox)
+            // game.debug.body(this.player);
         //if (Enemy.bulletGroup != null)
         //    game.debug.physicsGroup(Enemy.bulletGroup); 
         // game.debug.body(this.player);
 
         //Create some debug health text
-        game.debug.text('Health = ' + this.player.currHealth, this.player.x, this.player.y, { fontSize: '32px', fill: '#00ee00' });
+        // game.debug.text('Health = ' + this.player.currHealth, this.player.x, this.player.y, { fontSize: '32px', fill: '#00ee00' });
 
         //Create some debug health text
-        game.debug.text('Boss Health = ' + this.boss.currHealth, this.boss.x, this.boss.y, { fontSize: '32px', fill: '#ff0000' });
+        // game.debug.text('Boss Health = ' + this.boss.currHealth, this.boss.x, this.boss.y, { fontSize: '32px', fill: '#ff0000' });
     },
     workStart: function () {
         // timer before going on to the next stage
