@@ -26,8 +26,6 @@ BasicGame.Cutscene.prototype = {
 
         // load script
         this.load.text('scene', 'js/scenes/' + this.sceneName + '.json');
-
-
 	},
     create: function () {
         console.log('Cutscene: create');
