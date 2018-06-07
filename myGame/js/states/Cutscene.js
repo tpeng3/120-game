@@ -34,12 +34,6 @@ BasicGame.Cutscene.prototype = {
 		// parse the scene script
         this.scene = JSON.parse(this.game.cache.getText('scene'));
 
-        // add music, it'll be late but I'm lazy rn to change that
-        if (this.scene.bgm != undefined) {
-            var bgm = game.add.audio(this.scene.bgm);
-            bgm.loopFull();
-        }
-
         // add the initial bg
         bg = this.add.sprite(0, 0, this.scene.bg);
 

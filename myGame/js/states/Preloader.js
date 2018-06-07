@@ -22,16 +22,38 @@ BasicGame.Preloader.prototype = {
 		//	as the files below are loaded in.
 		//this.load.setPreloadSprite(this.preloadBar);
 
-		//	Here we load the rest of the assets our game needs.
-		//	As this is just a Project Template I've not provided these assets, swap them for your own.
         // load bgm and sfx
         //BGM
-        this.load.audio('bgm_temp_locke', 'assets/audio/bgm/Locke_And_Load.ogg');
+        // @Tino 6/6/18 I'm gonna load a bunch of jazzy royalty free songs to see which ones I should use
+        this.load.audio('bgm_locke', 'assets/audio/bgm/Locke_And_Load.ogg');
         this.load.audio('bgm_oldtemp_locke', 'assets/audio/bgm/old_Locke_And_Load.ogg');
-        this.load.audio('bgm_temp_talk', 'assets/audio/bgm/yoiyaminoseaside.ogg');
-        this.load.audio('bgm_touhou_stolen', 'assets/audio/bgm/ravel_nightstar_the_drums_and_bass_of_flower_bless.ogg');
         this.load.audio('bgm_wonder_zone', 'assets/audio/bgm/Enter_the_WONDER_ZONE.ogg');
-        this.load.audio('bgm_temp_detective', 'assets/audio/bgm/bgm_detective_1.ogg');
+        this.load.audio('bgm_temp_detective', 'assets/audio/bgm/bgm_startscreen.ogg');
+        this.load.audio('bgm_fedelynn', 'assets/audio/bgm/Dont_Fuck_With_Fedelynn_ver_2.mp3');
+        this.load.audio('bgm_temp_paino', 'assets/audio/bgm/paino.ogg');
+
+        this.load.audio('bgm_seaside', 'assets/audio/bgm/yoiyaminoseaside.ogg');
+        this.load.audio('bgm_sadserious', 'assets/audio/bgm/katamukikaketahizashi.mp3');
+        this.load.audio('bgm_midnighttrain', 'assets/audio/bgm/midnighttrain.mp3');
+        this.load.audio('bgm_middleofthenight', 'assets/audio/bgm/ushimitudokinosora.mp3');
+
+        this.load.audio('bgm_nightroad', 'assets/audio/bgm/NightRoaD.mp3');
+        this.load.audio('bgm_happyflute', 'assets/audio/bgm/tam-n17.mp3');
+        this.load.audio('bgm_sweetvermouth', 'assets/audio/bgm/tw007.mp3');
+        this.load.audio('bgm_vientodelsol', 'assets/audio/bgm/tw009.mp3');
+        this.load.audio('bgm_judas', 'assets/audio/bgm/tw013.mp3');
+        this.load.audio('bgm_strigiformes', 'assets/audio/bgm/tw018.mp3');
+        this.load.audio('bgm_evening', 'assets/audio/bgm/tw037.mp3');
+        this.load.audio('bgm_gunshotstraight', 'assets/audio/bgm/tw042.mp3');
+        this.load.audio('bgm_sofa', 'assets/audio/bgm/tw044.mp3');
+        this.load.audio('bgm_radio', 'assets/audio/bgm/tw056.mp3');
+        this.load.audio('bgm_dognduck', 'assets/audio/bgm/tw057.mp3');
+        this.load.audio('bgm_dbd', 'assets/audio/bgm/tw062.mp3');
+        this.load.audio('bgm_lightup', 'assets/audio/bgm/tw064.mp3');
+        this.load.audio('bgm_smoky', 'assets/audio/bgm/tw075.mp3');
+        this.load.audio('bgm_blend', 'assets/audio/bgm/tw082.mp3');
+        this.load.audio('bgm_mahoucooking', 'assets/audio/bgm/tw083.mp3');
+
         //SFX
         this.load.audio('sfx_player_laser', 'assets/audio/sfx/sfx_player_shot_laser.ogg');
         this.load.audio('sfx_bedtime', 'assets/audio/sfx/sfx_bedtime.ogg');

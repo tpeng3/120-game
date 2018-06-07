@@ -23,11 +23,17 @@ BasicGame.ActivityDecision.prototype = {
     create: function () {
 		console.log('ActivityDecision: create');
 
-        // add agency background. It feels weird loading it twice but this is just FOR NOW.
+        // add agency background. It feels weird adding it twice haha.
         this.add.sprite(0, 0, 'bg_agency');
         this.menuSelectSfx = this.add.audio('sfx_menu_select');
         this.menuEnterBadSfx = this.add.audio('sfx_menu_enter_bad');
         this.menuEnterGoodSfx = this.add.audio('sfx_menu_open');
+
+        // music!
+        if(!bgm.isPlaying){
+            bgm = this.add.audio('bgm_dbd', 1, true);
+            bgm.play();
+        }
 
         var fatigue = BasicGame.global.player_stats.fatigue;
         var text = '';
@@ -150,6 +156,7 @@ BasicGame.ActivityDecision.prototype = {
                 if (BasicGame.global.case == undefined) {
                     BasicGame.global.case_number++;
                     BasicGame.global.case = JSON.parse(this.game.cache.getText('next_case'));
+                    bgm.fadeOut(4000);
                     this.exit = true;
                     this.camera.fade('#000', 1000);
                     this.menuEnterGoodSfx.play('', 0, 0.75);
@@ -160,6 +167,7 @@ BasicGame.ActivityDecision.prototype = {
                 else if (BasicGame.global.case == "final")
                     console.log('final case reached, not yet handled in code');//handle final case choosing here
                 else {
+                    bgm.fadeOut(4000);
                     this.exit = true;
                     this.camera.fade('#000', 1000);
                     this.menuEnterGoodSfx.play('', 0, 0.75);

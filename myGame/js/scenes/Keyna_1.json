@@ -9,7 +9,8 @@
     	"functions":["this.rightChara.visible = false;"]},
     {"name":"Locke", "expression":"confident",
     	"text":"Yup, some peace and quiet is nice every now and then."},
-    {"name":"Keyna", "expression": "disgust",
+    {"music":{"song":"sofa"},
+       "name":"Keyna", "expression": "disgust",
     	"text":"LOCKE!!",
     	"functions":["this.rightChara.visible = true;"]},
     {"name":"Locke", "expression": "surprised",
@@ -104,6 +105,7 @@
     {"name":"Keyna", "expression":"sarcastic",
     	"text":"Well you'd better get them down in one."},
     {"name":"Locke", "expression":"thinking",
-    	"text":"So much for my rest day..."}
+    	"text":"So much for my rest day...",
+        "functions":["bgm.fadeOut(1000);"]}
   ] 
 }

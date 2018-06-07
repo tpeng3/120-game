@@ -134,6 +134,14 @@ Textbox.prototype.advance = function () {
         this.bodyText.text = "";
         // this.bodyText.addFontStyle('normal', 0); // reverting the styles back 
         this.nameText.text = line.name;
+        // start the music, if there is an update
+        if(line.music != undefined){
+            if(line.music.song != undefined){
+                bgm = game.add.audio("bgm_" + line.music.song, 1, true);
+                let fadeIn = line.music.fadeIn || 0;
+                bgm.fadeIn(fadeIn);
+            }
+        }
         // Call all funtions (currently happens at line beginning)
         if (line.functions != undefined) {
             for (let i = 0; i < line.functions.length; i++) {

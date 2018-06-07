@@ -4,7 +4,8 @@
   "sprite_right": "Keyna",
   "next_state":"Bedtime",
   "lines":[
-    {"name":"Keyna", "expression": "annoyed",
+    {"music":{"song":"vientodelsol"},
+        "name":"Keyna", "expression": "annoyed",
     	"text":"LOCKE!!!",
     	"functions":["this.leftChara.visible = false;"]},
     {"name":"Locke", "expression":"default",
@@ -103,6 +104,7 @@
     {"name":"Locke", "expression":"posing",
     	"text":" Commencing CLEANING SEQUENCE: FULL DIVE. START!"},
     {"name":"Keyna", "expression":"panic",
-    	"text":"Why are you the one pulling my arm now?!"}
+    	"text":"Why are you the one pulling my arm now?!",
+        "functions":["bgm.fadeOut(2000);"]}
   ] 
 }

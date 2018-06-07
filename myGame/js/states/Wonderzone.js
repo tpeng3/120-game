@@ -2,7 +2,7 @@ BasicGame.Wonderzone = function (game) {};
 
 BasicGame.Wonderzone.prototype = {
     create: function () {
-        game.sound.stopAll(); 
+        // game.sound.stopAll(); 
         
         var bg = game.add.sprite(0, 0, 'bg_agency');
         this.cutin1 = game.add.sprite(0, 300, 'ui_wonderzone');
@@ -30,6 +30,7 @@ BasicGame.Wonderzone.prototype = {
         }, this);
     },
     advanceState: function() {
+        game.sound.stopAll(); 
         this.state.start('Work', true, false);
     }
 };

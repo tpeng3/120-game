@@ -19,8 +19,8 @@ BasicGame.TitleScreen.prototype = {
 		game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 		game.input.onDown.add(this.goFullscreen, this);
 
-		var bgm = this.add.audio('bgm_temp_detective');
-		bgm.loopFull();
+		bgm = this.add.audio('bgm_temp_detective', 1, true);
+		bgm.play();
 
 		this.add.sprite(0, 0, 'title');
 
@@ -72,7 +72,8 @@ BasicGame.TitleScreen.prototype = {
 			}, this);
         }
         if (this.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-            this.state.start('Cutscene', true, false, 'Keyna_5');
+            this.state.start('Cutscene', true, false, '/case/CaseStart_1');
+            // this.state.start('Cutscene', true, false, 'Keyna_1');
         }
 	},
 	goFullscreen: function(){

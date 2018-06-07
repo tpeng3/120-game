@@ -25,7 +25,6 @@ BasicGame.Bedtime.prototype = {
         this.load.atlas('furniture', 'assets/img/bedtime/bedroom.png', 'assets/img/bedtime/bedroom.json');
 
         // load music and sfx
-        this.load.audio('bgm_temp_paino', 'assets/audio/bgm/paino.ogg');
 	},
 
 	create: function() {
