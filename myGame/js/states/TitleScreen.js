@@ -72,7 +72,7 @@ BasicGame.TitleScreen.prototype = {
 			}, this);
         }
         if (this.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-            this.state.start('Cutscene', true, false, '/case/CaseStart_1');
+            this.state.start('Cutscene', true, false, '/case/CaseClosed_2');
             // this.state.start('Cutscene', true, false, 'Keyna_1');
         }
 	},
