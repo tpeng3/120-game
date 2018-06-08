@@ -8,7 +8,7 @@
     	"text":"What a nice day out! Maybe I'll grab some Froggo Donuts later...",
     	"functions":["this.rightChara.visible = false;"]},
    	{"name":"",
-   		"text":"WEE WOO WEE WOO."}
+   		"text":"WEE WOO WEE WOO."},
     {"name":"Locke", "expression": "surprised",
     	"text":"AHHHH! IT'S HER AGAIN. YOU'LL NEVER CATCH ME AL-"},
     {"name":"Locke", "expression": "nervous",
@@ -66,7 +66,7 @@
     {"name":"Locke", "expression":"annoyed",
     	"text":"You two plot and conspire all the time!"},
     {"name":"Fedelynn", "expression":"tired",
-    	"text":["The police chief has... restricted my access to those kinds of resources. And Keyna would be too obvious."]},
+    	"text":"The police chief has... restricted my access to those kinds of resources. And Keyna would be too obvious."},
     {"name":"Fedelynn", "expression":"default",
     	"text":"Everyone know I work with her."},
     {"name":"Locke", "expression":"serious",

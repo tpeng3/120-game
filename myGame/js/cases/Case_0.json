@@ -3,8 +3,8 @@
   "bg": "",
   "bgm": "bgm_wonder_zone",
   "boss": {
-    "max_health": 50,
-    "curr_health": 50,
+    "max_health": 500,
+    "curr_health": 500,
     "pos": {
       "x": 0,
       "y": 0
