@@ -1,18 +1,48 @@
 {
-  "scene_name": "casestart_0",
   "bg": "bg_agency",
-  "bgm": "bgm_temp_locke",
-  "sprite_left": "locke_default",
+  "sprite_left": "Locke",
   "sprite_right": "",
-  "next_state": "Work",
-  "lines": [
-    {
-      "name": "Locke",
-      "text": "Thanks for the case crazy cat lady!"
-    },
-    {
-      "name": "Crazy Cat Lady",
-      "text": "You better find him whippersnapper"
-    }
-  ]
+  "next_state":"Wonderzone",
+  "lines":[
+    {"music":{"song":"seaside","fadeIn":4000},
+    "name":"Locke", "expression": "default",
+      "text":"That's strange... I haven't seen Tai at all recently."},
+    {"name":"Locke", "expression": "thinking",
+      "text":"Usually he's free on Saturday, but I wasn't able to contact him at all."},
+    {"name":"Locke", "expression": "serious",
+      "text":"His last message on Ribbitter was pretty cryptic too."},
+    {"name":"Locke", "expression": "default",
+      "text":"But I guess he's just been pretty busy lately."},
+    {"name":"",
+      "text":"-- A few minutes later --",
+      "functions":["this.leftChara.visible = false;", "this.black.visible = true;"]},
+    {"name":"Locke", "expression": "serious",
+      "text":"...Don't tell me..."},
+    {"name":"Locke", "expression": "surprised",
+      "text":"Did something happen to Tai?!"},
+    {"name":"Locke", "expression": "serious",
+      "text":"......No, that wouldn't happen. Tai's always been a pretty responsible guy."},
+    {"name":"Locke", "expression": "default",
+      "text":"He's a year younger than me, but he's always seemed more mature."},
+    {"name":"Locke", "expression": "nervous",
+      "text":"The amount of times he's had to bail me out of trouble has been... more than I want to count."},
+    {"name":"Locke", "expression": "serious",
+      "text":"He HAS felt pretty distant lately though."},
+    {"name":"Locke", "expression": "thinking",
+      "text":"I get that editing can be a pretty stressful job but..."},
+    {"name":"Locke", "expression": "serious",
+      "text":"It feels like there's something else he's been hiding from me..."},
+    {"name":"Locke", "expression": "thinking",
+      "text":"..."},
+    {"name":"Locke", "expression": "nervous",
+      "text":"No good. I can't work with all this worrying..."},
+    {"name":"Locke", "expression": "default",
+      "text":"Did something happen with Power Traingers?"},
+    {"name":"Locke", "expression": "thinking",
+      "text":"I mean, I don't think Trainger Yellow actually died, Tai would have looked more devastated during the live performance."},
+    {"name":"Locke", "expression": "serious",
+      "text":"Maybe I'll actually do some more research on the show. I've fallen really behind on the episodes."},
+    {"name":"Locke", "expression": "posing",
+      "text":"Alright, commencing WONDER ZONE: FULL DIVE. START!"}
+  ] 
 }
