@@ -1,11 +1,16 @@
 {
-  "case_name": "The Cat Caper Catastrophy",
+  "case_name": "Ribbit and Weep",
   "bg": "",
-  "bgm": "bgm_touhou_stolen",
+  "bgm": "bgm_wonder_zone",
   "boss": {
     "max_health": 500,
     "curr_health": 500,
-    "sprite": "bh_boss_cat",
-    "ai_pattern": "boss_cat"
+    "pos": {
+      "x": 50,
+      "y": 0
+    },
+    "name": "",
+    "sprite": "bh_boss_bird",
+    "ai_pattern": "boss_bird"
   }
 }

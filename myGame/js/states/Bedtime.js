@@ -173,8 +173,8 @@ BasicGame.Bedtime.prototype = {
 		this.lighting.visible = false;
 
 		// this is janky as hell but I don't care, I don't have to re-set up the bedroom HAHA
-		if(true){
-		// if (calendar.date.getDay() == 0){
+		//if(true){
+		if (calendar.date.getDay() == 0){
 			this.sundayTransition();
 		}else{
 			bgm.play()
@@ -188,8 +188,8 @@ BasicGame.Bedtime.prototype = {
         }, this);
 	},
     update: function () {
-    	if(false){
-    	// if (calendar.date.getDay() != 0){
+    	//if(false){
+    	if (calendar.date.getDay() != 0){
 	        // Movement code
 	        var dir = new Phaser.Point(0, 0);
 	        if (game.input.keyboard.isDown(Phaser.Keyboard.UP) ||
@@ -573,7 +573,7 @@ BasicGame.Bedtime.prototype = {
 		this.tv.animations.add('default', [1, 2], 8, true);
 		this.tv.animations.play('default');
 		this.game.time.events.add(1000, function(){
-			this.flavorText = 'Sundays are rest days so you decide to take things easy.'
+			this.flavorText = 'Sundays are rest days! You decide to take things easy.'
 		},this);
 		this.game.time.events.add(10000, this.advanceState, this);
 		var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);

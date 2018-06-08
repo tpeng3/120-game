@@ -93,7 +93,7 @@ function EnemyShooter(game, xPos, yPos, imageKey, startingHealth, maxHealth, tar
     //set shooting pattern and sfx
     this.shootingPattern = shootingPattern;
     this.shotSfx = game.add.audio('sfx_player_laser');
-    this.bulletAngle = new Phaser.Point(0, -1)
+    this.bulletAngle = new Phaser.Point(0, -1);
     this.bulletDamage = 1;
     this.shootCenter = false;
     //set bulletspeed (with default value)
@@ -156,6 +156,16 @@ EnemyShooter.prototype.finishShooting = function() {
 //SHOOTING PATTERNS (static functions)
 
 //Shoot a bullet at the target
+EnemyShooter.shootingPattern_shootAngle = function () {
+    if (this.Destructible == undefined)
+        this.Destructible = false;
+    else
+        this.Destructible = !this.Destructible;
+    this.shoot(this.Destructible);
+    this.finishShooting();
+}
+
+//Shoot a bullet at the target
 EnemyShooter.shootingPattern_shootAtTarget = function () {
     let angle = Phaser.Point.angle(new Phaser.Point(this.x, this.y), this.target.position);
     this.setAngle(angle);
@@ -199,9 +209,9 @@ EnemyShooter.shootingPattern_flower = function (notReset, angleOffset) {
 //shoot a round flower pattern or destructible and non-destructible bullets
 EnemyShooter.shootingPattern_burst = function () {
     if (this.modAngle == undefined || this.modAngle != 0)
-        this.modAngle == Enemy.PI18;
-    else
         this.modAngle = 0;
+    else
+        this.modAngle = Enemy.PI18;
     EnemyShooter.shootingPattern_flower.call(this, true, this.modAngle);
     this.finishShooting();
 }
@@ -225,6 +235,8 @@ EnemyShooter.shootingPattern_spiral = function () {
 function EnemyAI(game, xPos, yPos, imageKey, startingHealth, maxHealth, target, bulletSpeed, firingDelay, AI) {
     EnemyShooter.call(this, game, xPos, yPos, imageKey, startingHealth, maxHealth, target, AI.initMP, AI.initSP, bulletSpeed, firingDelay); //call base class constructor
     this.AI = AI;
+    if (this.AI.init != undefined)
+        this.AI.init.call(this);
     this.state = 'init';
     this.pause = true;
 }
@@ -264,7 +276,7 @@ EnemyAI.AI_boss_cat = {
 
 //AI patterns here
 EnemyAI.AI_boss_bird = {
-    initMP: Enemy.movementPattern_moveAroundPoint,
+    initMP: Enemy.movementPattern_doNothing,
     initSP: EnemyShooter.shootingPattern_shootAroundTarget,
     phase: 1,
     update: function () {
@@ -275,6 +287,7 @@ EnemyAI.AI_boss_bird = {
         if (this.AI.phase == 1) {
             if (this.state == 'init') {
                 console.log("crow init");
+                this.movementPattern = Enemy.movementPattern_moveAroundPoint;
                 this.firingDelay = 300;
                 let rotX = this.x - 50;
                 let rotY = this.y + 75;
@@ -297,6 +310,7 @@ EnemyAI.AI_boss_bird = {
                             game.time.events.add(500, function () {
                                 this.movementPattern = Enemy.movementPattern_moveAroundPoint;
                                 this.shootingPattern = EnemyShooter.shootingPattern_shootAroundTarget;
+                                this.firingDelay = 300;
                                 this.shootCenter = false;
                                 game.time.events.add(4000, function () { this.state = 'burst'; }, this);
                             }, this);
@@ -305,7 +319,137 @@ EnemyAI.AI_boss_bird = {
                     }
                 }
                 this.state = 'wait';
-            } 
+            } else if (this.state == 'wait') {
+                if (this.x > this.rotationPoint.x + 10)
+                    this.scale.x = 2;
+                else if (this.x < this.rotationPoint.x - 10)
+                    this.scale.x = -2;
+            }
+        }
+        else if (this.AI.phase == 2) {
+            if (this.AI.phase2Start == undefined) {
+                this.state = 'init';
+                this.AI.phase2Start = true;
+            }
+            if (this.state == 'init') {
+                this.movementPattern = Enemy.movementPattern_doNothing;
+                this.shootingPattern = function () { };
+                var targetPoint = new Phaser.Point(game.world.width / 2, 150);
+                game.physics.arcade.moveToObject(this, targetPoint, this.speed);
+                let buffer = 20;
+                if (this.position.x <= targetPoint.x + buffer && this.position.x >= targetPoint.x - buffer && this.position.y <= targetPoint.y + buffer && this.position.y >= targetPoint.y - buffer) {
+                    console.log("reached target point");
+                    this.body.velocity = new Phaser.Point(0, 0);
+                    this.state = 'wait';
+                    this.movementPattern = Enemy.movementPattern_moveAroundPoint;
+                    let rotX = this.x - 25;
+                    let rotY = this.y + 25;
+                    this.rotationPoint = new Phaser.Point(rotX, rotY);
+                    this.rotSpeed = Enemy.PI18;
+                    game.time.events.add(3000, function () { this.state = 'strafe'; }, this);
+                }
+            } else if (this.state == 'strafe') {
+                if (this.AI.strafeDir == undefined) {
+                    this.AI.strafeDir = true;
+                } else {
+                    this.AI.strafeDir = !this.AI.strafeDir;
+                }
+                if (this.AI.strafeDir) {
+                    this.direction = new Phaser.Point(1, 0);
+                    this.scale.x = 2;
+                } else {
+                    this.direction = new Phaser.Point(-1, 0);
+                    this.scale.x = -2;
+                }
+                this.movementPattern = Enemy.movementPattern_moveDirection;
+                this.bulletAngle = new Phaser.Point(0, -1);
+                this.shootingPattern = EnemyShooter.shootingPattern_shootAngle;
+                this.firingDelay = 100;
+                this.speed = 300;
+                this.state = 'strafePoll';
+            } else if (this.state == 'strafePoll') {
+                if (this.AI.strafeDir && this.x >= 900) {
+                    this.state = 'burst';
+                } else if (!this.AI.strafeDir && this.x <= 300) {
+                    this.state = 'burst'
+                }
+            } else if (this.state == 'burst') {
+                this.afterShot = function () {
+                    this.movementPattern = Enemy.movementPattern_doNothing;
+                    this.firingDelay = 750;
+                    this.shootingPattern = EnemyShooter.shootingPattern_burst;
+                    this.shootCenter = true;
+                    this.afterShot = function () {
+                        if (this.afterShot.count == undefined)
+                            this.afterShot.count = 0;
+                        this.afterShot.count++;
+                        if (this.afterShot.count >= 5) {
+                            this.movementPattern = Enemy.movementPattern_moveAroundPoint;
+                            let rotX = 0;
+                            if (this.AI.strafeDir)
+                                rotX = this.x - 25;
+                            else
+                                rotX = this.x + 25;
+                            let rotY = this.y + 25;
+                            this.rotationPoint = new Phaser.Point(rotX, rotY);
+                            this.rotSpeed = Enemy.PI18;
+                            this.shootingPattern = function () { };
+                            game.time.events.add(3000, function () {
+                                this.shootCenter = false;
+                                this.state = 'strafe';
+                            }, this);
+                            this.afterShot = function () { }
+                        }
+                    }
+                }
+                this.state = 'wait';
+            }
+        }
+        else if (this.AI.phase == 3) {
+            if (this.AI.phase3Start == undefined) {
+                this.state = 'init';
+                this.AI.phase3Start = true;
+            }
+            if (this.state == 'init') {
+                this.movementPattern = Enemy.movementPattern_doNothing;
+                this.shootingPattern = function () { };
+                var targetPoint = new Phaser.Point(game.world.width / 2, 150);
+                game.physics.arcade.moveToObject(this, targetPoint, this.speed);
+                let buffer = 15;
+                if (this.position.x <= targetPoint.x + buffer && this.position.x >= targetPoint.x - buffer && this.position.y <= targetPoint.y + buffer && this.position.y >= targetPoint.y - buffer) {
+                    console.log("reached target point");
+                    this.body.velocity = new Phaser.Point(0, 0);
+                    this.state = 'wait';
+                    this.movementPattern = Enemy.movementPattern_moveAroundPoint;
+                    let rotX = this.x - 25;
+                    let rotY = this.y + 25;
+                    this.rotationPoint = new Phaser.Point(rotX, rotY);
+                    this.rotSpeed = Enemy.PI18;
+                    game.time.events.add(1000, function () { this.state = 'burst'; }, this);
+                }
+            } else if (this.state == 'burst') {
+                this.afterShot = function () {
+                    this.firingDelay = 367;
+                    this.shootingPattern = EnemyShooter.shootingPattern_burst;
+                    this.shootCenter = true;
+                    this.afterShot = function () {
+                        if (this.afterShot.count == undefined)
+                            this.afterShot.count = 0;
+                        this.afterShot.count++;
+                        if (this.afterShot.count >= 7) {
+                            this.movementPattern = Enemy.movementPattern_doNothing;
+                            this.shootingPattern = function () { };
+                            game.time.events.add(3000, function () {
+                                this.movementPattern = Enemy.movementPattern_moveAroundPoint;
+                                this.shootCenter = false;
+                                this.state = 'burst';
+                            }, this);
+                            this.afterShot = function () { }
+                        }
+                    }
+                }
+                this.state = 'wait';
+            }
         }
     }
 }
