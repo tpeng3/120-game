@@ -12,6 +12,8 @@ function Enemy(game, xPos, yPos, imageKey, startingHealth, maxHealth, target, mo
     //Scaling is temp
     this.scale.x = 2;
     this.scale.y = 2;
+    this.halfWidth = this.width / 2;
+    this.halfHeight = this.height / 2;
     //Define static bullet group if not defined (in here to access game properly)
     if (Enemy.bulletGroup == null)
         Enemy.bulletGroup = game.add.group();
@@ -41,6 +43,8 @@ function Enemy(game, xPos, yPos, imageKey, startingHealth, maxHealth, target, mo
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
 Enemy.prototype.constructor = Enemy;
 Enemy.bulletGroup = null; //Initialize the enemy bullet group (static)
+Enemy.PI18 = Math.PI / 18;
+Enemy.PI36 = Math.PI / 36;
 
 //Call the movement pattern, and damage the player if the player is hit (can change any value of enemy)
 Enemy.prototype.update = function () {
@@ -68,6 +72,10 @@ Enemy.movementPattern_moveDirection = function () {
         return;
     this.body.velocity = new Phaser.Point(this.direction.x * this.speed, this.direction.y * this.speed)
 }
+//move around a point
+Enemy.movementPattern_moveAroundPoint = function () {
+    this.position.rotate(this.rotationPoint.x, this.rotationPoint.y, this.rotSpeed);
+}
 //Follow the target around
 Enemy.movementPattern_followTarget = function () {
     game.physics.arcade.moveToObject(this, this.target, this.speed);
@@ -87,6 +95,7 @@ function EnemyShooter(game, xPos, yPos, imageKey, startingHealth, maxHealth, tar
     this.shotSfx = game.add.audio('sfx_player_laser');
     this.bulletAngle = new Phaser.Point(0, -1)
     this.bulletDamage = 1;
+    this.shootCenter = false;
     //set bulletspeed (with default value)
     if (bulletSpeed != undefined)
         this.bulletSpeed = bulletSpeed;
@@ -98,6 +107,7 @@ function EnemyShooter(game, xPos, yPos, imageKey, startingHealth, maxHealth, tar
     else
         this.firingDelay = 1000 + (100 * Math.random());//fire every this amount of milliseconds
     this.isReadyToShoot = true;
+    this.afterShot = function () { };
 }
 //Finish prefab stuff
 EnemyShooter.prototype = Object.create(Enemy.prototype);
@@ -106,8 +116,10 @@ EnemyShooter.prototype.constructor = EnemyShooter;
 //Call shooting pattern if ready to shoot
 EnemyShooter.prototype.update = function () {
     Enemy.prototype.update.call(this); //call the base update
-    if (this.isReadyToShoot)
+    if (this.isReadyToShoot) {
         this.shootingPattern.call(this);
+        this.afterShot.call(this);
+    }
 }
 //Set the firing angle (helper member unction used in shooting patterns)
 //Args: angle: the angle in radians (or in degrees, if fromDegrees = true)
@@ -123,12 +135,15 @@ EnemyShooter.prototype.setAngle = function (angle, fromDegrees) {
 //Shoot a bullet (helper member unction used in shooting patterns)
 //Args: isDestructible (will be replaced by bulletType when there are more types) the type of bullet to shoot (bool) <optional>
 EnemyShooter.prototype.shoot = function (isDestructible) {
-    var bullet;
+    let bullet;
+    let yPos = this.y
+    if (!this.shootCenter)
+        yPos += this.halfHeight;
     if (isDestructible) {
-        bullet = new DestructibleBullet(game, 'enemy_bullet_l', this.x, this.y, this.bulletDamage, this.bulletSpeed, this.bulletAngle, this.target, Enemy.bulletGroup, Player.bulletGroup);
+        bullet = new DestructibleBullet(game, 'enemy_bullet_l', this.x, yPos, this.bulletDamage, this.bulletSpeed, this.bulletAngle, this.target, Enemy.bulletGroup, Player.bulletGroup);
         bullet.tint = 0x666666;
     } else {
-        bullet = new Bullet(game, 'enemy_bullet', this.x, this.y, this.bulletDamage, this.bulletSpeed, this.bulletAngle, this.target, Enemy.bulletGroup);
+        bullet = new Bullet(game, 'enemy_bullet', this.x, yPos, this.bulletDamage, this.bulletSpeed, this.bulletAngle, this.target, Enemy.bulletGroup);
     }
     //this.shotSfx.play();
 }
@@ -142,7 +157,20 @@ EnemyShooter.prototype.finishShooting = function() {
 
 //Shoot a bullet at the target
 EnemyShooter.shootingPattern_shootAtTarget = function () {
-    let angle = Phaser.Point.angle(new Phaser.Point(this.x, this.y), new Phaser.Point(this.target.x, this.target.y));
+    let angle = Phaser.Point.angle(new Phaser.Point(this.x, this.y), this.target.position);
+    this.setAngle(angle);
+    if (this.Destructible == undefined)
+        this.Destructible = false;
+    else
+        this.Destructible = !this.Destructible;
+    this.shoot(this.Destructible);
+    this.finishShooting();
+}
+
+//Shoot a bullet at the target
+EnemyShooter.shootingPattern_shootAroundTarget = function () {
+    let angle = Phaser.Point.angle(new Phaser.Point(this.x, this.y), this.target.position);
+    angle += Enemy.PI18 * Phaser.Math.random(-1, 1);
     this.setAngle(angle);
     if (this.Destructible == undefined)
         this.Destructible = false;
@@ -153,17 +181,31 @@ EnemyShooter.shootingPattern_shootAtTarget = function () {
 }
 
 //shoot a round flower pattern or destructible and non-destructible bullets
-EnemyShooter.shootingPattern_flower = function () {
-    let angle = Phaser.Point.angle(new Phaser.Point(this.x, this.y), new Phaser.Point(this.target.x, this.target.y));
+EnemyShooter.shootingPattern_flower = function (notReset, angleOffset) {
+    let angle = Phaser.Point.angle(new Phaser.Point(this.x, this.y), this.target.position);
+    if (angleOffset != undefined)
+        angle += angleOffset;
     var Destructible = false;
     for (let i = 0; i < 36; ++i) {
         this.setAngle(angle);
-        angle += Math.PI / 18;
+        angle += Enemy.PI18;
         this.shoot(Destructible);
         Destructible = !Destructible;
     }
+    if (notReset == undefined || notReset == false)
+        this.finishShooting();
+}
+
+//shoot a round flower pattern or destructible and non-destructible bullets
+EnemyShooter.shootingPattern_burst = function () {
+    if (this.modAngle == undefined || this.modAngle != 0)
+        this.modAngle == Enemy.PI18;
+    else
+        this.modAngle = 0;
+    EnemyShooter.shootingPattern_flower.call(this, true, this.modAngle);
     this.finishShooting();
 }
+
 //shoot a spiral pattern of destructible and non-destructible bullets
 EnemyShooter.shootingPattern_spiral = function () {
     if (this.modAngle == undefined) {
@@ -174,7 +216,7 @@ EnemyShooter.shootingPattern_spiral = function () {
         this.Destructible = false;
     else
         this.Destructible = !this.Destructible;
-    this.modAngle += Math.PI / 18;
+    this.modAngle += Enemy.PI18;
     this.setAngle(this.modAngle);
     this.shoot(this.Destructible);
     this.finishShooting();
@@ -216,6 +258,54 @@ EnemyAI.AI_boss_cat = {
                 timeToWait += 750;
             game.time.events.add(timeToWait, function () { this.state = 'move'; }, this);
             this.state = 'wait';
+        }
+    }
+}
+
+//AI patterns here
+EnemyAI.AI_boss_bird = {
+    initMP: Enemy.movementPattern_moveAroundPoint,
+    initSP: EnemyShooter.shootingPattern_shootAroundTarget,
+    phase: 1,
+    update: function () {
+        if (this.currHealth < 100)
+            this.AI.phase = 3;
+        else if (this.currHealth < 200)
+            this.AI.phase = 2;
+        if (this.AI.phase == 1) {
+            if (this.state == 'init') {
+                console.log("crow init");
+                this.firingDelay = 300;
+                let rotX = this.x - 50;
+                let rotY = this.y + 75;
+                this.rotationPoint = new Phaser.Point(rotX, rotY);
+                this.rotSpeed = Enemy.PI18 / 5;
+                this.speed = 75;
+                this.state = 'wait';
+                game.time.events.add(5000, function () { this.state = 'burst'; }, this);
+            } else if (this.state == 'burst') {
+                this.afterShot = function () {
+                    this.movementPattern = Enemy.movementPattern_doNothing;
+                    this.firingDelay = 500;
+                    this.shootingPattern = EnemyShooter.shootingPattern_burst;
+                    this.shootCenter = true;
+                    this.afterShot = function () {
+                        if (this.afterShot.count == undefined)
+                            this.afterShot.count = 0;
+                        this.afterShot.count++;
+                        if (this.afterShot.count >= 2) {
+                            game.time.events.add(500, function () {
+                                this.movementPattern = Enemy.movementPattern_moveAroundPoint;
+                                this.shootingPattern = EnemyShooter.shootingPattern_shootAroundTarget;
+                                this.shootCenter = false;
+                                game.time.events.add(4000, function () { this.state = 'burst'; }, this);
+                            }, this);
+                            this.afterShot = function () { }
+                        }
+                    }
+                }
+                this.state = 'wait';
+            } 
         }
     }
 }

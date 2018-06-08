@@ -1,0 +1,12 @@
+{
+  "case_name": "The Catalyst",
+  "bg": "",
+  "bgm": "bgm_wonder_zone",
+  "boss": {
+    "max_health": 50,
+    "curr_health": 50,
+    "name": "Admiral Snuggles",
+    "sprite": "bh_boss_cat",
+    "ai_pattern":  "boss_cat"
+  }
+}
