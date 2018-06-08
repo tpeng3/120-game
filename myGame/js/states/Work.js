@@ -78,8 +78,9 @@ BasicGame.Work.prototype = {
         this.add.existing(this.player);
         this.player.body.collideWorldBounds = true; // player can't move outside of frame
 
+        let bossDat = BasicGame.global.case.boss;
         // create and spawn the boss enemy
-        this.boss = new EnemyAI(game, this.world.width / 2, -300, 'boss', BasicGame.global.case.boss.curr_health, BasicGame.global.case.boss.max_health, this.player, 150, 1500, EnemyAI['AI_' + BasicGame.global.case.boss.ai_pattern]);
+        this.boss = new EnemyAI(game, this.world.width / 2 + bossDat.pos.x, 30 + bossDat.pos.y, 'boss', bossDat.curr_health, bossDat.max_health, this.player, 150, 1500, EnemyAI['AI_' + bossDat.ai_pattern]);
         this.add.existing(this.boss);
         this.enemyGroup.add(this.boss);
 
