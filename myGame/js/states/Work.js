@@ -26,10 +26,6 @@ BasicGame.Work.prototype = {
         this.load.image('bh_boss_health', 'assets/img/bh/bh_boss_health.png');
         this.load.image('bh_boss_hcontainer', 'assets/img/bh/bh_boss_health_container.png');
 
-        // load bgm and sfx (now loaded in boot)
-        //this.load.audio('bgm_touhou_stolen', 'assets/audio/bgm/ravel_nightstar_the_drums_and_bass_of_flower_bless.ogg');
-        //this.load.audio('bgm_wonder_zone', 'assets/audio/bgm/Enter_the_WONDER_ZONE.ogg');
-        //this.load.audio('sfx_player_laser', 'assets/audio/sfx/sfx_player_shot_laser.ogg');
         this.load.audio('sfx_enemy_death', 'assets/audio/sfx/sfx_enemy_death.ogg');
     },
     create: function () {
@@ -72,6 +68,7 @@ BasicGame.Work.prototype = {
 
         // create enemy group
         this.enemyGroup = this.add.group();
+        Enemy.group = this.enemyGroup;
 
         // create the player sprite from the player prefab
         this.player = new Player(game, this.lives, this.enemyGroup);

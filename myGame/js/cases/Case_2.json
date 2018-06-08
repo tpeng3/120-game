@@ -6,11 +6,11 @@
     "max_health": 500,
     "curr_health": 500,
     "pos": {
-      "x": 50,
+      "x": 0,
       "y": 0
     },
-    "name": "",
-    "sprite": "bh_boss_bird",
-    "ai_pattern": "boss_bird"
+    "name": "CroakNDagger2012",
+    "sprite": "bh_boss_frog",
+    "ai_pattern": "boss_frog"
   }
 }

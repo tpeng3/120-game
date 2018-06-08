@@ -1,13 +1,16 @@
 {
-  "case_name": "Lark and Load",
+  "case_name": "Ribbit and Weep",
   "bg": "",
   "bgm": "bgm_wonder_zone",
   "boss": {
-    "max_health": 300,
-    "curr_health": 300,
-    "pos": {"x": 50, "y": 0},
-    "name": "The Cheepskate",
-    "sprite": "bh_boss_bird",
-    "ai_pattern":  "boss_bird"
+    "max_health": 500,
+    "curr_health": 500,
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "name": "CroakNDagger2012",
+    "sprite": "bh_boss_frog",
+    "ai_pattern": "boss_frog"
   }
 }
