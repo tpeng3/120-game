@@ -23,7 +23,9 @@ BasicGame.Work.prototype = {
         this.load.image('bh_clock', 'assets/img/bh/bh_clock.png');
         this.load.image('bh_tick', 'assets/img/bh/bh_tick.png');
         this.load.image('bh_lives', 'assets/img/bh/bh_lives.png');
-        this.load.image('bh_boss_health', 'assets/img/bh/bh_boss_health.png');
+        // this.load.image('bh_boss_health', 'assets/img/bh/bh_boss_health.png');
+        this.load.spritesheet('bh_boss_health', 'assets/img/bh/bh_boss_health.png', 2, 16);
+
         this.load.image('bh_boss_hcontainer', 'assets/img/bh/bh_boss_health_container.png');
 
         this.load.audio('sfx_enemy_death', 'assets/audio/sfx/sfx_enemy_death.ogg');

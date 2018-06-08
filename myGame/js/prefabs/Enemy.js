@@ -58,8 +58,14 @@ Enemy.prototype.update = function () {
 //take damage and die if necessary
 Enemy.prototype.damage = function (numDamage) {
     this.currHealth -= numDamage;
-    if (!this.isNotBoss)
+    //update health bar color
+    if(this.currHealth/this.initialHealth < .2){
+        this.bh_boss_health.frame = 2;
+    }
+    if (!this.isNotBoss){
         this.bh_boss_health.width = (this.currHealth/this.initialHealth) * (this.bh_boss_hcontainer.width-4);
+        // this.bh_boss_health.tint = Phaser.Color.interpolateColor(0xffffff, Math.random() * 0xff0000, 10, 50);
+    }
     if (this.currHealth <= 0) {
         this.deathSfx.play('',0,0.75);
         this.destroy();

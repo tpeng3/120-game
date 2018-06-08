@@ -16,6 +16,8 @@ function Textbox(game, changeState, scene, lines, position, anchor, scale) {
     this.alpha = 0.85;
     //Game and scene stuff
     this.callbackGame = game;
+    //call the camera
+    this.camera = game.camera;
     //set scene of make dummy scene if null
     if (scene != null)
         this.scene = scene;
@@ -32,6 +34,7 @@ function Textbox(game, changeState, scene, lines, position, anchor, scale) {
         Tai: 'sfx_text_scroll_tai',
         Keyna: 'sfx_text_scroll_keyna',
         Lynn: 'sfx_text_scroll_fedelynn',
+        Fedelynn: 'sfx_text_scroll_fedelynn',
         'Allie Catt': 'sfx_text_scroll_client_f',
         'Earl Leebird': 'sfx_text_scroll_client_m',
         default: 'sfx_text_scroll_default'
@@ -151,6 +154,7 @@ Textbox.prototype.advance = function () {
         // change character sprite expression
         if(line.expression != undefined){
             let chara = (line.name == this.leftChara.key? this.leftChara : this.rightChara);
+            if(chara == 'Fedelynn') chara = 'Lynn'; // just for you fedelynn
             chara.frameName = line.name + '_' + line.expression;
         }
         // sprite dimming
