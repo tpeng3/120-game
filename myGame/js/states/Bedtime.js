@@ -22,6 +22,7 @@ BasicGame.Bedtime.prototype = {
         this.load.spritesheet('arrow', 'assets/img/bedtime/temp_arrow.png', 12, 16);
         this.load.image('bg_bedroom', 'assets/img/bedtime/bg_bedroom.png');
         this.load.image('bg_grey', 'assets/img/bedtime/bg_grey.png');
+        this.load.spritesheet('sprite_tv', 'assets/img/bedtime/sprite_tv.png', 120, 108);
         this.load.atlas('furniture', 'assets/img/bedtime/bedroom.png', 'assets/img/bedtime/bedroom.json');
 
         // load music and sfx
@@ -34,8 +35,7 @@ BasicGame.Bedtime.prototype = {
         console.log('Bedtime: create');
         game.sound.stopAll(); 
 
-        bgm = game.add.audio('bgm_temp_paino');
-        bgm.loopFull()
+        bgm = game.add.audio('bgm_temp_paino', 1, true);
 
         this.exit = false;
         this.bedtimeSfx = game.add.audio('sfx_bedtime');
@@ -51,30 +51,6 @@ BasicGame.Bedtime.prototype = {
 
 		// add room objects
 		this.addFurniture();
-
-		// set up furniture flavor text
-		var flavor = this.add.text(game.width/2, game.height - 100, '', instrStyle);
-		flavor.anchor.setTo(0.5, 0);
-		// flavor.setTextBounds(300, 100, 800, 100);
-		this.flavorText = '';
-		var oldText = '';
-
-		var charNum = 0;
-	    this.game.time.events.loop(10, function(){
-	    	if(this.flavorText != oldText){
-	    		oldText = this.flavorText;
-	    		flavor.text = '';
-	    		charNum = 0;
-	    	}else if(this.flavorText != ''){
-	        	if(charNum < this.flavorText.length){
-	        		flavor.text += this.flavorText[charNum];
-	        		charNum++;
-	        	}
-	        }else{
-	        	flavor.text = '';
-	        	charNum = 0;
-	        }
-      	}, this);
 
 		// add locke
 		sprite = this.add.sprite(game.width/2, game.height/2, 'sprite_locke');
@@ -165,12 +141,44 @@ BasicGame.Bedtime.prototype = {
 	    }
 	    this.ribbitter.visible = false;
 
+		// set up furniture flavor text
+		this.flavor = this.add.text(game.width/2, game.height - 100, '', instrStyle);
+		this.flavor.anchor.setTo(0.5, 0);
+		// flavor.setTextBounds(300, 100, 800, 100);
+		this.flavorText = '';
+		var oldText = '';
+
+		var charNum = 0;
+	    this.game.time.events.loop(10, function(){
+	    	if(this.flavorText != oldText){
+	    		oldText = this.flavorText;
+	    		this.flavor.text = '';
+	    		charNum = 0;
+	    	}else if(this.flavorText != ''){
+	        	if(charNum < this.flavorText.length){
+	        		this.flavor.text += this.flavorText[charNum];
+	        		charNum++;
+	        	}
+	        }else{
+	        	this.flavor.text = '';
+	        	charNum = 0;
+	        }
+      	}, this);
+
 	    // for the lamp lighting
 		this.lighting = this.add.sprite(0, 0, 'bg_grey');
 		this.lighting.scale.setTo(game.width, game.height);
 		this.lighting.tint = 0x333;
 		this.lighting.alpha = .6;
 		this.lighting.visible = false;
+
+		// this is janky as hell but I don't care, I don't have to re-set up the bedroom HAHA
+		if(true){
+		// if (calendar.date.getDay() == 0){
+			this.sundayTransition();
+		}else{
+			bgm.play()
+		}
 
 		// fade transition (It has to be placed at the end for layering reasons)
         var fade = new TransitionFade(game, 1000);
@@ -180,72 +188,76 @@ BasicGame.Bedtime.prototype = {
         }, this);
 	},
     update: function () {
-        // Movement code
-        var dir = new Phaser.Point(0, 0);
-        if (game.input.keyboard.isDown(Phaser.Keyboard.UP) ||
-            game.input.keyboard.isDown(Phaser.Keyboard.W)) {
-            dir.y -= this.spriteSpeed;
-        }
-        if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) ||
-            game.input.keyboard.isDown(Phaser.Keyboard.S)) {
-            dir.y += this.spriteSpeed;
-        }
-        if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ||
-            game.input.keyboard.isDown(Phaser.Keyboard.D)) {
-            dir.x += this.spriteSpeed;
-        }
-        if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) ||
-            game.input.keyboard.isDown(Phaser.Keyboard.A)) {
-            dir.x -= this.spriteSpeed;
-        }
+    	if(false){
+    	// if (calendar.date.getDay() != 0){
+	        // Movement code
+	        var dir = new Phaser.Point(0, 0);
+	        if (game.input.keyboard.isDown(Phaser.Keyboard.UP) ||
+	            game.input.keyboard.isDown(Phaser.Keyboard.W)) {
+	            dir.y -= this.spriteSpeed;
+	        }
+	        if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) ||
+	            game.input.keyboard.isDown(Phaser.Keyboard.S)) {
+	            dir.y += this.spriteSpeed;
+	        }
+	        if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ||
+	            game.input.keyboard.isDown(Phaser.Keyboard.D)) {
+	            dir.x += this.spriteSpeed;
+	        }
+	        if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) ||
+	            game.input.keyboard.isDown(Phaser.Keyboard.A)) {
+	            dir.x -= this.spriteSpeed;
+	        }
 
-        // Just for fun, hold SHIFT if you just want to change the direction and not move
-        if(game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
-        	dir.x = 0;
-        	dir.y = 0;
-        }
+	        // Just for fun, hold SHIFT if you just want to change the direction and not move
+	        if(game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)){
+	        	dir.x = 0;
+	        	dir.y = 0;
+	        }
 
-        dir.normalize();
-        dir.setMagnitude(this.spriteSpeed);
-        sprite.body.velocity = dir;
+	        dir.normalize();
+	        dir.setMagnitude(this.spriteSpeed);
+	        sprite.body.velocity = dir;
 
-		// update player sprite Animation
-        if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ||
-            game.input.keyboard.isDown(Phaser.Keyboard.D)) {
-            sprite.animations.play('right');
-            this.spriteDirection = 7;
-            sensor.anchor.setTo(.25, .5);
-            this.ribbitter.visible = (this.ribbitter.visible ? false : false);
-        }
-	    else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) ||
-            game.input.keyboard.isDown(Phaser.Keyboard.A)) {
-            sprite.animations.play('left');
-            this.spriteDirection = 4;
-            sensor.anchor.setTo(.75, .5);
-        }
-	    else if (game.input.keyboard.isDown(Phaser.Keyboard.UP) ||
-	    	game.input.keyboard.isDown(Phaser.Keyboard.W)) {
-	    	sprite.animations.play('up');
-	    	this.spriteDirection = 10;
-            sensor.anchor.setTo(.5, .75);
-            this.ribbitter.visible = (this.ribbitter.visible ? false : false);
+			// update player sprite Animation
+	        if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) ||
+	            game.input.keyboard.isDown(Phaser.Keyboard.D)) {
+	            sprite.animations.play('right');
+	            this.spriteDirection = 7;
+	            sensor.anchor.setTo(.25, .5);
+	            this.ribbitter.visible = (this.ribbitter.visible ? false : false);
+	        }
+		    else if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT) ||
+	            game.input.keyboard.isDown(Phaser.Keyboard.A)) {
+	            sprite.animations.play('left');
+	            this.spriteDirection = 4;
+	            sensor.anchor.setTo(.75, .5);
+	        }
+		    else if (game.input.keyboard.isDown(Phaser.Keyboard.UP) ||
+		    	game.input.keyboard.isDown(Phaser.Keyboard.W)) {
+		    	sprite.animations.play('up');
+		    	this.spriteDirection = 10;
+	            sensor.anchor.setTo(.5, .75);
+	            this.ribbitter.visible = (this.ribbitter.visible ? false : false);
+			}
+		    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) ||
+		    	game.input.keyboard.isDown(Phaser.Keyboard.S)) {
+		    	sprite.animations.play('down');
+		    	this.spriteDirection = 1;
+		        sensor.anchor.setTo(.5,.25);
+	            this.ribbitter.visible = (this.ribbitter.visible ? false : false);
+		    }
+		    else{
+		    	sprite.animations.stop();
+		    	sprite.animations.frame = this.spriteDirection;
+		        sprite.body.velocity.setTo(0, 0);
+		    }
+
+		    // update sensor positions
+		    sensor.x = sprite.x;
+		    sensor.y = sprite.y;
+
 		}
-	    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) ||
-	    	game.input.keyboard.isDown(Phaser.Keyboard.S)) {
-	    	sprite.animations.play('down');
-	    	this.spriteDirection = 1;
-	        sensor.anchor.setTo(.5,.25);
-            this.ribbitter.visible = (this.ribbitter.visible ? false : false);
-	    }
-	    else{
-	    	sprite.animations.stop();
-	    	sprite.animations.frame = this.spriteDirection;
-	        sprite.body.velocity.setTo(0, 0);
-	    }
-
-	    // update sensor positions
-	    sensor.x = sprite.x;
-	    sensor.y = sprite.y;
 
 	    // check collision with furniture
 	    this.checkFurniture();
@@ -361,7 +373,7 @@ BasicGame.Bedtime.prototype = {
 		this.physics.arcade.enable(this.trashcan);
 	 	this.trashcan.body.immovable = true;
 
-	 	this.tv = this.add.sprite(64*14+36, 64*2+62, 'furniture', 'sprite_tv');
+	 	this.tv = this.add.sprite(64*14+36, 64*2+62, 'sprite_tv');
 		this.physics.arcade.enable(this.tv);
 	 	this.tv.body.immovable = true;
 	},
@@ -498,10 +510,7 @@ BasicGame.Bedtime.prototype = {
                         game.sound.stopAll(); 
                         this.bedtimeSfx.play();
                         bgm.fadeOut(2000);
-                        this.camera.fade('#000', 2000);
-                        this.camera.onFadeComplete.addOnce(function () {
-                            this.state.start('NextDay');
-                        }, this);
+                        this.advanceState();
                     }
         			break;
         		// if player check laptop, opens up social media
@@ -554,7 +563,28 @@ BasicGame.Bedtime.prototype = {
         this.world.bringToTop(this.arrow);
         this.world.bringToTop(this.lighting);
         this.world.bringToTop(this.ribbitter);
+        this.world.bringToTop(this.flavor);
 	},
+	sundayTransition(){
+		this.lighting.visible = true;
+		sprite.x = this.sofa.x+ (this.sofa.width / 2);
+		sprite.y = this.sofa.y + 6;
+		sprite.animations.frame = 10; //upwards
+		this.tv.animations.add('default', [1, 2], 8, true);
+		this.tv.animations.play('default');
+		this.game.time.events.add(1000, function(){
+			this.flavorText = 'Sundays are rest days so you decide to take things easy.'
+		},this);
+		this.game.time.events.add(10000, this.advanceState, this);
+		var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        spaceKey.onDown.add(this.advanceState, this);
+	},
+	advanceState(){
+		this.camera.fade('#000', 2000);
+        this.camera.onFadeComplete.addOnce(function () {
+            this.state.start('NextDay');
+        }, this);
+    },
 	render: function(){
 		// game.debug.body(sprite);
 		// game.debug.body(this.lampsensor);
