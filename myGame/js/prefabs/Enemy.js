@@ -58,11 +58,11 @@ Enemy.prototype.update = function () {
 //take damage and die if necessary
 Enemy.prototype.damage = function (numDamage) {
     this.currHealth -= numDamage;
-    //update health bar color
-    if(this.currHealth/this.initialHealth < .2){
-        this.bh_boss_health.frame = 2;
-    }
-    if (!this.isNotBoss){
+    if (!this.isNotBoss) {
+        //update health bar color
+        if (this.currHealth / this.initialHealth < .2) {
+            this.bh_boss_health.frame = 2;
+        }
         this.bh_boss_health.width = (this.currHealth/this.initialHealth) * (this.bh_boss_hcontainer.width-4);
         // this.bh_boss_health.tint = Phaser.Color.interpolateColor(0xffffff, Math.random() * 0xff0000, 10, 50);
     }
@@ -318,7 +318,7 @@ EnemyAI.AI_boss_cat = {
             this.speed = 75;
             this.direction = new Phaser.Point(1, 0);
             this.state = 'wait';
-            game.time.events.add(4000, function () { this.state = 'move'; }, this);
+            game.time.events.add(3000, function () { this.state = 'move'; }, this);
         } else if (this.state == 'move') {
             this.direction.x *= -1;
             this.movementPattern = Enemy.movementPattern_moveDirection;
@@ -392,8 +392,9 @@ EnemyAI.AI_boss_bird = {
                 this.movementPattern = Enemy.movementPattern_doNothing;
                 this.shootingPattern = function () { };
                 var targetPoint = new Phaser.Point(600, 150);
+                this.speed = 75;
                 game.physics.arcade.moveToObject(this, targetPoint, this.speed);
-                let buffer = 20;
+                let buffer = 15;
                 if (this.position.x <= targetPoint.x + buffer && this.position.x >= targetPoint.x - buffer && this.position.y <= targetPoint.y + buffer && this.position.y >= targetPoint.y - buffer) {
                     console.log("reached target point");
                     this.body.velocity = new Phaser.Point(0, 0);
