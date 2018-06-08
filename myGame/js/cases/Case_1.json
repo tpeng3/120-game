@@ -1,11 +1,16 @@
 {
-  "case_name": "The Whispered Meow",
+  "case_name": "Lark and Load",
   "bg": "",
-  "bgm": "bgm_touhou_stolen",
+  "bgm": "bgm_wonder_zone",
   "boss": {
-    "max_health": 200,
-    "curr_health": 200,
-    "sprite": "bh_boss_cat",
-    "ai_pattern":  "boss_cat"
+    "max_health": 300,
+    "curr_health": 300,
+    "pos": {
+      "x": 50,
+      "y": 0
+    },
+    "name": "The Cheepskate",
+    "sprite": "bh_boss_bird",
+    "ai_pattern": "boss_bird"
   }
 }

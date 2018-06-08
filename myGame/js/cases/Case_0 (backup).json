@@ -5,8 +5,12 @@
   "boss": {
     "max_health": 50,
     "curr_health": 50,
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
     "name": "Admiral Snuggles",
     "sprite": "bh_boss_cat",
-    "ai_pattern":  "boss_cat"
+    "ai_pattern": "boss_cat"
   }
 }
