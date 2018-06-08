@@ -49,7 +49,7 @@
     	"text":"(Oh this is perfect!)",
       	"functions": ["this.bodyText.style.fill = '#ccc';", "this.leftChara.visible = false;"]},
     {"name":"Suspicious Cop",
-    	"text":"Huh. Nevermind, maybe it was just me.",
+    	"text":"Huh. Nevermind, it was just a trash can.",
       	"functions": ["this.bodyText.style.fill = '#fff';"]},
     {"name":"Locke", "expression":"trashcan",
     	"text":"...The Domain of the Trash Can...",
