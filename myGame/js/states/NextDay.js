@@ -35,7 +35,7 @@ BasicGame.NextDay.prototype = {
     },
     advanceState: function() {
         if (calendar.date.getDay() == 0)
-            this.state.start('Results');
+            this.state.start('Bedtime', true, false);
         else
             this.state.start('ActivityDecision', true, false);
     }

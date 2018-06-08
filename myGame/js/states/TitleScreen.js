@@ -67,12 +67,12 @@ BasicGame.TitleScreen.prototype = {
 			this.camera.fade('#000');
 			this.camera.onFadeComplete.add(function(){
 				//this.state.start('ActivityDecision', true, false);
-                this.state.start('Cutscene', true, false, 'Intro');
-                // this.state.start('Bedtime', true, false);
+                // this.state.start('Cutscene', true, false, 'Intro');
+                this.state.start('Bedtime', true, false);
 			}, this);
         }
         if (this.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-            this.state.start('Cutscene', true, false, '/case/CaseClosed_2');
+            // this.state.start('Cutscene', true, false, '/case/CaseClosed_2');
             // this.state.start('Cutscene', true, false, 'Keyna_1');
         }
 	},
