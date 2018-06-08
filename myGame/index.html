@@ -5,7 +5,6 @@
     <title>DevRangers</title>
     <script src="../framework/phaser.min.js"></script>
     <script src="../framework/dat.gui.min.js"></script>
-    <!-- <script src="js/Preloader.js"></script> -->
     <script src="js/Settings.js"></script>
     <script src="js/Calendar.js"></script>
     <script src="js/prefabs/Bullet.js"></script>
@@ -24,6 +23,7 @@
     <script src="js/states/Bedtime.js"></script>
     <script src="js/states/Results.js"></script>
     <script src="js/states/NextDay.js"></script>
+    <script src="js/states/Credits.js"></script>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 
@@ -48,6 +48,7 @@
         game.state.add('Bedtime', BasicGame.Bedtime);
         game.state.add('Results', BasicGame.Results);
         game.state.add('NextDay', BasicGame.NextDay);
+        game.state.add('Credits', BasicGame.Credits);
 
         // Now start the TitleScreen state.
         // Maybe later we can start in the Preloader state if we need to
