@@ -15,7 +15,9 @@ BasicGame.Bedtime.prototype = {
         this.load.image('icon_tai', 'assets/img/ui/icon_tai.png');
         this.load.image('icon_keyna', 'assets/img/ui/icon_keyna.png');
         this.load.image('icon_lynn', 'assets/img/ui/icon_lynn.png');
-        this.load.text('scene', 'js/scenes/ribbits/Ribbits.json');
+        this.load.text('Ribbit_Day', 'js/scenes/ribbits/Ribbit_Day.json');
+        this.load.text('Ribbit_Event', 'js/scenes/ribbits/Ribbit_Event.json');
+        this.load.text('Ribbit_Extra', 'js/scenes/ribbits/Ribbit_Extra.json');
 
         // load sprite furniture and locke
         this.load.spritesheet('sprite_locke', 'assets/img/bedtime/sprite_locke.png', 64, 64);
@@ -92,30 +94,50 @@ BasicGame.Bedtime.prototype = {
 		this.arrow.animations.add('default', [0, 1], 2, true);
 		this.arrow.animations.play('default');
 
-	 	// add ribbitter
-	 	this.ribbitter = this.add.group();
-	 	var ui_ribbitter = this.add.sprite(256, 120, 'ui_ribbitter');
-	 	ui_ribbitter.alpha = 0.97;
-	 	this.ribbitter.add(ui_ribbitter);
+		// only update ribbitter if it's not Sunday
+		if (calendar.date.getDay() != 0){
+		 	// add ribbitter
+		 	this.ribbitter = this.add.group();
+		 	var ui_ribbitter = this.add.sprite(256, 120, 'ui_ribbitter');
+		 	ui_ribbitter.alpha = 0.97;
+		 	this.ribbitter.add(ui_ribbitter);
 
-	 	// add ribbit instructions
-	 	var ribbitInstr = this.add.text(game.width/2, game.height - 60, 'Press SPACEBAR or move to close window.', instrStyle);
-		ribbitInstr.anchor.set(0.5, 1);
-		this.ribbitter.add(ribbitInstr);
+		 	// add ribbit instructions
+		 	var ribbitInstr = this.add.text(game.width/2, game.height - 60, 'Press SPACEBAR or move to close window.', instrStyle);
+			ribbitInstr.anchor.set(0.5, 1);
+			this.ribbitter.add(ribbitInstr);
 
-	 	// parse those ribbits
-        var ribbits = JSON.parse(this.game.cache.getText('scene'));
-        var date = calendar.printDate() - 1;
+		 	// parse those ribbits
+		 	var ribbits = [];
 
-	 	titleStyle = { font: 'bold Trebuchet MS', fontSize: '22px', fill: '#333'};
-	 	textStyle = { font: 'Trebuchet MS', fontSize: '18px', fill: '#333', wordWrap: true, wordWrapWidth: 64*7 };
+		 	// check for specific day ribbits
+	        var ribbit_day = JSON.parse(this.game.cache.getText('Ribbit_Day'));
+	        var date = calendar.printDate()-1;
+	        for(let i=0; i<ribbit_day[date].length; i++){
+	        	ribbits.push(ribbit_day[date][i]);
+	        }
 
-	 	var prevHeight = 240;
-	 	var ribbitCount = 0; // max ribbits per day is 3
-	 	for(i=0; i<ribbits[date].length; i++){
-	 		if( (ribbits[date][i].condition == null || eval(ribbits[date][i].condition) 
-	 			&& ribbitCount < 3)){
-		 		var handle, icon = ribbits[date][i].icon;
+	        // check for specific case/hangout ribbits
+	        var ribbit_event = JSON.parse(this.game.cache.getText('Ribbit_Event'));
+	        for(let i=0; i<ribbit_event.length; i++){
+	        	if(ribbits.length <= 3 && eval(ribbit_event[i].condition))
+	        		ribbits.push(ribbit_event[i]);
+	        }
+
+	        // if there's less than three ribbits, push in some flavor text
+	        var ribbit_extra = JSON.parse(this.game.cache.getText('Ribbit_Extra'));
+	        while(ribbits.length < 3){
+	        	let random = Math.floor(Math.random() * ribbit_extra.length);
+	        	if(ribbit_extra[random].condition == undefined || eval(ribbit_extra[random].condition))
+	        		ribbits.push(ribbit_extra[random]);
+	        }
+
+		 	titleStyle = { font: 'bold Trebuchet MS', fontSize: '22px', fill: '#333'};
+		 	textStyle = { font: 'Trebuchet MS', fontSize: '18px', fill: '#333', wordWrap: true, wordWrapWidth: 64*7 };
+
+		 	var prevHeight = 240;
+		 	for(i=0; i<ribbits.length; i++){
+		 		let handle, icon = ribbits[i].icon;
 		 		var ribbitIcon = this.add.sprite(500, prevHeight, icon);
 		 		if(icon == 'icon_locke') handle = '@5urelocke';
 				else if(icon == 'icon_tai') handle = '@trainger_yellow';
@@ -123,23 +145,21 @@ BasicGame.Bedtime.prototype = {
 				else if(icon == 'icon_lynn') handle = '@tiredmomcop';
 				var ribbitHandle = this.add.text(545, prevHeight, handle, titleStyle);
 		        prevHeight = prevHeight + ribbitHandle.height;
-		        var ribbitText = this.add.text(540, prevHeight, ribbits[date][i].text, textStyle);
+		        var ribbitText = this.add.text(540, prevHeight, ribbits[i].text, textStyle);
 		        ribbitText.lineSpacing = -4;
 		        prevHeight = prevHeight + ribbitText.height + 8;
-		        if(i != ribbits[date].length-1){
+		        if(i != ribbits.length-1){
 			        var ribbitDividier = this.add.sprite(492, prevHeight, 'bg_grey');
 			        ribbitDividier.scale.setTo(512, 2);
 			        prevHeight = prevHeight + ribbitDividier.height + 12;
 		        }
-
 		        this.ribbitter.add(ribbitIcon);
 		        this.ribbitter.add(ribbitHandle);
 		        this.ribbitter.add(ribbitText);
 		        this.ribbitter.add(ribbitDividier);
-		        ribbitCount++;
 		    }
-	    }
-	    this.ribbitter.visible = false;
+		    this.ribbitter.visible = false;
+		}
 
 		// set up furniture flavor text
 		this.flavor = this.add.text(game.width/2, game.height - 100, '', instrStyle);
