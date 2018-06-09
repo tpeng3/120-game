@@ -88,7 +88,7 @@ BasicGame.TitleScreen.prototype = {
 			}, this);
         }
         if (this.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-            this.state.start('Cutscene', true, false, '/case/CaseStart_final_fedelynn');
+            this.state.start('Cutscene', true, false, '/case/CaseClosed_final_fedelynn');
             // this.state.start('ActivityDecision', true, false);
             // this.state.start('Cutscene', true, false, 'Fedelynn_3');
         }
