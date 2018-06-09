@@ -33,9 +33,14 @@ BasicGame.NextDay.prototype = {
             }, this);
         }, this);
     },
-    advanceState: function() {
-        if (calendar.date.getDay() == 0)
+    advanceState: function () {
+        let p = BasicGame.global.player_stats.relationships;
+        if (calendar.date.getDate() == 17 && !(p.Tai >= 3 || p.Keyna >= 3 || p.Fedelynn >= 3)) {
+            this.state.start('Cutscene', true, false, 'HangoutFail');
+        } else if (calendar.date.getDay() == 0)
             this.state.start('Bedtime', true, false);
+        else if (calendar.date.getDate() == 18)
+            this.state.start('FinalCaseDecision', true, false);
         else
             this.state.start('ActivityDecision', true, false);
     }

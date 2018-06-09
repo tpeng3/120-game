@@ -10,7 +10,24 @@ BasicGame.TitleScreen.prototype = {
 		// this is just for transitions
         this.load.image('bg_black', 'assets/img/bg/bg_black.png');
 	},
-	create: function() {
+    create: function () {
+        //Create and/or reset global object
+        BasicGame.global = {
+            case_number: -1,
+            case: undefined,
+            case_flags: {},
+            event_flags: {},
+            player_stats: {
+                fatigue: 0,
+                relationships: {
+                    Tai: 0,
+                    Keyna: 0,
+                    Fedelynn: 0
+                }
+            },
+            debug: 0
+        }
+        calendar = new Calendar();
 		console.log('TitleScreen: create');
 		this.stage.backgroundColor = "#000";
         this.typeSfx = game.add.audio('sfx_text_scroll_default');
@@ -66,8 +83,8 @@ BasicGame.TitleScreen.prototype = {
 		if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
 			this.camera.fade('#000');
 			this.camera.onFadeComplete.add(function(){
-                // this.state.start('Cutscene', true, false, 'Intro');
-                this.state.start('Bedtime', true, false);
+                this.state.start('Cutscene', true, false, 'Intro');
+                //this.state.start('Bedtime', true, false);
 			}, this);
         }
         if (this.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {

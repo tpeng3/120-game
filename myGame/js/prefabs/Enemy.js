@@ -628,6 +628,7 @@ EnemyAI.AI_boss_frog = {
             if (this.AI.phase2Start == undefined) {
                 this.state = 'init';
                 this.AI.phase2Start = true;
+                this.bulletSpeed = 150;
             }
             if (this.state == 'init') {
                 this.movementPattern = Enemy.movementPattern_doNothing;
@@ -704,6 +705,7 @@ EnemyAI.AI_boss_frog = {
             if (this.AI.phase3Start == undefined) {
                 this.state = 'init';
                 this.AI.phase3Start = true;
+                this.bulletSpeed = 150;
             }
             if (this.state == 'init') {
                 this.movementPattern = Enemy.movementPattern_doNothing;

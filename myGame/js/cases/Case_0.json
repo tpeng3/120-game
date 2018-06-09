@@ -2,6 +2,7 @@
   "case_name": "The Catalyst",
   "bg": "",
   "bgm": "bgm_wonder_zone",
+  "due_date": "6",
   "boss": {
     "max_health": 50,
     "curr_health": 50,

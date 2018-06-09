@@ -2,10 +2,11 @@
   "case_name": "The Cat Caper Catastrophy",
   "bg": "",
   "bgm": "bgm_touhou_stolen",
+  "due_date": "Infinity!",
   "boss": {
     "max_health": 100,
     "curr_health": 100,
     "sprite": "bh_boss_cat",
-    "ai_pattern":  "ai_boss_cat"
+    "ai_pattern": "ai_boss_cat"
   }
 }
