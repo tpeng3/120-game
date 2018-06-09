@@ -29,21 +29,21 @@ BasicGame.Preloader.prototype = {
         this.load.audio('bgm_oldtemp_locke', 'assets/audio/bgm/old_Locke_And_Load.ogg');
         this.load.audio('bgm_wonder_zone', 'assets/audio/bgm/Enter_the_WONDER_ZONE.ogg');
         this.load.audio('bgm_temp_detective', 'assets/audio/bgm/bgm_startscreen.ogg');
-        this.load.audio('bgm_fedelynn', 'assets/audio/bgm/Dont_Fuck_With_Fedelynn_ver_2.mp3');
+        this.load.audio('bgm_fedelynn', 'assets/audio/bgm/Dont_Fuck_With_Fedelynn_ver_2.ogg');
         this.load.audio('bgm_temp_paino', 'assets/audio/bgm/paino.ogg');
 
         this.load.audio('bgm_seaside', 'assets/audio/bgm/yoiyaminoseaside.ogg');
-        this.load.audio('bgm_sadserious', 'assets/audio/bgm/katamukikaketahizashi.mp3');
+        this.load.audio('bgm_sadserious', 'assets/audio/bgm/katamukikaketahizashi.ogg');
 
-        this.load.audio('bgm_sweetvermouth', 'assets/audio/bgm/tw007.mp3');
-        this.load.audio('bgm_vientodelsol', 'assets/audio/bgm/tw009.mp3');
-        this.load.audio('bgm_strigiformes', 'assets/audio/bgm/tw018.mp3');
-        this.load.audio('bgm_popup', 'assets/audio/bgm/tw034.mp3');
-        this.load.audio('bgm_gunshotstraight', 'assets/audio/bgm/tw042.mp3');
-        this.load.audio('bgm_sofa', 'assets/audio/bgm/tw044.mp3');
-        this.load.audio('bgm_radio', 'assets/audio/bgm/tw056.mp3');
-        this.load.audio('bgm_dbd', 'assets/audio/bgm/tw062.mp3');
-        this.load.audio('bgm_blend', 'assets/audio/bgm/tw082.mp3');
+        this.load.audio('bgm_sweetvermouth', 'assets/audio/bgm/tw007.ogg');
+        this.load.audio('bgm_vientodelsol', 'assets/audio/bgm/tw009.ogg');
+        this.load.audio('bgm_strigiformes', 'assets/audio/bgm/tw018.ogg');
+        this.load.audio('bgm_popup', 'assets/audio/bgm/tw034.ogg');
+        this.load.audio('bgm_gunshotstraight', 'assets/audio/bgm/tw042.ogg');
+        this.load.audio('bgm_sofa', 'assets/audio/bgm/tw044.ogg');
+        this.load.audio('bgm_radio', 'assets/audio/bgm/tw056.ogg');
+        this.load.audio('bgm_dbd', 'assets/audio/bgm/tw062.ogg');
+        this.load.audio('bgm_blend', 'assets/audio/bgm/tw082.ogg');
 
         //SFX
         this.load.audio('sfx_player_laser', 'assets/audio/sfx/sfx_player_shot_laser.ogg');

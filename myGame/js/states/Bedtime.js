@@ -95,7 +95,7 @@ BasicGame.Bedtime.prototype = {
 		this.arrow.animations.play('default');
 
 		// only update ribbitter if it's not Sunday
-		if (calendar.date.getDay() != 0 && Basicgame.global.case_number != 'final'){
+		if (calendar.date.getDay() != 0 && BasicGame.global.case_number != 'final'){
 		 	// add ribbitter
 		 	this.ribbitter = this.add.group();
 		 	var ui_ribbitter = this.add.sprite(256, 120, 'ui_ribbitter');

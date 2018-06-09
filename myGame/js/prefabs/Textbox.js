@@ -37,7 +37,14 @@ function Textbox(game, changeState, scene, lines, position, anchor, scale, scene
         Lynn: 'sfx_text_scroll_fedelynn',
         Fedelynn: 'sfx_text_scroll_fedelynn',
         'Allie Catt': 'sfx_text_scroll_client_f',
+        'Viola Gee': 'sfx_text_scroll_client_f',
+        'Client': 'sfx_text_scroll_client_f',
         'Earl Leebird': 'sfx_text_scroll_client_m',
+        'Announcer': 'sfx_text_scroll_client_m',
+        'Trainger Red': 'sfx_text_scroll_locke',
+        'Trainger Blue': 'sfx_text_scroll_keyna',
+        'Trainger Yellow': 'sfx_text_scroll_tai',
+        'Trainger Black': 'sfx_text_scroll_fedelynn',
         default: 'sfx_text_scroll_default'
     }
     this.skipNum = 4;
