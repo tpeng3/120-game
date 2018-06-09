@@ -10,7 +10,7 @@ BasicGame.CharacterDecision.prototype = {
         this.characterSprites = [];
         this.load.image('button_Tai', 'assets/img/ui/button_tai.png');
         this.load.image('button_Keyna', 'assets/img/ui/button_keyna.png');
-        this.load.image('button_Lynn', 'assets/img/ui/button_lynn.png');
+        this.load.image('button_Fedelynn', 'assets/img/ui/button_lynn.png');
     },
     create: function () {
         console.log('CharacterDecision!')

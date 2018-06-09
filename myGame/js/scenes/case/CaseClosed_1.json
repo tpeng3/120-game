@@ -6,7 +6,7 @@
   "lines":[
     {"name":"Locke", "expression":"trashcan",
       "text":"(Alright, maybe if I move in a more of a zig-zag pattern...)",
-      "functions": ["this.bodyText.style.fill = '#ccc';", "this.leftChara.visible = false;", "this.rightChara.visible = false;"]},
+      "functions": ["this.bodyText.style.fill = '#ccc';", "this.leftChara.visible = false;", "this.rightChara.visible = false;", "calendar.fedelynn_unlocked = true;"]},
     {"name":"Locke",
       "text":"(The Cheepskate will never see what hit him!)"},
     {"name":"",
