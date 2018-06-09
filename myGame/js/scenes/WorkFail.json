@@ -1,0 +1,17 @@
+{
+  "bg": "bg_agency",
+  "sprite_left": "Locke",
+  "sprite_right": "",
+  "next_state":"GameOver",
+  "lines":[
+    {"name":"Locke", "expression": "default",
+      "text":"...I am really behind on work."},
+    {"name":"Locke", "expression": "nervous",
+      "text":"...No good. I told my client I'd finish in a week."},
+    {"name":"Locke", "expression": "surprised",
+      "text":"But at this rate, my business is going to fall under!"},
+    {"name":"",
+      "text":"Unfortunately, Locke's incompetency got the better of them.",
+      "functions":["this.black.visible = true;", "this.leftChara.visible = false;"]}
+  ] 
+}

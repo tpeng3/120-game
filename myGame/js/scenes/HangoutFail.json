@@ -1,0 +1,17 @@
+{
+  "bg": "bg_agency",
+  "sprite_left": "Locke",
+  "sprite_right": "",
+  "next_state":"GameOver",
+  "lines":[
+    {"name":"Locke", "expression": "default",
+      "text":"...It's been kind of quiet lately."},
+    {"name":"Locke", "expression": "nervous",
+      "text":"I guess I got so wrapped up in work, I haven't been hanging out with anyone recently."},
+    {"name":"Locke", "expression": "surprised",
+      "text":"At this rate, I'm going to become a total shut in!"},
+    {"name":"",
+      "text":"Unfortunately, Locke fails to harness the power of friendship.",
+      "functions":["this.black.visible = true;", "this.leftChara.visible = false;"]}
+  ] 
+}
