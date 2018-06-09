@@ -131,9 +131,11 @@ BasicGame.Bedtime.prototype = {
 	        // if there's less than three ribbits, push in some flavor text
 	        var ribbit_extra = JSON.parse(this.game.cache.getText('Ribbit_Extra'));
 	        while(ribbits.length < 3){
-	        	let random = Math.floor(Math.random() * ribbit_extra.length);
-	        	if(ribbit_extra[random].condition == undefined || eval(ribbit_extra[random].condition))
-	        		ribbits.push(ribbit_extra[random]);
+	        	// let random = Math.floor(Math.random() * ribbit_extra.length);
+	        	let ribind = BasicGame.global.etcrib;
+	        	if(ribbit_extra[ribind].condition == undefined || eval(ribbit_extra[ribind].condition))
+	        		ribbits.push(ribbit_extra[ribind]);
+	        	BasicGame.global.etcrib++;
 	        }
 
 		 	titleStyle = { font: 'bold Trebuchet MS', fontSize: '22px', fill: '#333'};
@@ -559,7 +561,7 @@ BasicGame.Bedtime.prototype = {
           		  	this.flavorText = 'You got this hat from Tai as a birthday present, but you\'ve yet to find a good opportunity to wear it.';
           		  	break;
           		case "bookshelf1":
-            		this.flavorText = 'A bookshelf full of your favorite mystery novels. (Some might have stolen from Keyna\'s bookself)';
+            		this.flavorText = 'A bookshelf full of your favorite mystery novels. (Some might have stolen from Keyna\'s bookshelf.)';
             		break;
             	case "bookshelf2":
 	            	this.flavorText = 'A bookshelf full of your favorite non-mystery novels.';

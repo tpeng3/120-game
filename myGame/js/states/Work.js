@@ -120,7 +120,7 @@ BasicGame.Work.prototype = {
         }
 
         let pos = new Phaser.Point(this.world.width/2, this.world.height - this.world.height / 3)
-        this.introText = new Textbox(game, false, null, [{ name: '', text: 'Arrow keys or WASD to move, hold [SPACEBAR] to shoot, and hold [SHIFT] for precise movement' }], pos, new Phaser.Point(0.5,0.5), new Phaser.Point(1000, 200));
+        this.introText = new Textbox(game, false, null, [{ name: '', text: 'Arrow keys or WASD to move, Hold [SPACEBAR] to shoot, and Hold [SHIFT] for precise movement!' }], pos, new Phaser.Point(0.5,0.5), new Phaser.Point(1000, 200));
 
         //Bind the line advancing function to the spacebar
         var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);

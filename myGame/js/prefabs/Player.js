@@ -88,7 +88,8 @@ Player.prototype.update = function () {
     this.core.y = this.y+12;
 
     //Shooting code
-    if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.isReadyToShoot) {
+    if ((game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && this.isReadyToShoot) ||
+        (game.input.keyboard.isDown(Phaser.Keyboard.Z) && this.isReadyToShoot)) {
         new Bullet(game, 'locke_bullet', this.x, this.y, this.bulletDamage, this.bulletSpeed, this.bulletAngle, this.enemyGroup, Player.bulletGroup);
         this.shotSfx.play();
         this.isReadyToShoot = false;

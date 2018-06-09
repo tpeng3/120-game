@@ -25,7 +25,8 @@ BasicGame.TitleScreen.prototype = {
                     Fedelynn: 0
                 }
             },
-            debug: 0
+            debug: 0,
+            etcrib: 0
         }
         calendar = new Calendar();
 		console.log('TitleScreen: create');
