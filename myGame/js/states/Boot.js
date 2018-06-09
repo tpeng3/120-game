@@ -4,6 +4,9 @@ var BasicGame = {};
 BasicGame.global = {
     case_number: -1,
     case: undefined,
+    event_flags: {
+
+    },
     player_stats: {
         fatigue: 0, 
         relationships: {

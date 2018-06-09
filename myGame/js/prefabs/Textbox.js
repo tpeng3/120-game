@@ -1,5 +1,5 @@
 // Textbox prefab constructor function
-function Textbox(game, changeState, scene, lines, position, anchor, scale) {
+function Textbox(game, changeState, scene, lines, position, anchor, scale, sceneKey) {
     this.changeState = changeState;
     // call to Phaser.Sprite // new Sprite(game, x, y, key, frame)
     if (position == undefined || position == null)
@@ -12,6 +12,7 @@ function Textbox(game, changeState, scene, lines, position, anchor, scale) {
     this.anchor.setTo(anchor.x, anchor.y);
     if (scale == null || scale == undefined)
         var scale = new Phaser.Point(1252, 200);
+    this.sceneKey = sceneKey;
     this.scale.setTo(scale.x, scale.y);
     this.alpha = 0.85;
     //Game and scene stuff
@@ -174,7 +175,9 @@ Textbox.prototype.advance = function () {
     } else { // else end conversation (if no more lines)
         if (this.changeState) {
             this.callbackGame.camera.fade('#000');
-            this.callbackGame.camera.onFadeComplete.add(function () {
+            this.callbackGame.camera.onFadeComplete.addOnce(function () {
+                if (this.sceneKey != null && this.sceneKey != undefined)
+                    BasicGame.global.event_flags[this.sceneKey] = true;
                 this.callbackGame.state.start(this.scene.next_state);
             }, this);
         }
@@ -204,7 +207,10 @@ Textbox.prototype.startNewScene = function (changeState, scene, lines) {
 
 Textbox.prototype.skipScene = function () {
     this.callbackGame.camera.fade('#000');
-    this.callbackGame.camera.onFadeComplete.add(function () {
+    this.callbackGame.camera.onFadeComplete.addOnce(function () {
+        if (this.sceneKey != null && this.sceneKey != undefined)
+            BasicGame.global.event_flags[this.sceneKey] = true;
+        console.log(BasicGame.global.event_flags);
         this.callbackGame.state.start(this.scene.next_state);
     }, this);
 }

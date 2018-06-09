@@ -5,41 +5,41 @@ function Calendar() {
     this.fedelynn_unlocked = false;
     this.scenes = {
         Fedelynn: {
-            'normal': ['Fedelynn_1', 'Fedelynn_2', 'Fedelynn_3', 'Fedelynn_4']
+            'normal': ['Fedelynn_1', 'Fedelynn_2', 'Fedelynn_3']
         },
         Fedelynn_ind: 0,
         Keyna: {
-            'normal': ['Keyna_1', 'Keyna_2', 'Keyna_3', 'Keyna_4', 'Keyna_5']
+            'normal': ['Keyna_1', 'Keyna_2', 'Keyna_3']
         },
         Keyna_ind: 0,
         Tai: {
-            'normal': ['Tai_1', 'Tai_2', 'Tai_3', 'Tai_4']
+            'normal': ['Tai_1', 'Tai_2', 'Tai_3']
         },
         Tai_ind: 0
     },
     this.schedule = {
             '3/1 Friday': 'no_option',
-            '3/2 Saturday': ['Tai', 'Keyna'],
+            '3/2 Saturday': ['Tai'],
             '3/4 Monday': 'nobody_there',
             '3/5 Tuesday': ['Keyna'],
-            '3/6 Wednesday': 'nobody_there',
-            '3/7 Thursday': ['Keyna'],
+            '3/6 Wednesday': ['Tai'],
+            '3/7 Thursday': 'nobody_there',
             '3/8 Friday': ['Keyna', 'Tai'],
             '3/9 Saturday': ['Fedelynn', 'Keyna', 'Tai'],
 
             '3/11 Monday': 'nobody_there',
-            '3/12 Tuesday': ['Keyna'],
+            '3/12 Tuesday': ['Fedelynn'],
             '3/13 Wednesday': ['Fedelynn', 'Tai'],
-            '3/14 Thursday': ['Fedelynn', 'Keyna'],
-            '3/15 Friday': ['Tai'],
-            '3/16 Saturday': ['Fedelynn', 'Keyna', 'Tai'],
+            '3/14 Thursday': ['Fedelynn'],
+            '3/15 Friday': ['Keyna'],
+            '3/16 Saturday': ['Fedelynn', 'Keyna'],
 
-            '3/18 Monday': 'nobody_there',
-            '3/19 Tuesday': ['Keyna'],
-            '3/20 Wednesday': ['Fedelynn', 'Tai'],
-            '3/21 Thursday': ['Fedelynn', 'Keyna'],
-            '3/22 Friday': ['Tai'],
-            '3/23 Saturday': ['Fedelynn', 'Keyna', 'Tai'],
+            '3/18 Monday': 'no_option',
+            '3/19 Tuesday': 'no_option',
+            '3/20 Wednesday': 'no_option',
+            '3/21 Thursday': 'no_option',
+            '3/22 Friday': 'no_option',
+            '3/23 Saturday': 'no_option',
 
             '3/25 Monday': 'no_option',
             '3/26 Tuesday': 'no_option',

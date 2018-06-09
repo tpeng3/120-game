@@ -39,6 +39,7 @@ BasicGame.Cutscene.prototype = {
 
         // add textbox
         var textbox = new Textbox(game, true, this.scene);
+        textbox.sceneKey = this.sceneName;
 
         // place the dateTimeBox
         var dateBox = this.add.sprite(textbox.left, 20, 'bg_black');
