@@ -543,7 +543,7 @@ BasicGame.Bedtime.prototype = {
         			break;
         		// if player check laptop, opens up social media
         		case "laptop":
-        			if(Basicgame.global.case_number == 'final'){
+        			if(BasicGame.global.case_number == 'final'){
         				this.flavorText = 'Like a fool, you spilled orange juice on your laptop and won\'t be able to use it anymore.';
         			}else{
 				    	if(this.ribbitter.visible == false){
