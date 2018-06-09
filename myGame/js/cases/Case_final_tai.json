@@ -12,6 +12,6 @@
     },
     "name": "Trainger Yellow",
     "sprite": "bh_boss_trainger",
-    "ai_pattern": "boss_frog"
+    "ai_pattern": "boss_final"
   }
 }

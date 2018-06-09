@@ -12,6 +12,6 @@
     },
     "name": "Husband Killer",
     "sprite": "bh_boss_murderer",
-    "ai_pattern": "boss_frog"
+    "ai_pattern": "boss_final"
   }
 }

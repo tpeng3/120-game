@@ -183,7 +183,7 @@ BasicGame.ActivityDecision.prototype = {
                     this.menuEnterBadSfx.play('', 0, 0.5);
                     return;
                 }
-                if (BasicGame.global.player_stats.fatigue < 3)
+                if (BasicGame.global.player_stats.fatigue < 3 && BasicGame.case_number != 'final')
                     BasicGame.global.player_stats.fatigue++;
                 if (BasicGame.global.case == undefined) {
                     BasicGame.global.case_number++;
@@ -196,10 +196,7 @@ BasicGame.ActivityDecision.prototype = {
                         BasicGame.global.case_flags['Case_' + BasicGame.global.case_number] = false;
                         this.state.start('Cutscene', true, false, 'case/CaseStart_' + (BasicGame.global.case_number));
                     }, this);
-                }
-                else if (BasicGame.global.case == "final")
-                    console.log('final case reached, not yet handled in code');//handle final case choosing here
-                else {
+                } else {
                     bgm.fadeOut(4000);
                     this.exit = true;
                     this.camera.fade('#000', 1000);

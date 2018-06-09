@@ -12,6 +12,6 @@
     },
     "name": "Deuce Evidens",
     "sprite": "bh_boss_da",
-    "ai_pattern": "boss_frog"
+    "ai_pattern": "boss_final"
   }
 }
