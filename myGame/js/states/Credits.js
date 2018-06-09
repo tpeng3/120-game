@@ -10,6 +10,9 @@ BasicGame.Credits.prototype = {
     },
     create: function () {
         game.sound.stopAll(); 
+
+        bgm = this.add.audio('bgm_popup', 1, true);
+        bgm.play();
         
         // var bg = game.add.sprite(0, 0, 'bg_agency');
         // this.cutin1 = game.add.sprite(0, 300, 'ui_wonderzone');

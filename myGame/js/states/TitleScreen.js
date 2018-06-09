@@ -71,9 +71,9 @@ BasicGame.TitleScreen.prototype = {
 			}, this);
         }
         if (this.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-            // this.state.start('Cutscene', true, false, '/case/CaseClosed_2');
-            this.state.start('ActivityDecision', true, false);
-            // this.state.start('Cutscene', true, false, 'Keyna_2');
+            this.state.start('Cutscene', true, false, '/case/CaseClosed_final_tai');
+            // this.state.start('ActivityDecision', true, false);
+            // this.state.start('Cutscene', true, false, 'Tai_3');
         }
 	},
 	goFullscreen: function(){
