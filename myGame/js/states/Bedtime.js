@@ -123,7 +123,7 @@ BasicGame.Bedtime.prototype = {
 	        var ribbit_event = JSON.parse(this.game.cache.getText('Ribbit_Event'));
 	        for(let i=0; i<ribbit_event.length; i++){
 	        	var flag = BasicGame.global.event_flags[ribbit_event[i].condition];
-	        	if( flag != undefined && flag == true && ribbits.length <= 3){
+	        	if( flag != undefined && flag == true && ribbits.length < 3){
 	        		ribbits.push(ribbit_event[i]);
 	        	}
 	        }
