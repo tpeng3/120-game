@@ -6,20 +6,22 @@ BasicGame.GameOver.prototype = {
     },
     create: function () {
         game.sound.stopAll(); 
+        this.typeSfx = game.add.audio('sfx_text_scroll_default');
 
         this.stage.backgroundColor = "#000";
 
         var rip = this.add.sprite(this.world.centerX, 0, 'gameover');
         rip.anchor.setTo(0.5, 0);
+        rip.scale.set(2.2);
         rip.alpha = 0;
         this.game.add.tween(rip).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true);
 
         // haha I just copied this from the title screen
-        var titleStyle = {font: 'Trebuchet MS', fontSize: '50px', fill: '#fff'};
-        var titleText = this.add.text(this.world.centerX, this.world.centerY + 50, '', titleStyle);
+        var titleStyle = {font: 'bold Consolas', fontSize: '50px', fill: '#fff'};
+        var titleText = this.add.text(this.world.centerX - 224, this.world.centerY + 100, '', titleStyle);
         var subtitle = 'G A M E  O V E R';
         var charNum = 0;
-        this.game.time.events.add(1000, function(){
+        this.game.time.events.add(2000, function(){
             this.game.time.events.loop(100, function(){
                 if (charNum != subtitle.length) {
                     if (subtitle[charNum] != ' ') {
@@ -36,7 +38,7 @@ BasicGame.GameOver.prototype = {
         var startText = this.add.text(this.world.centerX, 550, '-Press SPACEBAR to return to the TitleScreen-', startStyle);
         startText.anchor.set(0.5);
         startText.visible = false;
-        this.game.time.events.add(2000, function(){
+        this.game.time.events.add(5000, function(){
             startText.visible = true;
         }, this);
 
