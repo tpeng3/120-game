@@ -82,7 +82,9 @@ BasicGame.ActivityDecision.prototype = {
                 info = 'No active case: work to find a client!';
         }
         else if (BasicGame.global.case_number == 'final') {
-            info = '???';
+            let bossDat = BasicGame.global.case.boss;
+            let percentWork = Math.round(((bossDat.max_health - bossDat.curr_health) / bossDat.max_health) * 100);
+            info = 'Case: ' + BasicGame.global.case.case_name + ' (' + percentWork + '% done)';
             daysLeft = 'No time limit'
         } else if (BasicGame.global.case_flags.Case_2 == true) {
             info = 'No more clients for now!';
