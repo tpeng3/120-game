@@ -71,25 +71,54 @@ BasicGame.ActivityDecision.prototype = {
         caseInfo.alpha = 0.75
         // initialize the caseInfo text
         var info = '';
-        if (BasicGame.global.case == undefined)
-            info = 'No active case: work to find a client!';
-        else if (BasicGame.global.case == 'final')
+        var daysLeft = '';
+        this.lastDayTofinish = false;
+        if (BasicGame.global.case == undefined) {
+            let dateNum = calendar.date.getDate();
+            if ((dateNum == 9 && BasicGame.global.case_flags['Case_1'] != true) || (dateNum == 16 && BasicGame.global.case_flags['Case_2'] != true)) {
+                info = "Locke's agnecy is going under. Finish a case today!";
+                this.lastDayTofinish = true;
+            } else
+                info = 'No active case: work to find a client!';
+        }
+        else if (BasicGame.global.case_number == 'final') {
             info = '???';
-        else{
-            let percentWork = Math.round(
-                ((BasicGame.global.case.boss.max_health - BasicGame.global.case.boss.curr_health)
-                / BasicGame.global.case.boss.max_health) * 100);
-            info = 'Case: ' + BasicGame.global.case.case_name + ' (' + percentWork + '% done)';      
+            daysLeft = 'No time limit'
+        } else if (BasicGame.global.case_flags.Case_2 == true) {
+            info = 'No more clients for now!';
+        }
+        else {
+            let bossDat = BasicGame.global.case.boss;
+            let percentWork = Math.round(((bossDat.max_health - bossDat.curr_health)/ bossDat.max_health) * 100);
+            info = 'Case: ' + BasicGame.global.case.case_name + ' (' + percentWork + '% done)';
+            let numDays = BasicGame.global.case.due_date - calendar.date.getDate();
+            if (numDays == 0) {
+                daysLeft = 'Case due today!!!';
+                this.lastDayTofinish = true;
+            }
+            else {
+                daysLeft = 'Case due in: ' + (BasicGame.global.case.due_date - calendar.date.getDate()) + ' day';
+                if (numDays != 1)
+                    daysLeft += 's';
+            }
         }
         this.caseInfoText = this.add.text(textbox.left + 60, 65, info, { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
-        caseInfo.scale.setTo(this.caseInfoText.width+90, this.caseInfoText.height);
+        caseInfo.scale.setTo(this.caseInfoText.width + 90, this.caseInfoText.height);
+        if (daysLeft != '') {
+            var daysLeftSprite = this.add.sprite(game.world.width, 20, 'bg_black');
+            daysLeftSprite.alpha = 0.75;
+            this.daysLeftText = this.add.text(game.world.width, 20, daysLeft, { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
+            daysLeftSprite.scale.setTo(this.daysLeftText.width + 90, this.daysLeftText.height);
+            daysLeftSprite.x -= this.daysLeftText.width + 90;
+            this.daysLeftText.x -= this.daysLeftText.width + 60;
+        }
 
         //get scene data
         this.sceneData = calendar.getSceneData();
         this.exit = false;
 
         // add choice buttons
-        if (calendar.print() == "3/2 Saturday") {
+        if (calendar.print() == "3/2 Saturday" || (BasicGame.global.case_flags.Case_2 == true && BasicGame.global.case_number != 'final')) {
             this.work = this.add.sprite(this.world.width / 2 - 200, this.world.height / 2 - 50, 'button_work_no_option');
             this.noWorkOption = true;
         } else {
@@ -100,7 +129,7 @@ BasicGame.ActivityDecision.prototype = {
         this.work.scale.setTo(0.85, 0.85);
         // just to have the positioning match character decision
         var buttonX = (this.world.width / 3 * 2);
-        if (this.sceneData == 'no_option')
+        if (this.sceneData == 'no_option' || this.lastDayTofinish)
             this.hangout = this.add.sprite(buttonX, this.world.height / 2 - 50, 'button_hangout_no_option');
         else
             this.hangout = this.add.sprite(buttonX, this.world.height / 2 - 50, 'button_hangout');
@@ -152,7 +181,8 @@ BasicGame.ActivityDecision.prototype = {
                     this.menuEnterBadSfx.play('', 0, 0.5);
                     return;
                 }
-                BasicGame.global.player_stats.fatigue++;
+                if (BasicGame.global.player_stats.fatigue < 3)
+                    BasicGame.global.player_stats.fatigue++;
                 if (BasicGame.global.case == undefined) {
                     BasicGame.global.case_number++;
                     BasicGame.global.case = JSON.parse(this.game.cache.getText('next_case'));
@@ -161,6 +191,7 @@ BasicGame.ActivityDecision.prototype = {
                     this.camera.fade('#000', 1000);
                     this.menuEnterGoodSfx.play('', 0, 0.75);
                     this.camera.onFadeComplete.addOnce(function () {
+                        BasicGame.global.case_flags['Case_' + BasicGame.global.case_number] = false;
                         this.state.start('Cutscene', true, false, 'case/CaseStart_' + (BasicGame.global.case_number));
                     }, this);
                 }
@@ -177,8 +208,8 @@ BasicGame.ActivityDecision.prototype = {
                 }
             } else {
                 if (this.exit)
-                    return;  
-                if (this.sceneData == 'no_option') {
+                    return;
+                if (this.sceneData == 'no_option' || this.lastDayTofinish) {
                     this.menuEnterBadSfx.play('', 0, 0.5);
                     return;
                 }  
@@ -195,6 +226,8 @@ BasicGame.ActivityDecision.prototype = {
                     this.camera.onFadeComplete.addOnce(function () {
                         console.log('incrementing ' + this.sceneData[0] + '_ind: ' + (calendar.scenes[this.sceneData[0] + '_ind'] + 1));
                         calendar.scenes[this.sceneData[0] + '_ind']++;
+                        BasicGame.global.player_stats.relationships[this.sceneData[0]]++;
+                        console.log(BasicGame.global.player_stats.relationships);
                         this.state.start('Cutscene', true, false, this.sceneData[0] + '_' + calendar.scenes[this.sceneData[0] + '_ind']);
                     }, this);
                 } else {

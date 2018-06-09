@@ -119,10 +119,6 @@ BasicGame.Work.prototype = {
             lives.add(this.add.sprite(120, 410+(i*70), 'bh_lives'));
         }
 
-        // some text for the players
-        //var textStyle = { fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: 600 };
-        //this.add.text(this.frame.x + this.frame.width + 10, 40, 'Use arrow keys to move, SPACEBAR to shoot. Move to next stage via death or after 15 seconds.', textStyle);
-
         let pos = new Phaser.Point(this.world.width/2, this.world.height - this.world.height / 3)
         this.introText = new Textbox(game, false, null, [{ name: '', text: 'Arrow keys or WASD to move, hold [SPACEBAR] to shoot' }], pos, new Phaser.Point(0.5,0.5), new Phaser.Point(1000, 200));
 
@@ -183,16 +179,21 @@ BasicGame.Work.prototype = {
         Enemy.bulletGroup = null;
         BasicGame.global.case.boss.curr_health = this.boss.currHealth;
         this.camera.fade('#000');
-            this.camera.onFadeComplete.add(function(){
+        this.camera.onFadeComplete.addOnce(function () {
+            let dateNum = calendar.date.getDate();
+            if ((dateNum == 9 && BasicGame.global.case_flags['Case_1'] != true) || (dateNum == 16 && BasicGame.global.case_flags['Case_2'] != true)) {
+                this.state.start('Cutscene', true, false, 'WorkFail');
+            } else
                 this.state.start('Bedtime');
-            }, this);
+        }, this);
     },
     workEndBossDeath: function () {
         BasicGame.global.case = undefined;
         Player.bulletGroup = null;
         Enemy.bulletGroup = null;
         this.camera.fade('#000');
-        this.camera.onFadeComplete.add(function () {
+        this.camera.onFadeComplete.addOnce(function () {
+            BasicGame.global.case_flags['Case_' + BasicGame.global.case_number] = true;
             this.state.start('Cutscene', true, false, 'case/CaseClosed_' + (BasicGame.global.case_number));
         }, this);
     }

@@ -598,7 +598,7 @@ BasicGame.Bedtime.prototype = {
 		sprite.animations.frame = 10; //upwards
 		this.tv.animations.add('default', [1, 2], 8, true);
 		this.tv.animations.play('default');
-		this.game.time.events.add(3000, function(){
+		this.game.time.events.add(1000, function(){
 			this.flavorText = 'Sundays are rest days! So you decide to take things easy.'
 		},this);
 		this.game.time.events.add(10000, this.advanceState, this);
@@ -608,6 +608,9 @@ BasicGame.Bedtime.prototype = {
 	advanceState(){
 		this.camera.fade('#000', 2000);
         this.camera.onFadeComplete.addOnce(function () {
+            if (calendar.date.getDay() == 0) {
+                calendar.week++;
+            }
             this.state.start('NextDay');
         }, this);
     },

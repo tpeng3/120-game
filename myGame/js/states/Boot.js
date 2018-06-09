@@ -1,22 +1,7 @@
 // add the states to Basic Game
 var BasicGame = {};
 
-BasicGame.global = {
-    case_number: -1,
-    case: undefined,
-    event_flags: {
-
-    },
-    player_stats: {
-        fatigue: 0, 
-        relationships: {
-            Tai: 0,
-            Keyna: 0,
-            Fedelynn: 0
-        }
-    },
-    debug: 0
-}
+//globals now set in title screen so the reset on gameover or restating the game
 
 BasicGame.Boot = function (game) {};
 

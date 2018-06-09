@@ -46,6 +46,6 @@ BasicGame.GameOver.prototype = {
         spaceKey.onDown.add(this.advanceState, this);
     },
     advanceState: function() {
-        this.state.start('Titlescreen', true, false);
+        this.state.start('TitleScreen', true, false);
     }
 };
