@@ -95,7 +95,7 @@ BasicGame.Bedtime.prototype = {
 		this.arrow.animations.play('default');
 
 		// only update ribbitter if it's not Sunday
-		if (calendar.date.getDay() != 0){
+		if (calendar.date.getDay() != 0 && Basicgame.global.case_number != 'final'){
 		 	// add ribbitter
 		 	this.ribbitter = this.add.group();
 		 	var ui_ribbitter = this.add.sprite(256, 120, 'ui_ribbitter');
@@ -543,19 +543,23 @@ BasicGame.Bedtime.prototype = {
         			break;
         		// if player check laptop, opens up social media
         		case "laptop":
-			    	if(this.ribbitter.visible == false){
-			    		this.ribbitter.visible = true;
-			    		this.notification.visible = false;
-			    	}else{
-			    		this.ribbitter.visible = false;
-			    	}
+        			if(Basicgame.global.case_number == 'final'){
+        				this.flavorText = 'Like a fool, you spilled orange juice on your laptop and won\'t be able to use it anymore.';
+        			}else{
+				    	if(this.ribbitter.visible == false){
+				    		this.ribbitter.visible = true;
+				    		this.notification.visible = false;
+				    	}else{
+				    		this.ribbitter.visible = false;
+				    	}
+				    }
 			    	break;
 	    		// now for furniture that has flavor text
 	    		case "hat":
           		  	this.flavorText = 'You got this hat from Tai as a birthday present, but you\'ve yet to find a good opportunity to wear it.';
           		  	break;
           		case "bookshelf1":
-            		this.flavorText = 'A bookshelf full of your favorite mystery novels.';
+            		this.flavorText = 'A bookshelf full of your favorite mystery novels. (Some might have stolen from Keyna\'s bookself)';
             		break;
             	case "bookshelf2":
 	            	this.flavorText = 'A bookshelf full of your favorite non-mystery novels.';
