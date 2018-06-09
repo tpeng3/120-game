@@ -113,15 +113,17 @@ BasicGame.Bedtime.prototype = {
 		 	// check for specific day ribbits
 	        var ribbit_day = JSON.parse(this.game.cache.getText('Ribbit_Day'));
 	        var date = calendar.printDate();
-	        for(let i=0; i<ribbit_day[date].length; i++){
-	        	ribbits.push(ribbit_day[date][i]);
+	        if(ribbit_day[date] != undefined){
+		        for(let i=0; i<ribbit_day[date].length; i++){
+		        	ribbits.push(ribbit_day[date][i]);
+		        }
 	        }
 
 	        // check for specific case/hangout ribbits
 	        var ribbit_event = JSON.parse(this.game.cache.getText('Ribbit_Event'));
 	        for(let i=0; i<ribbit_event.length; i++){
 	        	var flag = BasicGame.global.event_flags[ribbit_event[i].condition];
-	        	if( flag != undefined && flag == true){
+	        	if( flag != undefined && flag == true && ribbits.length <= 3){
 	        		ribbits.push(ribbit_event[i]);
 	        	}
 	        }

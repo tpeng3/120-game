@@ -34,26 +34,19 @@ BasicGame.Preloader.prototype = {
 
         this.load.audio('bgm_seaside', 'assets/audio/bgm/yoiyaminoseaside.ogg');
         this.load.audio('bgm_sadserious', 'assets/audio/bgm/katamukikaketahizashi.mp3');
-        // this.load.audio('bgm_midnighttrain', 'assets/audio/bgm/midnighttrain.mp3');
-        // this.load.audio('bgm_middleofthenight', 'assets/audio/bgm/ushimitudokinosora.mp3');
 
-        // this.load.audio('bgm_nightroad', 'assets/audio/bgm/NightRoaD.mp3');
-        // this.load.audio('bgm_happyflute', 'assets/audio/bgm/tam-n17.mp3');
         this.load.audio('bgm_sweetvermouth', 'assets/audio/bgm/tw007.mp3');
         this.load.audio('bgm_vientodelsol', 'assets/audio/bgm/tw009.mp3');
-        // this.load.audio('bgm_judas', 'assets/audio/bgm/tw013.mp3');
         this.load.audio('bgm_strigiformes', 'assets/audio/bgm/tw018.mp3');
         // this.load.audio('bgm_evening', 'assets/audio/bgm/tw037.mp3');
         this.load.audio('bgm_gunshotstraight', 'assets/audio/bgm/tw042.mp3');
         this.load.audio('bgm_sofa', 'assets/audio/bgm/tw044.mp3');
-        // this.load.audio('bgm_radio', 'assets/audio/bgm/tw056.mp3');
+        this.load.audio('bgm_radio', 'assets/audio/bgm/tw056.mp3');
         // this.load.audio('bgm_dognduck', 'assets/audio/bgm/tw057.mp3');
         this.load.audio('bgm_dbd', 'assets/audio/bgm/tw062.mp3');
         this.load.audio('bgm_popup', 'assets/audio/bgm/tw034.mp3');
         // this.load.audio('bgm_lightup', 'assets/audio/bgm/tw064.mp3');
-        // this.load.audio('bgm_smoky', 'assets/audio/bgm/tw075.mp3');
         this.load.audio('bgm_blend', 'assets/audio/bgm/tw082.mp3');
-        // this.load.audio('bgm_mahoucooking', 'assets/audio/bgm/tw083.mp3');
 
         //SFX
         this.load.audio('sfx_player_laser', 'assets/audio/sfx/sfx_player_shot_laser.ogg');
