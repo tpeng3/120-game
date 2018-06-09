@@ -112,7 +112,7 @@ BasicGame.Bedtime.prototype = {
 
 		 	// check for specific day ribbits
 	        var ribbit_day = JSON.parse(this.game.cache.getText('Ribbit_Day'));
-	        var date = calendar.printDate()-1;
+	        var date = calendar.printDate();
 	        for(let i=0; i<ribbit_day[date].length; i++){
 	        	ribbits.push(ribbit_day[date][i]);
 	        }
@@ -120,8 +120,10 @@ BasicGame.Bedtime.prototype = {
 	        // check for specific case/hangout ribbits
 	        var ribbit_event = JSON.parse(this.game.cache.getText('Ribbit_Event'));
 	        for(let i=0; i<ribbit_event.length; i++){
-	        	if(ribbits.length <= 3 && eval(ribbit_event[i].condition))
+	        	var flag = BasicGame.global.event_flags[ribbit_event[i].condition];
+	        	if( flag != undefined && flag == true){
 	        		ribbits.push(ribbit_event[i]);
+	        	}
 	        }
 
 	        // if there's less than three ribbits, push in some flavor text
@@ -137,6 +139,10 @@ BasicGame.Bedtime.prototype = {
 
 		 	var prevHeight = 240;
 		 	for(i=0; i<ribbits.length; i++){
+		 		// update ribbit condition flags
+		 		if(ribbits[i].condition != undefined){
+	        		BasicGame.global.event_flags[ribbits[i].condition] = false;
+		 		}
 		 		let handle, icon = ribbits[i].icon;
 		 		var ribbitIcon = this.add.sprite(500, prevHeight, icon);
 		 		if(icon == 'icon_locke') handle = '@5urelocke';

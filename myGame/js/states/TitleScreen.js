@@ -66,8 +66,8 @@ BasicGame.TitleScreen.prototype = {
 		if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
 			this.camera.fade('#000');
 			this.camera.onFadeComplete.add(function(){
-                this.state.start('Cutscene', true, false, 'Intro');
-                // this.state.start('GameOver', true, false);
+                // this.state.start('Cutscene', true, false, 'Intro');
+                this.state.start('Bedtime', true, false);
 			}, this);
         }
         if (this.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {

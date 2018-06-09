@@ -1,17 +1,92 @@
 [
 	{
-	"condition":"false",
-	"icon": "icon_tai",
-	"text":"@5urelocke So do you want to meet up at a cafe tomorrow? It's about a block away from your office, next to a library. I heard they have good donuts there."
-	},
-	{
-	"condition":"false",
+	"condition":"case/CaseClosed_1",
 	"icon": "icon_locke",
-	"text":"just solved another INTENSE case today. #hardboileddetectiveing"
+	"text":"a strawberry a day keeps the hunger away... probably,"
 	},
 	{
-	"condition":"false",
+	"condition":"case/CaseClosed_2",
+	"icon": "icon_locke",
+	"text":"hey if this ribbit gets 50 croaks, keyna has to tpose in front of lynn"
+	},
+	{
+	"condition":"case/CaseClosed_2",
+	"icon": "icon_keyna",
+	"text":"@surelocke nice try but your ribbit only got two croaks. one from a bot and one from Tai? this is almost kind of sad."
+	},
+	{
+	"condition":"Tai_2",
+	"icon": "icon_locke",
+	"text":"@trainger_yellow wednesday right? ill try to make it to the live performance! POWER TRAINGERS GO!"
+	},
+	{
+	"condition":"Tai_3",
 	"icon": "icon_tai",
-	"text":"Can't wait to see the new Power Traingers episode on Sunday!"
+	"text":"As expected, the live performance was fun! Too bad the Trainger Yellow cliffhanger had to happen. The movie better be worth it. I have high expectations. "
+	},
+	{
+	"condition":"Tai_3",
+	"icon": "icon_locke",
+	"text":"(pt live performance spoilers?) TRAINGER YELLOW!!!!!!!!!!!!!"
+	},
+	{
+	"condition":"Keyna_1",
+	"icon": "icon_locke",
+	"text":"why the heck do couples have so many problems?! youd think things would just work out if people are really in love with each other"
+	},
+	{
+	"condition":"Keyna_1",
+	"icon": "icon_keyna",
+	"text":"@surelocke if only things were that simple. most people only love certain aspects of their partner. or simply enjoy the IDEA of a relationship."
+	},
+	{
+	"condition":"Keyna_2",
+	"icon": "icon_keyna",
+	"text":"I'm more disorganized than I originally thought. thanks @surelocke I owe you one."
+	},
+	{
+	"condition":"Keyna_2",
+	"icon": "icon_locke",
+	"text":"@DetectiveK honestly how do you even have so many papers in your office?! but im glad to help"
+	},
+	{
+	"condition":"Keyna_3",
+	"icon": "icon_locke",
+	"text":"i dunno how to say this in an not awkward way, but i hope shes okay"
+	},
+	{
+	"condition":"Fedelynn_1",
+	"icon": "icon_locke",
+	"text":"just ran into some trouble with the police today. such is the dangerous life of a detective"
+	},
+	{
+	"condition":"Fedelynn_1",
+	"icon": "icon_keyna",
+	"text":"@surelocke seriously? stop trying to cause trouble for Fedelynn!!"
+	},
+	{
+	"condition":"Fedelynn_2",
+	"icon": "icon_lynn",
+	"text":"@surelocke I didn't know you had a Ribbitter account :^O"
+	},
+	{
+	"condition":"Fedelynn_2",
+	"icon": "icon_locke",
+	"text":"NOO!!!! shes found me..."
+	},
+	{
+	"condition":"Fedelynn_2",
+	"icon": "icon_keyna",
+	"text":"@keyna I mean it's not hard when you've already been following her account."
+	},
+	{
+	"condition":"Fedelynn_3",
+	"icon": "icon_lynn",
+	"text":"This was a mistake, I shouldn't have brought others into my mess."
+	},
+	{
+	"condition":"Fedelynn_3",
+	"icon": "icon_locke",
+	"text":"Doogle has taught me a lot about legal issues today..."
 	}
 ]
