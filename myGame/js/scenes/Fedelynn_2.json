@@ -1,5 +1,5 @@
 {
-  "bg": "bg_agency",
+  "bg": "bg_street",
   "sprite_left": "Locke",
   "sprite_right": "Lynn",
   "next_state":"Bedtime",

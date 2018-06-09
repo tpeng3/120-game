@@ -155,14 +155,15 @@ Textbox.prototype.advance = function () {
         // change character sprite expression
         if(line.expression != undefined){
             let chara = (line.name == this.leftChara.key? this.leftChara : this.rightChara);
-            if(chara == 'Lynn') chara = 'Fedelynn'; // just for you fedelynn
-            chara.frameName = line.name + '_' + line.expression;
+            if(line.name == 'Fedelynn') chara.frameName = 'Lynn_' + line.expression; // just for you fedelynn
+            else chara.frameName = line.name + '_' + line.expression;
         }
         // sprite dimming
         var dimColor = 0x555555;
         var name = this.scene.lines[this.textLine].name;
+        // im being lazy with the name checking
         this.leftChara.tint = ((name == "Locke and Keyna") || (name == "") || (name == this.scene.sprite_left) ? 0xffffff : dimColor);
-        this.rightChara.tint = ((name == "Locke and Keyna") || (name == "") || (name == this.scene.sprite_right) ? 0xffffff : dimColor);
+        this.rightChara.tint = ((name == "Fedelynn") || (name == "Locke and Keyna") || (name == "") || (name == this.scene.sprite_right) ? 0xffffff : dimColor);
         //set talk sfx
         this.playsfx = this.skipNum;
         if (line.text_sfx != undefined)

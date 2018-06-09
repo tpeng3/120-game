@@ -71,9 +71,9 @@ BasicGame.TitleScreen.prototype = {
 			}, this);
         }
         if (this.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
-            this.state.start('Cutscene', true, false, '/case/CaseClosed_final_keyna');
+            // this.state.start('Cutscene', true, false, '/case/CaseClosed_final_keyna');
             // this.state.start('ActivityDecision', true, false);
-            // this.state.start('Cutscene', true, false, 'Keyna_');
+            this.state.start('Cutscene', true, false, 'Fedelynn_2');
         }
 	},
 	goFullscreen: function(){
