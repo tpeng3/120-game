@@ -1,12 +1,17 @@
 {
-  "case_name": "The Cat Caper Catastrophy",
+  "case_name": "Power Traingers",
   "bg": "",
-  "bgm": "bgm_touhou_stolen",
-  "due_date": "Infinity!",
+  "bgm": "bgm_wonder_zone",
+  "due_date": "None",
   "boss": {
-    "max_health": 100,
-    "curr_health": 100,
-    "sprite": "bh_boss_cat",
-    "ai_pattern": "ai_boss_cat"
+    "max_health": 500,
+    "curr_health": 500,
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "name": "CroakNDagger2012",
+    "sprite": "bh_boss_trainger",
+    "ai_pattern": "boss_frog"
   }
 }

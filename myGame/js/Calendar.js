@@ -53,6 +53,7 @@ function Calendar() {
 Calendar.prototype = {
     getSceneData: function () {
         if (BasicGame.global.case_number == 'final')
+            return 'no_option';
         var today = this.schedule[this.print()];
         if (today == 'no_option' || today == 'nobody_there') {
             console.log(this.print() + ': ' + today);

@@ -1,6 +1,6 @@
-BasicGame.CharacterDecision = function (game) { };
+BasicGame.FinalCaseDecision = function (game) { };
 
-BasicGame.CharacterDecision.prototype = {
+BasicGame.FinalCaseDecision.prototype = {
 
     init: function (characters) {
         this.characters = ['Tai', 'Keyna', 'Fedelynn'];
@@ -14,13 +14,13 @@ BasicGame.CharacterDecision.prototype = {
         this.characterSprites = [];
         this.load.image('button_Tai', 'assets/img/ui/button_tai.png');
         this.load.image('button_Keyna', 'assets/img/ui/button_keyna.png');
-        this.load.image('button_Lynn', 'assets/img/ui/button_lynn.png');
+        this.load.image('button_Fedelynn', 'assets/img/ui/button_lynn.png');
         this.load.text('final_case_Fedelynn', 'js/cases/Case_final_fedelynn.json');
         this.load.text('final_case_Keyna', 'js/cases/Case_final_keyna.json');
         this.load.text('final_case_Tai', 'js/cases/Case_final_tai.json');
     },
     create: function () {
-        console.log('CharacterDecision!')
+        console.log('FinalCaseDecision!')
         this.menuSelectSfx = this.add.audio('sfx_menu_select');
         this.menuEnterGoodSfx = this.add.audio('sfx_menu_open');
         this.menuEnterBadSfx = this.add.audio('sfx_menu_enter_bad');
@@ -40,13 +40,12 @@ BasicGame.CharacterDecision.prototype = {
             newSprite.tint = this.dimColor;
             this.characterSprites.push(newSprite);
             if (p[this.characters[i]] < 3) {
-                this.selectionText[i] = [{ name: '', text: 'Your relationship with ' + this.characters[i] + "isn't good enough to select this option." }];
-                this.endingUnlocked[i] = true;
+                this.selectionText[i] = [{ name: '', text: 'Your relationship with ' + this.characters[i] + " isn't good enough to select this option." }];
+                this.endingUnlocked[i] = false;
             }
         }
-        //     this.characterSprites[0].x -= 20;
-        //     this.characterSprites[2].x += 20;
-        //     this.selected = 1;
+        this.characterSprites[0].x -= 20;
+        this.characterSprites[2].x += 20;
         this.characterSprites[this.selected].tint = this.unDimColor;
         this.characterSprites[this.selected].scale = new Phaser.Point(1, 1);
 
@@ -105,8 +104,9 @@ BasicGame.CharacterDecision.prototype = {
             this.menuEnterGoodSfx.play('', 0, 0.75);
             this.camera.onFadeComplete.addOnce(function () {
                 BasicGame.global.case_number = 'final';
+                BasicGame.global.final_chara_route = this.characters[this.selected];
                 BasicGame.global.case = JSON.parse(this.game.cache.getText('final_case_' + this.characters[this.selected]));
-                this.state.start('Cutscene', true, false, 'case/CaseStart_final' + this.characters[this.selected]);
+                this.state.start('Cutscene', true, false, 'case/CaseStart_final_' + this.characters[this.selected]);
             }, this);
         }
     }

@@ -120,7 +120,7 @@ BasicGame.Work.prototype = {
         }
 
         let pos = new Phaser.Point(this.world.width/2, this.world.height - this.world.height / 3)
-        this.introText = new Textbox(game, false, null, [{ name: '', text: 'Arrow keys or WASD to move, hold [SPACEBAR] to shoot' }], pos, new Phaser.Point(0.5,0.5), new Phaser.Point(1000, 200));
+        this.introText = new Textbox(game, false, null, [{ name: '', text: 'Arrow keys or WASD to move, hold [SPACEBAR] to shoot, and hold [SHIFT] for precise movement' }], pos, new Phaser.Point(0.5,0.5), new Phaser.Point(1000, 200));
 
         //Bind the line advancing function to the spacebar
         var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -194,7 +194,10 @@ BasicGame.Work.prototype = {
         this.camera.fade('#000');
         this.camera.onFadeComplete.addOnce(function () {
             BasicGame.global.case_flags['Case_' + BasicGame.global.case_number] = true;
-            this.state.start('Cutscene', true, false, 'case/CaseClosed_' + (BasicGame.global.case_number));
+            if (BasicGame.global.case_number != 'final')
+                this.state.start('Cutscene', true, false, 'case/CaseClosed_' + (BasicGame.global.case_number));
+            else
+                this.state.start('Cutscene', true, false, 'case/CaseClosed_final_' + BasicGame.global.final_chara_route);
         }, this);
     }
 };

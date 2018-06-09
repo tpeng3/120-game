@@ -22,7 +22,7 @@ function Player(game, startingHealth, enemyGroup) {
         Player.bulletGroup = game.add.group();
     this.shotSfx = game.add.audio('sfx_player_laser');
     this.bulletSpeed = 700;
-    this.bulletDamage = 1;
+    this.bulletDamage = 1.125;
     this.bulletAngle = new Phaser.Point(0, 1); //angle of shots (as Vec2d (Phaser.Point))
     this.firingDelay = 110;//fire every this amount of milliseconds
     this.isReadyToShoot = true;
@@ -35,6 +35,7 @@ function Player(game, startingHealth, enemyGroup) {
     this.maxSpeedShift = new Phaser.Point(100, 100);
     this.accel = 1500;
     this.pause = true;
+    this.iFrames = false;
 }
 // explicitly define prefab's prototype (Phaser.Sprite) and constructor (Player)
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -46,11 +47,11 @@ Player.prototype.update = function () {
     if (this.pause)
         return;
     if (game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)) {
-        this.bulletDamage = 2;
+        //this.bulletDamage = 2;
         this.body.maxVelocity = this.maxSpeedShift;
         this.core.visible = true;
     } else {
-        this.bulletDamage = 1;
+        //this.bulletDamage = 1;
         this.body.maxVelocity = this.maxSpeedNormal;
         this.core.visible = false;
     }
@@ -100,13 +101,18 @@ Player.prototype.readyToShoot = function () {
     this.isReadyToShoot = true;
 }
 Player.prototype.damage = function (damage) {
+    if (this.iFrames)
+        return;
     this.currHealth -= damage;
     if(this.currHealth <= 0){
         this.kill();
-    }else{
+    } else {
+        this.iFrames = true;
+        this.alpha = 0.5;
         // update expression on sprite
         spriteLocke.frameName = 'bh_locke_' +this.currHealth;
         (lives.getChildAt(this.currHealth)).kill();
+        game.time.events.add(2500, function () { this.iFrames = false; this.alpha = 1; }, this);
     }
 }
 
