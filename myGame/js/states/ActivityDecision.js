@@ -183,7 +183,7 @@ BasicGame.ActivityDecision.prototype = {
                     this.menuEnterBadSfx.play('', 0, 0.5);
                     return;
                 }
-                if (BasicGame.global.player_stats.fatigue < 3 && BasicGame.case_number != 'final')
+                if (BasicGame.global.player_stats.fatigue < 3 && BasicGame.global.case_number != 'final')
                     BasicGame.global.player_stats.fatigue++;
                 if (BasicGame.global.case == undefined) {
                     BasicGame.global.case_number++;
