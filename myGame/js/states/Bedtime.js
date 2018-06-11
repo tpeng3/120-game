@@ -46,8 +46,10 @@ BasicGame.Bedtime.prototype = {
 		var bg = this.add.sprite(128, 64, 'bg_bedroom');
 
 		// add some instruction text
-	 	instrStyle = { font: 'bold Trebuchet MS', fontSize: '22px', fill: '#fff', wordWrap: true, wordWrapWidth: 800, boundsAlignH: 'center' };
-		this.add.text(16, 16, 'Use Arrow Keys or WASD to move. Press SPACEBAR at the Bed to sleep.', instrStyle);
+        instrStyle = { font: 'bold Trebuchet MS', fontSize: '22px', fill: '#fff', wordWrap: true, wordWrapWidth: 800, boundsAlignH: 'center' };
+        if (calendar.date.getDay() != 0) {
+            var instrText = this.add.text(16, 16, 'Use Arrow Keys or WASD to move. Press SPACEBAR at the Bed to sleep.', instrStyle);
+        }
 
 		this.physics.startSystem(Phaser.Physics.ARCADE);
 

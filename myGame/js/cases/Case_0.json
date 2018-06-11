@@ -1,17 +1,17 @@
 {
-  "case_name": "The Catalyst",
+  "case_name": "Lark and Load",
   "bg": "",
   "bgm": "bgm_wonder_zone",
-  "due_date": "6",
+  "due_date": "9",
   "boss": {
-    "max_health": 50,
-    "curr_health": 50,
+    "max_health": 300,
+    "curr_health": 300,
     "pos": {
-      "x": 0,
+      "x": 50,
       "y": 0
     },
-    "name": "Admiral Snuggles",
-    "sprite": "bh_boss_cat",
-    "ai_pattern": "boss_cat"
+    "name": "The Cheepskate",
+    "sprite": "bh_boss_bird",
+    "ai_pattern": "boss_bird"
   }
 }

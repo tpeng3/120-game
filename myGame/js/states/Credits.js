@@ -15,21 +15,23 @@ BasicGame.Credits.prototype = {
         bgm = this.add.audio('bgm_popup', 1, true);
         bgm.play();
 
+        BasicGame.save.date = calendar.date;
+        BasicGame.save.end_any = true;
+
         var cg;
         if(BasicGame.global.final_chara_route == "Tai"){
             cg = 'ending_tai';
+            BasicGame.save.end_Tai = 'complete';
         }else if(BasicGame.global.final_chara_route == "Keyna"){
             cg = 'ending_keyna';
+            BasicGame.save.end_Keyna = 'complete';
         }else if(BasicGame.global.final_chara_route == "Fedelynn"){
             cg = 'ending_lynn';
+            BasicGame.save.end_Fedelynn = 'complete';
         }
 
         var bg = game.add.sprite(0, 0, cg);
 
-        // game.add.tween(this.cutin1).to( { alpha: 1 }, 400, Phaser.Easing.Linear.None, true);
-        // var tweenCutin = game.add.tween(this.cutin1).to( { y: 150 }, 300, Phaser.Easing.Linear.None, true);
-
-        // tweenCutin.onComplete.add(this.timeToWork, this);
         var credits = game.add.sprite(this.world.centerX, this.world.centerY, 'credits');
         credits.anchor.set(0.5);
         credits.alpha = 0;

@@ -2,6 +2,14 @@
 var BasicGame = {};
 
 //globals now set in title screen so the reset on gameover or restating the game
+BasicGame.save = {
+    end_Fedelynn: 'incomplete',
+    end_Keyna: 'incomplete',
+    end_Tai: 'incomplete',
+    end_any: false,
+    date: undefined
+}
+
 
 BasicGame.Boot = function (game) {};
 
@@ -30,10 +38,7 @@ BasicGame.Boot.prototype = {
 
     preload: function () {
         console.log('Boot: preload');
-        //  Here we load the assets required for our preloader (in this case a background and a loading bar)
-        //this.load.image('preloaderBackground', 'images/preloader_background.jpg');
-        //this.load.image('preloaderBar', 'images/preloadr_bar.png');
-
+        this.load.spritesheet('sprite_locke', 'assets/img/bedtime/sprite_locke.png', 64, 64);
     },
 
     create: function () {
@@ -41,9 +46,4 @@ BasicGame.Boot.prototype = {
         //  So now let's start the real preloader going
         this.state.start('Preloader');
     },
-    update: function () {
-        //if (Phaser.Loader.hasLoaded)
-        //this.state.start('Preloader');
-    }
-
 };

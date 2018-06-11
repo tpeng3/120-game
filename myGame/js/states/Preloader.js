@@ -1,28 +1,11 @@
 
-BasicGame.Preloader = function (game) {
-
-	this.background = null;
-	this.preloadBar = null;
-
-	this.ready = false;
-
-};
+BasicGame.Preloader = function (game) { };
 
 BasicGame.Preloader.prototype = {
 
     preload: function () {
         console.log('Preloader: preload');
-		//	These are the assets we loaded in Boot.js
-		//	A nice sparkly background and a loading progress bar
-		//this.background = this.add.sprite(0, 0, 'preloaderBackground');
-		//this.preloadBar = this.add.sprite(300, 400, 'preloaderBar');
 
-		//	This sets the preloadBar sprite as a loader sprite.
-		//	What that does is automatically crop the sprite from 0 to full-width
-		//	as the files below are loaded in.
-		//this.load.setPreloadSprite(this.preloadBar);
-
-        // load bgm and sfx
         //BGM
         // @Tino 6/6/18 I'm gonna load a bunch of jazzy royalty free songs to see which ones I should use
         this.load.audio('bgm_locke', 'assets/audio/bgm/Locke_And_Load.ogg');
@@ -59,31 +42,22 @@ BasicGame.Preloader.prototype = {
         this.load.audio('sfx_text_scroll_client_f', 'assets/audio/sfx/sfx_ts_rando2.ogg');
         this.load.audio('sfx_text_scroll_client_m', 'assets/audio/sfx/sfx_ts_rando4.ogg');
         this.load.audio('sfx_text_scroll_default', 'assets/audio/sfx/sfx_type3.ogg');
-		//	+ lots of other required assets here
-
 	},
 
     create: function () {
         console.log('Preloader: create');
-		//	Once the load has finished we disable the crop because we're going to sit in the update loop for a short while as the music decodes
-        // this.preloadBar.cropEnabled = false;
+
+        var sprite = this.add.sprite(game.width / 2, game.height / 2, 'sprite_locke');
+        sprite.anchor.set(0.5, 0.5);
+        sprite.scale.setTo(1.5, 1.5);
+        sprite.animations.add('right', [6, 7, 8], 10, true);
+        sprite.animations.play('right');
+        var instrStyle = { font: 'bold Trebuchet MS', fontSize: '36px', fill: '#fff', wordWrap: true, wordWrapWidth: 800, boundsAlignH: 'center' };
+        var instrText = this.add.text(game.width / 2, sprite.y + 100, 'Loading...', instrStyle);
+        instrText.anchor.set(0.5, 0.5);
 	},
 
 	update: function () {
-		//	You don't actually need to do this, but I find it gives a much smoother game experience.
-		//	Basically it will wait for our audio file to be decoded before proceeding to the MainMenu.
-		//	You can jump right into the menu if you want and still play the music, but you'll have a few
-		//	seconds of delay while the mp3 decodes - so if you need your music to be in-sync with your menu
-		//	it's best to wait for it to decode here first, then carry on.
-		
-		//	If you don't have any music in your game then put the game.state.start line into the create function and delete
-		//	the update function completely.
-		
-		//if (this.cache.isSoundDecoded('titleMusic') && this.ready == false)
-		//{
-		//	this.ready = true;
-		//	this.state.start('MainMenu');
-		//}
         if (game.cache.isSoundDecoded('bgm_temp_detective')) {//&& game.cache.isSoundDecoded('sfx_type')) {
             game.state.start('TitleScreen', true, false);
         }

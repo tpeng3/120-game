@@ -29,45 +29,56 @@ BasicGame.TitleScreen.prototype = {
             etcrib: 0
         }
         calendar = new Calendar();
-		console.log('TitleScreen: create');
-		this.stage.backgroundColor = "#000";
+        console.log('TitleScreen: create');
+        this.stage.backgroundColor = "#000";
         this.typeSfx = game.add.audio('sfx_text_scroll_default');
-		// set fullscreen when you click on the game window
-		// I'll keep this commented out while debugging because otherwise it's a pain
-		game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-		game.input.onDown.add(this.goFullscreen, this);
+        // set fullscreen when you click on the game window
+        // I'll keep this commented out while debugging because otherwise it's a pain
+        game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.input.onDown.add(this.goFullscreen, this);
 
-		bgm = this.add.audio('bgm_temp_detective', 1, true);
-		bgm.play();
+        bgm = this.add.audio('bgm_temp_detective', 1, true);
+        bgm.play();
 
-		this.add.sprite(0, 0, 'title');
+        this.add.sprite(0, 0, 'title');
 
-    	var titleStyle = {font: 'Consolas', fontSize: '50px', fill: '#fff'};
+        var titleStyle = { font: 'Consolas', fontSize: '50px', fill: '#fff' };
         var titleText = this.add.text(450, 400, '', titleStyle);
         var subtitle = 'Tactical Schedule Management';
         var charNum = 0;
-        this.game.time.events.add(1000, function(){
-	       	this.game.time.events.loop(100, function(){
+        this.game.time.events.add(1000, function () {
+            this.game.time.events.loop(100, function () {
                 if (charNum != subtitle.length) {
                     if (subtitle[charNum] != ' ') {
                         this.typeSfx.stop();
                         this.typeSfx.play();
                     }
-	        		titleText.text += subtitle[charNum];
-	        		charNum++;
-	        	}
-        	}, this);
+                    titleText.text += subtitle[charNum];
+                    charNum++;
+                }
+            }, this);
         }, this);
-      
-		var startStyle = {font: 'Trebuchet MS', fontSize: '32px', fill: '#51FFD4'};
-        var startText = this.add.text(this.world.width/2, 550, '-Press SPACEBAR to Start-', startStyle);
-        startText.anchor.set(0.5);
-        startText.visible = false;
-      	this.game.time.events.add(3000, function(){
-			this.game.time.events.loop(1000, function(){
+
+        var startStyle = { font: 'Trebuchet MS', fontSize: '32px', fill: '#51FFD4' };
+        if (BasicGame.save.end_any) {
+            var startText = this.add.text(this.world.width / 2, 550, '-Press SPACEBAR to Play Again-', startStyle);
+            startText.anchor.set(0.5);
+            this.game.time.events.loop(1000, function () {
                 startText.visible = (startText.visible == false ? true : false);
-        	}, this);
-      	}, this);
+            }, this);
+            var endSkipText = this.add.text(this.world.width / 2, 680, '-Press ENTER to Go Back To Final Case Selection-', startStyle);
+            endSkipText.anchor.set(0.5);
+        }
+        else {
+            var startText = this.add.text(this.world.width / 2, 550, '-Press SPACEBAR to Start-', startStyle);
+            startText.anchor.set(0.5);
+            startText.visible = false;
+            this.game.time.events.add(3000, function () {
+                this.game.time.events.loop(1000, function () {
+                    startText.visible = (startText.visible == false ? true : false);
+                }, this);
+            }, this);
+        }
 
 		// Capture certain keys to prevent their default actions in the browser.
         this.input.keyboard.addKeyCapture([
@@ -81,17 +92,20 @@ BasicGame.TitleScreen.prototype = {
 	},
 	update: function () {
 		// start the game with the cutscene of Intro_0
-		if(this.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
+		if(this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)){
 			this.camera.fade('#000');
-			this.camera.onFadeComplete.add(function(){
+			this.camera.onFadeComplete.addOnce(function(){
                 this.state.start('Cutscene', true, false, 'Intro');
                 // this.state.start('Credits', true, false);
 			}, this);
         }
-        if (this.input.keyboard.isDown(Phaser.Keyboard.ENTER)) {
+        if (this.input.keyboard.justPressed(Phaser.Keyboard.ENTER) && BasicGame.save.end_any) {
             // this.state.start('Cutscene', true, false, '/case/CaseClosed_final_fedelynn');
             // this.state.start('ActivityDecision', true, false);
             // this.state.start('Cutscene', true, false, 'Fedelynn_3');
+            if (BasicGame.save.date != undefined)
+                calendar.date = BasicGame.save.date;
+            this.state.start('FinalCaseDecision', true, false);
         }
 	},
 	goFullscreen: function(){

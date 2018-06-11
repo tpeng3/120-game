@@ -341,6 +341,8 @@ EnemyAI.AI_boss_bird = {
             this.AI.phase = 3;
         else if (this.currHealth < 200)
             this.AI.phase = 2;
+        else
+            this.AI.phase = 1;
         if (this.AI.phase == 1) {
             if (this.state == 'init') {
                 console.log("crow init");
@@ -474,7 +476,7 @@ EnemyAI.AI_boss_bird = {
                 this.speed = 75;
                 var targetPoint = new Phaser.Point(600, 150);
                 game.physics.arcade.moveToObject(this, targetPoint, this.speed);
-                let buffer = 15;
+                let buffer = 50;
                 if (this.position.x <= targetPoint.x + buffer && this.position.x >= targetPoint.x - buffer && this.position.y <= targetPoint.y + buffer && this.position.y >= targetPoint.y - buffer) {
                     console.log("reached target point");
                     this.body.velocity = new Phaser.Point(0, 0);
@@ -524,6 +526,8 @@ EnemyAI.AI_boss_frog = {
             this.AI.phase = 3;
         else if (this.currHealth < 350)
             this.AI.phase = 2;
+        else
+            this.AI.phase = 1;
         if (this.AI.phase == 1) {
             if (this.state == 'init') {
                 console.log("frog init");
@@ -832,6 +836,8 @@ EnemyAI.AI_boss_final = {
             this.AI.phase = 3;
         else if (this.currHealth < 350)
             this.AI.phase = 2;
+        else
+            this.AI.phase = 1;
         if (this.AI.phase == 1) {
             if (this.state == 'init') {
                 console.log("final init");

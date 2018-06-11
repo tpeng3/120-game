@@ -18,6 +18,7 @@ BasicGame.FinalCaseDecision.prototype = {
         this.load.text('final_case_Fedelynn', 'js/cases/Case_final_fedelynn.json');
         this.load.text('final_case_Keyna', 'js/cases/Case_final_keyna.json');
         this.load.text('final_case_Tai', 'js/cases/Case_final_tai.json');
+        this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
     },
     create: function () {
         console.log('FinalCaseDecision!')
@@ -39,9 +40,20 @@ BasicGame.FinalCaseDecision.prototype = {
             newSprite.x = ((this.world.width / (this.characters.length + 1)) * (i + 1));
             newSprite.tint = this.dimColor;
             this.characterSprites.push(newSprite);
+            var end_state = BasicGame.save['end_' + this.characters[i]];
             if (p[this.characters[i]] < 3) {
-                this.selectionText[i] = [{ name: '', text: 'Your relationship with ' + this.characters[i] + " isn't good enough to select this option." }];
-                this.endingUnlocked[i] = false;
+                if (end_state == 'incomplete') {
+                    if (BasicGame.save.end_any)
+                        this.selectionText[i] = [{ name: '', text: 'Play all of ' + this.characters[i] + "'s scenes to unlock this option." }];
+                    else
+                        this.selectionText[i] = [{ name: '', text: 'Your relationship with ' + this.characters[i] + " isn't good enough to select this option." }];
+                    this.endingUnlocked[i] = false;
+                } else if (end_state == 'complete') {
+                    this.selectionText[i] = [{ name: '', text: 'You already helped ' + this.characters[i] + '!' }];
+                    this.endingUnlocked[i] = false;
+                }
+            } else if (end_state != 'complete') {
+                BasicGame.save = 'unlocked';
             }
         }
         this.characterSprites[0].x -= 20;
