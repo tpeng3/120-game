@@ -474,7 +474,7 @@ EnemyAI.AI_boss_bird = {
                 this.speed = 150;
                 var targetPoint = new Phaser.Point(600, 150);
                 game.physics.arcade.moveToObject(this, targetPoint, this.speed);
-                let buffer = 20;
+                let buffer = 50;
                 if (this.position.x <= targetPoint.x + buffer && this.position.x >= targetPoint.x - buffer && this.position.y <= targetPoint.y + buffer && this.position.y >= targetPoint.y - buffer) {
                     this.body.velocity = new Phaser.Point(0, 0);
                     this.state = 'wait';
