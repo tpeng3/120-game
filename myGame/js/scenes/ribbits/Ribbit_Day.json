@@ -44,26 +44,20 @@
 "5":[
 	{
 	"icon": "icon_tai",
-	"text":"It's my weekly rest day tomorrow!"
-	},
-	{
-	"icon": "icon_tai",
 	"text":"I just saw the annoucement! A live performance for Power Traingers next week? I'm so excited!"
 	}
 ],
 "6":[
+	{
+	"icon":"icon_tai",
+	"text":"Today was my day off so I rewatched a few PT episodes. Does Trainger Yellow know that I would die for him?"
+	},
 	{
 	"icon": "icon_lynn",
 	"text":"Why does saturday feels so far away >:^("
 	}
 ],
 "7":[
-	{
-	"icon": "icon_keyna",
-	"text":"it's a good thing I take my fridays off. I love three day weekends! "
-	}
-],
-"9":[
 	{
 	"icon": "icon_tai",
 	"text":"I admit it's bad of me to get speeding tickets, but how can I not press on the pedal when my favorite theme gets on?!"
@@ -77,10 +71,20 @@
 	"text":"@trainger_yellow lol tai you speed demon"
 	}
 ],
+"8":[
+	{
+	"icon": "icon_keyna",
+	"text":"it's a good thing I take my fridays off. I love three day weekends! "
+	}
+],
 "11":[
 	{
 	"icon": "icon_lynn",
-	"text":"Chief says we need to hit an arrest quota :'^("
+	"text":"Things are getting rough at work..."
+	},
+	{
+	"icon": "icon_lynn",
+	"text":"On a more positive note, my son has been showing me these \"kaomojis\". (9'-')9"
 	},
 	{
 	"icon": "icon_keyna",
@@ -89,22 +93,8 @@
 ],
 "12":[
 	{
-	"icon": "icon_keyna",
-	"text":"i should be better than this!! jakfel;jwlkja"
-	},
-	{
 	"icon": "icon_tai",
 	"text":"Anyone else excited for the Power Traingers live performance tomorrow?"
-	}
-],
-"13":[
-	{
-	"icon": "icon_lynn",
-	"text":"Things are getting rough at work..."
-	},
-	{
-	"icon": "icon_lynn",
-	"text":"On a more positive note, my son has been showing me these \"kaomojis\". (9'-')9"
 	}
 ],
 "14":[
@@ -130,7 +120,7 @@
 "16":[
 	{
 	"icon": "icon_locke",
-	"text":"range water qver ceybaard cant se rbbtter anyre he1q!"
+	"text":"range juce qver ceybaard brqCen cant se rbbtter anymre he1q!"
 	}
 ]
 }

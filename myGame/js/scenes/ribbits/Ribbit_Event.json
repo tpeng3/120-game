@@ -12,7 +12,7 @@
 	{
 	"condition":"case/CaseClosed_2",
 	"icon": "icon_keyna",
-	"text":"@surelocke nice try but you only got two croaks. one from a bot and one from Tai? this is almost sad."
+	"text":"@5urelocke nice try but you only got two croaks. one from a bot and one from Tai? this is almost sad."
 	},
 	{
 	"condition":"Tai_2",
@@ -22,7 +22,7 @@
 	{
 	"condition":"Tai_3",
 	"icon": "icon_tai",
-	"text":"As expected, the live performance was fun! Too bad the Trainger Yellow cliffhanger had to happen. The movie better be worth it. I have high expectations. "
+	"text":"As expected, the live performance was fun! It's too bad the Trainger Yellow cliffhanger had to happen. The movie better be worth it. I have high expectations. "
 	},
 	{
 	"condition":"Tai_3",
@@ -37,12 +37,12 @@
 	{
 	"condition":"Keyna_1",
 	"icon": "icon_keyna",
-	"text":"@surelocke if only things were that simple. most people only love certain aspects of their partner. or simply enjoy the IDEA of a relationship."
+	"text":"@5urelocke if only things were that simple. most people only love certain aspects of their partner. or simply enjoy the IDEA of a relationship."
 	},
 	{
 	"condition":"Keyna_2",
 	"icon": "icon_keyna",
-	"text":"I'm more disorganized than I originally thought. thanks @surelocke I owe you one."
+	"text":"I'm more disorganized than I originally thought. thanks @5urelocke I owe you one."
 	},
 	{
 	"condition":"Keyna_2",
@@ -62,12 +62,12 @@
 	{
 	"condition":"Fedelynn_1",
 	"icon": "icon_keyna",
-	"text":"@surelocke seriously? stop trying to cause trouble for Fedelynn!!"
+	"text":"@5urelocke seriously? stop trying to cause trouble for Fedelynn!!"
 	},
 	{
 	"condition":"Fedelynn_2",
 	"icon": "icon_lynn",
-	"text":"@surelocke I didn't know you had a Ribbitter account :^O"
+	"text":"@5urelocke I didn't know you had a Ribbitter account :^O"
 	},
 	{
 	"condition":"Fedelynn_2",
@@ -77,7 +77,7 @@
 	{
 	"condition":"Fedelynn_2",
 	"icon": "icon_keyna",
-	"text":"@keyna I mean it's not hard when you've already been following her account."
+	"text":"@5urelocke I mean it's not hard when you've already been following her account."
 	},
 	{
 	"condition":"Fedelynn_3",
@@ -87,6 +87,6 @@
 	{
 	"condition":"Fedelynn_3",
 	"icon": "icon_locke",
-	"text":"Doogle has taught me a lot about legal issues today..."
+	"text":"doogle has taught me a lot about legal issues today... its kind of amazing my business hasnt been shut down yet lol"
 	}
 ]
