@@ -11,6 +11,7 @@ BasicGame.TitleScreen.prototype = {
         this.load.image('bg_black', 'assets/img/bg/bg_black.png');
 	},
     create: function () {
+        game.sound.stopAll();
         //Create and/or reset global object
         BasicGame.global = {
             case_number: -1,
@@ -66,7 +67,11 @@ BasicGame.TitleScreen.prototype = {
             this.game.time.events.loop(1000, function () {
                 startText.visible = (startText.visible == false ? true : false);
             }, this);
-            var endSkipText = this.add.text(this.world.width / 2, 680, '-Press ENTER to Go Back To Final Case Selection-', startStyle);
+            var endSkip = '-Press ENTER to Go Back To Final Case Selection-';
+            if (BasicGame.save.end_Fedelynn == 'complete' && BasicGame.save.end_Tai == 'complete' && BasicGame.save.end_Keyna == 'complete') {
+                endSkip = 'All Endings are Complete! Locke and their friends are all Happy :)';
+            }
+            var endSkipText = this.add.text(this.world.width / 2, 680, endSkip, startStyle);
             endSkipText.anchor.set(0.5);
         }
         else {
@@ -96,13 +101,9 @@ BasicGame.TitleScreen.prototype = {
 			this.camera.fade('#000');
 			this.camera.onFadeComplete.addOnce(function(){
                 this.state.start('Cutscene', true, false, 'Intro');
-                // this.state.start('Credits', true, false);
 			}, this);
         }
         if (this.input.keyboard.justPressed(Phaser.Keyboard.ENTER) && BasicGame.save.end_any) {
-            // this.state.start('Cutscene', true, false, '/case/CaseClosed_final_fedelynn');
-            // this.state.start('ActivityDecision', true, false);
-            // this.state.start('Cutscene', true, false, 'Fedelynn_3');
             if (BasicGame.save.date != undefined)
                 calendar.date = BasicGame.save.date;
             this.state.start('FinalCaseDecision', true, false);

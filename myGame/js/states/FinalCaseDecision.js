@@ -68,7 +68,15 @@ BasicGame.FinalCaseDecision.prototype = {
         dateBox.alpha = 0.75;
         // initialize the dateTime text
         this.dateText = this.add.text(this.textbox.left + 60, 20, calendar.print(), { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
-        dateBox.scale.setTo(this.dateText.width+90, this.dateText.height+6);
+        dateBox.scale.setTo(this.dateText.width + 90, this.dateText.height);
+
+        if (BasicGame.save.end_any) {
+            var info = this.add.sprite(this.textbox.left, 65, 'bg_black');
+            info.alpha = 0.75
+            var infoText = 'Press ENTER to return to title screen';
+            this.caseInfoText = this.add.text(this.textbox.left + 60, 65, infoText, { font: 'bold Trebuchet MS', fontSize: '32px', fill: '#fff' });
+            info.scale.setTo(this.caseInfoText.width + 90, this.caseInfoText.height);
+        }
         // fade transition (It has to be placed at the end for layering reasons)
         var fade = new TransitionFade(game);
     },
@@ -104,7 +112,7 @@ BasicGame.FinalCaseDecision.prototype = {
                 this.menuSelectSfx.play('', 0, 0.5, false, true);
         }
         //@Tina you don't need to change any of this code, just set this.selected appropriately
-        if (this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR) || this.input.keyboard.justPressed(Phaser.Keyboard.ENTER)) {
+        if (this.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
             if (!this.endingUnlocked[this.selected]) {
                 this.menuEnterBadSfx.play();
                 return;
@@ -120,6 +128,9 @@ BasicGame.FinalCaseDecision.prototype = {
                 BasicGame.global.case = JSON.parse(this.game.cache.getText('final_case_' + this.characters[this.selected]));
                 this.state.start('Cutscene', true, false, 'case/CaseStart_final_' + this.characters[this.selected]);
             }, this);
+        }
+        if (this.input.keyboard.justPressed(Phaser.Keyboard.ENTER) && BasicGame.save.end_any) {
+            this.state.start('TitleScreen', true, false);
         }
     }
 
