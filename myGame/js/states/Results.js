@@ -8,7 +8,6 @@ BasicGame.Results.prototype = {
 
     create: function () {
         calendar.week++;
-        console.log('Results!')
         // some text for the players
         var textStyle = { fontSize: '24px', fill: '#fff', wordWrap: true, wordWrapWidth: 900 };
         this.add.text(200, 40, 'Rest day: ' + calendar.print() + ': Results (Placeholder)', textStyle);

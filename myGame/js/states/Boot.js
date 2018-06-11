@@ -37,12 +37,10 @@ BasicGame.Boot.prototype = {
     },
 
     preload: function () {
-        console.log('Boot: preload');
         this.load.spritesheet('sprite_locke', 'assets/img/bedtime/sprite_locke.png', 64, 64);
     },
 
     create: function () {
-        console.log('Boot: create');
         //  So now let's start the real preloader going
         this.state.start('Preloader');
     },

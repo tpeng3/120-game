@@ -2,7 +2,6 @@ BasicGame.Work = function (game) {};
 
 BasicGame.Work.prototype = {
     preload: function() {
-        console.log('Work: preload');
         this.time.advancedTiming = true;
 
         // bullet hell images
@@ -33,7 +32,6 @@ BasicGame.Work.prototype = {
     create: function () {
         this.BH_TIME = 60000; //time limit for the bullet hell is currently a minute
 
-        console.log('Work: create');
         //Initialize lives based on the player's fatigue
         this.lives = Math.max(1, 3 - Math.floor((BasicGame.global.player_stats.fatigue - 1) / 2));
 
@@ -135,7 +133,7 @@ BasicGame.Work.prototype = {
             this.workEndBossDeath();
         }
 
-        if(this.input.keyboard.isDown(Phaser.Keyboard.ENTER) || !this.player.alive){ // temporary code just to progress through the states for now
+        if(!this.player.alive){ // temporary code just to progress through the states for now
             this.workEnd();
         }
     },

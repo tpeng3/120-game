@@ -15,13 +15,12 @@ BasicGame.FinalCaseDecision.prototype = {
         this.load.image('button_Tai', 'assets/img/ui/button_tai.png');
         this.load.image('button_Keyna', 'assets/img/ui/button_keyna.png');
         this.load.image('button_Fedelynn', 'assets/img/ui/button_lynn.png');
-        this.load.text('final_case_Fedelynn', 'js/cases/Case_final_fedelynn.json');
-        this.load.text('final_case_Keyna', 'js/cases/Case_final_keyna.json');
-        this.load.text('final_case_Tai', 'js/cases/Case_final_tai.json');
+        this.load.text('final_case_Fedelynn', 'js/cases/Case_final_Fedelynn.json');
+        this.load.text('final_case_Keyna', 'js/cases/Case_final_Keyna.json');
+        this.load.text('final_case_Tai', 'js/cases/Case_final_Tai.json');
         this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
     },
     create: function () {
-        console.log('FinalCaseDecision!')
         this.menuSelectSfx = this.add.audio('sfx_menu_select');
         this.menuEnterGoodSfx = this.add.audio('sfx_menu_open');
         this.menuEnterBadSfx = this.add.audio('sfx_menu_enter_bad');

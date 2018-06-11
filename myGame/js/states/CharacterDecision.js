@@ -13,7 +13,6 @@ BasicGame.CharacterDecision.prototype = {
         this.load.image('button_Fedelynn', 'assets/img/ui/button_lynn.png');
     },
     create: function () {
-        console.log('CharacterDecision!')
         this.menuSelectSfx = this.add.audio('sfx_menu_select');
         this.menuEnterGoodSfx = this.add.audio('sfx_menu_open');
         // add the initial bg
@@ -91,10 +90,8 @@ BasicGame.CharacterDecision.prototype = {
             this.camera.fade('#000', 1000);
             this.menuEnterGoodSfx.play('', 0, 0.75);
             this.camera.onFadeComplete.addOnce(function () {
-                console.log('incrementing ' + this.characters[this.selected] + '_ind: ' + (calendar.scenes[this.characters[this.selected] + '_ind'] + 1));
                 calendar.scenes[this.characters[this.selected] + '_ind']++;
                 BasicGame.global.player_stats.relationships[this.characters[this.selected]]++;
-                console.log(BasicGame.global.player_stats.relationships);
                 this.state.start('Cutscene', true, false, this.characters[this.selected] + '_' + calendar.scenes[this.characters[this.selected] + '_ind']);
             }, this);
         }

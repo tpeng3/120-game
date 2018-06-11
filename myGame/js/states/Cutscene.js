@@ -7,10 +7,8 @@ BasicGame.Cutscene.prototype = {
 
         //Set the scene name (json file path) from the place that started the scene
         this.sceneName = sceneKey;
-        console.log('starting scene: ' + sceneKey);
     },
 	preload: function() {
-		console.log('Cutscene: preload');
         // load backgrounds
         this.load.image('bg_agency', 'assets/img/bg/bg_agency.png');
         this.load.image('bg_cafe', 'assets/img/bg/bg_cafe.png');
@@ -28,7 +26,6 @@ BasicGame.Cutscene.prototype = {
         this.load.text('scene', 'js/scenes/' + this.sceneName + '.json');
 	},
     create: function () {
-        console.log('Cutscene: create');
         game.sound.stopAll(); 
 
 		// parse the scene script

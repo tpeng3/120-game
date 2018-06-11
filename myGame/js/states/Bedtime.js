@@ -8,7 +8,6 @@ BasicGame.Bedtime = function (game) {
 
 BasicGame.Bedtime.prototype = {
 	preload: function() {
-        console.log('Bedtime: preload');
 		// load ribbitter
         this.load.image('ui_ribbitter', 'assets/img/ui/ui_socialmedia.png');
         this.load.image('icon_locke', 'assets/img/ui/icon_locke.png');
@@ -34,7 +33,6 @@ BasicGame.Bedtime.prototype = {
 		// variables
 		this.spriteSpeed = Settings.BEDROOM_SPRITE_SPEED;
 
-        console.log('Bedtime: create');
         game.sound.stopAll(); 
 
         bgm = game.add.audio('bgm_temp_paino', 1, true);

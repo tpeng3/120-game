@@ -5,8 +5,6 @@ BasicGame.ActivityDecision = function (game) {
 
 BasicGame.ActivityDecision.prototype = {
 	preload: function() {
-        console.log('ActivityDecision: preload');
-
         // load cases
         if (BasicGame.global.case == undefined) //normal cases
             game.load.text('next_case', 'js/cases/Case_' + (BasicGame.global.case_number + 1) + '.json');
@@ -21,8 +19,6 @@ BasicGame.ActivityDecision.prototype = {
         this.load.image('ui_wonderzone2', 'assets/img/ui/ui_wonderzone2.png');
 	},
     create: function () {
-		console.log('ActivityDecision: create');
-
         // add agency background. It feels weird adding it twice haha.
         this.add.sprite(0, 0, 'bg_agency');
         this.menuSelectSfx = this.add.audio('sfx_menu_select');
@@ -57,8 +53,6 @@ BasicGame.ActivityDecision.prototype = {
         }
 
         var textbox = new Textbox(game, false, null, [{ name: name, text: text  }]);
-
-        console.log("Fatigue: " + BasicGame.global.player_stats.fatigue);
 
         // place the dateTimeBox
         var dateBox = this.add.sprite(textbox.left, 20, 'bg_black');
@@ -223,10 +217,8 @@ BasicGame.ActivityDecision.prototype = {
                     this.exit = true;
                     this.menuEnterGoodSfx.play('', 0, 0.75);
                     this.camera.onFadeComplete.addOnce(function () {
-                        console.log('incrementing ' + this.sceneData[0] + '_ind: ' + (calendar.scenes[this.sceneData[0] + '_ind'] + 1));
                         calendar.scenes[this.sceneData[0] + '_ind']++;
                         BasicGame.global.player_stats.relationships[this.sceneData[0]]++;
-                        console.log(BasicGame.global.player_stats.relationships);
                         this.state.start('Cutscene', true, false, this.sceneData[0] + '_' + calendar.scenes[this.sceneData[0] + '_ind']);
                     }, this);
                 } else {

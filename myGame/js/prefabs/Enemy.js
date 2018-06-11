@@ -345,7 +345,6 @@ EnemyAI.AI_boss_bird = {
             this.AI.phase = 1;
         if (this.AI.phase == 1) {
             if (this.state == 'init') {
-                console.log("crow init");
                 this.movementPattern = Enemy.movementPattern_moveAroundPoint;
                 this.firingDelay = 300;
                 let rotX = this.x - 50;
@@ -398,7 +397,6 @@ EnemyAI.AI_boss_bird = {
                 game.physics.arcade.moveToObject(this, targetPoint, this.speed);
                 let buffer = 20;
                 if (this.position.x <= targetPoint.x + buffer && this.position.x >= targetPoint.x - buffer && this.position.y <= targetPoint.y + buffer && this.position.y >= targetPoint.y - buffer) {
-                    console.log("reached target point");
                     this.body.velocity = new Phaser.Point(0, 0);
                     this.state = 'wait';
                     this.movementPattern = Enemy.movementPattern_moveAroundPoint;
@@ -471,15 +469,13 @@ EnemyAI.AI_boss_bird = {
                 this.AI.phase3Start = true;
             }
             if (this.state == 'init') {
-                console.log('initing3');
                 this.movementPattern = Enemy.movementPattern_doNothing;
                 this.shootingPattern = function () { };
                 this.speed = 150;
                 var targetPoint = new Phaser.Point(600, 150);
                 game.physics.arcade.moveToObject(this, targetPoint, this.speed);
-                let buffer = 50;
+                let buffer = 20;
                 if (this.position.x <= targetPoint.x + buffer && this.position.x >= targetPoint.x - buffer && this.position.y <= targetPoint.y + buffer && this.position.y >= targetPoint.y - buffer) {
-                    console.log("reached target point");
                     this.body.velocity = new Phaser.Point(0, 0);
                     this.state = 'wait';
                     this.movementPattern = Enemy.movementPattern_moveAroundPoint;
@@ -531,7 +527,6 @@ EnemyAI.AI_boss_frog = {
             this.AI.phase = 1;
         if (this.AI.phase == 1) {
             if (this.state == 'init') {
-                console.log("frog init");
                 this.firingDelay = 10;
                 this.state = 'spread';
             } else if (this.state == 'spread') {
@@ -644,7 +639,6 @@ EnemyAI.AI_boss_frog = {
                 game.physics.arcade.moveToObject(this, targetPoint, this.speed);
                 let buffer = 15;
                 if (this.position.x <= targetPoint.x + buffer && this.position.x >= targetPoint.x - buffer && this.position.y <= targetPoint.y + buffer && this.position.y >= targetPoint.y - buffer) {
-                    console.log("reached target point");
                     this.body.velocity = new Phaser.Point(0, 0);
                     this.state = 'wait';
                     this.resetPos = new Phaser.Point(this.x, this.y);
@@ -690,7 +684,6 @@ EnemyAI.AI_boss_frog = {
                 game.physics.arcade.moveToObject(this, targetPoint, this.speed);
                 let buffer = 20;
                 if (this.position.x <= targetPoint.x + buffer && this.position.x >= targetPoint.x - buffer && this.position.y <= targetPoint.y + buffer && this.position.y >= targetPoint.y - buffer) {
-                    console.log("reached target point");
                     this.body.velocity = new Phaser.Point(0, 0);
                     this.state = 'wait';
                     this.resetPos = new Phaser.Point(this.x, this.y);
@@ -720,7 +713,6 @@ EnemyAI.AI_boss_frog = {
                 game.physics.arcade.moveToObject(this, targetPoint, this.speed);
                 let buffer = 15;
                 if (this.position.x <= targetPoint.x + buffer && this.position.x >= targetPoint.x - buffer && this.position.y <= targetPoint.y + buffer && this.position.y >= targetPoint.y - buffer) {
-                    console.log("reached target point");
                     this.body.velocity = new Phaser.Point(0, 0);
                     this.state = 'wait';
                     this.resetPos = new Phaser.Point(this.x, this.y);
@@ -775,7 +767,6 @@ EnemyAI.AI_boss_frog = {
                 this.AI.afterShotCount = 0;
                 let buffer = 15;
                 if (this.position.x <= targetPoint.x + buffer && this.position.x >= targetPoint.x - buffer && this.position.y <= targetPoint.y + buffer && this.position.y >= targetPoint.y - buffer) {
-                    console.log("reached target point");
                     this.body.velocity = new Phaser.Point(0, 0);
                     this.state = 'wait';
                     this.resetPos = new Phaser.Point(this.x, this.y);
@@ -799,7 +790,6 @@ EnemyAI.AI_boss_frog = {
                         if (this.firingDelay <= 10)
                             this.afterShot = function () { };
                         this.AI.afterShotCount = 0;
-                        console.log('firing delay: ' + this.firingDelay);
                     }
                 }
                 this.state = 'waitForSpiralFinish';
@@ -841,7 +831,6 @@ EnemyAI.AI_boss_final = {
             this.AI.phase = 1;
         if (this.AI.phase == 1) {
             if (this.state == 'init') {
-                console.log("final init");
                 this.firingDelay = 10;
                 this.state = 'spread';
             } else if (this.state == 'spread') {
@@ -954,7 +943,6 @@ EnemyAI.AI_boss_final = {
                 game.physics.arcade.moveToObject(this, targetPoint, this.speed);
                 let buffer = 15;
                 if (this.position.x <= targetPoint.x + buffer && this.position.x >= targetPoint.x - buffer && this.position.y <= targetPoint.y + buffer && this.position.y >= targetPoint.y - buffer) {
-                    console.log("reached target point");
                     this.body.velocity = new Phaser.Point(0, 0);
                     this.state = 'wait';
                     this.resetPos = new Phaser.Point(this.x, this.y);
@@ -1000,7 +988,6 @@ EnemyAI.AI_boss_final = {
                 game.physics.arcade.moveToObject(this, targetPoint, this.speed);
                 let buffer = 20;
                 if (this.position.x <= targetPoint.x + buffer && this.position.x >= targetPoint.x - buffer && this.position.y <= targetPoint.y + buffer && this.position.y >= targetPoint.y - buffer) {
-                    console.log("reached target point");
                     this.body.velocity = new Phaser.Point(0, 0);
                     this.state = 'wait';
                     this.resetPos = new Phaser.Point(this.x, this.y);
@@ -1030,7 +1017,6 @@ EnemyAI.AI_boss_final = {
                 game.physics.arcade.moveToObject(this, targetPoint, this.speed);
                 let buffer = 15;
                 if (this.position.x <= targetPoint.x + buffer && this.position.x >= targetPoint.x - buffer && this.position.y <= targetPoint.y + buffer && this.position.y >= targetPoint.y - buffer) {
-                    console.log("reached target point");
                     this.body.velocity = new Phaser.Point(0, 0);
                     this.state = 'wait';
                     this.resetPos = new Phaser.Point(this.x, this.y);
@@ -1085,7 +1071,6 @@ EnemyAI.AI_boss_final = {
                 this.AI.afterShotCount = 0;
                 let buffer = 15;
                 if (this.position.x <= targetPoint.x + buffer && this.position.x >= targetPoint.x - buffer && this.position.y <= targetPoint.y + buffer && this.position.y >= targetPoint.y - buffer) {
-                    console.log("reached target point");
                     this.body.velocity = new Phaser.Point(0, 0);
                     this.state = 'wait';
                     this.resetPos = new Phaser.Point(this.x, this.y);
@@ -1109,7 +1094,6 @@ EnemyAI.AI_boss_final = {
                         if (this.firingDelay <= 10)
                             this.afterShot = function () { };
                         this.AI.afterShotCount = 0;
-                        console.log('firing delay: ' + this.firingDelay);
                     }
                 }
                 this.state = 'waitForSpiralFinish';

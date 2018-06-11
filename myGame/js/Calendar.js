@@ -56,7 +56,6 @@ Calendar.prototype = {
             return 'no_option';
         var today = this.schedule[this.print()];
         if (today == 'no_option' || today == 'nobody_there') {
-            console.log(this.print() + ': ' + today);
             return today;
         }
         for (let i = 0; i < today.length;) {
@@ -69,7 +68,6 @@ Calendar.prototype = {
         }
         if (today.length <= 0)
             today = 'nobody_there';
-        console.log(this.print() + ': ' + today);
         return today;
     },
     // Prints a specially formatted version of the date for the game's purposes
@@ -108,7 +106,6 @@ Calendar.prototype = {
         else {
             this.date.setDate(this.date.getDate() + 1);
         }
-        console.log(this.date);
     },
 };
 

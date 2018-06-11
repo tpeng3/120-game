@@ -4,7 +4,6 @@ BasicGame.TitleScreen = function (game) {
 };
 BasicGame.TitleScreen.prototype = {
 	preload: function() {
-		console.log('TitleScreen: preload');
 		// basically load a title screen image and assets
 		this.load.image('title', 'assets/img/ui/ui_title.png');
 		// this is just for transitions
@@ -30,7 +29,6 @@ BasicGame.TitleScreen.prototype = {
             etcrib: 0
         }
         calendar = new Calendar();
-        console.log('TitleScreen: create');
         this.stage.backgroundColor = "#000";
         this.typeSfx = game.add.audio('sfx_text_scroll_default');
         // set fullscreen when you click on the game window

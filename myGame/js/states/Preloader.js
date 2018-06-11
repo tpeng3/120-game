@@ -4,8 +4,6 @@ BasicGame.Preloader = function (game) { };
 BasicGame.Preloader.prototype = {
 
     preload: function () {
-        console.log('Preloader: preload');
-
         //BGM
         // @Tino 6/6/18 I'm gonna load a bunch of jazzy royalty free songs to see which ones I should use
         this.load.audio('bgm_locke', 'assets/audio/bgm/Locke_And_Load.ogg');
@@ -45,8 +43,6 @@ BasicGame.Preloader.prototype = {
 	},
 
     create: function () {
-        console.log('Preloader: create');
-
         var sprite = this.add.sprite(game.width / 2, game.height / 2, 'sprite_locke');
         sprite.anchor.set(0.5, 0.5);
         sprite.scale.setTo(1.5, 1.5);
