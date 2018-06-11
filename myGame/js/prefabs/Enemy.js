@@ -471,6 +471,7 @@ EnemyAI.AI_boss_bird = {
                 this.AI.phase3Start = true;
             }
             if (this.state == 'init') {
+                console.log('initing3');
                 this.movementPattern = Enemy.movementPattern_doNothing;
                 this.shootingPattern = function () { };
                 this.speed = 150;
@@ -508,8 +509,8 @@ EnemyAI.AI_boss_bird = {
                             this.afterShot = function () { }
                         }
                     }
+                    this.state = 'wait';
                 }
-                this.state = 'wait';
             }
         }
     }
