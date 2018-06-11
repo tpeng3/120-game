@@ -33,14 +33,11 @@ BasicGame.CharacterDecision.prototype = {
             newSprite.tint = this.dimColor;
             this.characterSprites.push(newSprite);
         }
-        // if (this.characters.length == 2) {
-        //     this.characterSprites[0].x -= 10;
-        //     this.characterSprites[1].x += 10;
-        // } else {
-        //     this.characterSprites[0].x -= 20;
-        //     this.characterSprites[2].x += 20;
-        //     this.selected = 1;
-        // }
+        if (this.characters.length == 3) {
+            this.characterSprites[0].x -= 20;
+            this.characterSprites[2].x += 20;
+            this.selected = 1;
+        } 
         this.characterSprites[this.selected].tint = this.unDimColor;
         this.characterSprites[this.selected].scale = new Phaser.Point(1, 1);
 

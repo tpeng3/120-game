@@ -78,7 +78,9 @@ BasicGame.ActivityDecision.prototype = {
             if ((dateNum == 9 && BasicGame.global.case_flags['Case_1'] != true) || (dateNum == 16 && BasicGame.global.case_flags['Case_2'] != true)) {
                 info = "Locke's agnecy is going under. Finish a case today!";
                 this.lastDayTofinish = true;
-            } else
+            } else if (BasicGame.global.case_flags['Case_2'] == true)
+                info = 'No more clients for now: take it easy!'
+            else
                 info = 'No active case: work to find a client!';
         }
         else if (BasicGame.global.case_number == 'final') {
@@ -86,10 +88,7 @@ BasicGame.ActivityDecision.prototype = {
             let percentWork = Math.round(((bossDat.max_health - bossDat.curr_health) / bossDat.max_health) * 100);
             info = 'Case: ' + BasicGame.global.case.case_name + ' (' + percentWork + '% done)';
             daysLeft = 'No time limit'
-        } else if (BasicGame.global.case_flags.Case_2 == true) {
-            info = 'No more clients for now!';
-        }
-        else {
+        } else {
             let bossDat = BasicGame.global.case.boss;
             let percentWork = Math.round(((bossDat.max_health - bossDat.curr_health)/ bossDat.max_health) * 100);
             info = 'Case: ' + BasicGame.global.case.case_name + ' (' + percentWork + '% done)';
@@ -180,7 +179,7 @@ BasicGame.ActivityDecision.prototype = {
                 if (this.exit)
                     return;
                 if (this.noWorkOption) {
-                    this.menuEnterBadSfx.play('', 0, 0.5);
+                    this.menuEnterBadSfx.play('', 0, 0.6);
                     return;
                 }
                 if (BasicGame.global.player_stats.fatigue < 3 && BasicGame.global.case_number != 'final')
@@ -209,13 +208,14 @@ BasicGame.ActivityDecision.prototype = {
                 if (this.exit)
                     return;
                 if (this.sceneData == 'no_option' || this.lastDayTofinish) {
-                    this.menuEnterBadSfx.play('', 0, 0.5);
+                    this.menuEnterBadSfx.play('', 0, 0.6);
                     return;
                 }  
                 BasicGame.global.player_stats.fatigue = 0;
                 this.camera.fade('#000', 1000);
                 if (this.sceneData == "nobody_there") {
                     this.exit = true;
+                    this.menuEnterGoodSfx.play('', 0, 0.75);
                     this.camera.onFadeComplete.addOnce(function () {
                         this.state.start('Cutscene', true, false, 'NobodyThere');
                     }, this);

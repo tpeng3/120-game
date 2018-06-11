@@ -60,7 +60,7 @@ Calendar.prototype = {
             return today;
         }
         for (let i = 0; i < today.length;) {
-            if (this.scenes[today[i] + '_ind'] > this.week || (!this.fedelynn_unlocked && today[i] == 'Fedelynn')) {
+            if (this.scenes[today[i] + '_ind'] > this.week || this.scenes[today[i] + '_ind'] > 3 || (!this.fedelynn_unlocked && today[i] == 'Fedelynn')) {
                 today.splice(i, 1);
             }
             else {
