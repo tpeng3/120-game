@@ -129,14 +129,7 @@ BasicGame.Work.prototype = {
     update: function () {
         this.hexagons.tilePosition.x += .1;
         this.hexagons.tilePosition.y += 1;
-
-        // debug information
-        this.game.debug.text(this.time.fps || '--', 2, 14, "#00ff00");
         // this.physics.arcade.collide(this.player, this.frameBounds);
-
-        // update boss health bar?? I'll have it here for now
-        // if()
-        // this.bh_boss_health.scale.x -= this.health_scale;
 
         if (!this.boss.alive) {
             this.workEndBossDeath();
@@ -145,19 +138,6 @@ BasicGame.Work.prototype = {
         if(this.input.keyboard.isDown(Phaser.Keyboard.ENTER) || !this.player.alive){ // temporary code just to progress through the states for now
             this.workEnd();
         }
-    },
-    render: function () {
-        // if(this.player.showHitbox)
-            // game.debug.body(this.player);
-        //if (Enemy.bulletGroup != null)
-        //    game.debug.physicsGroup(Enemy.bulletGroup); 
-        // game.debug.body(this.player);
-
-        //Create some debug health text
-        // game.debug.text('Health = ' + this.player.currHealth, this.player.x, this.player.y, { fontSize: '32px', fill: '#00ee00' });
-
-        //Create some debug health text
-        // game.debug.text('Boss Health = ' + this.boss.currHealth, this.boss.x, this.boss.y, { fontSize: '32px', fill: '#ff0000' });
     },
     workStart: function () {
         // timer before going on to the next stage

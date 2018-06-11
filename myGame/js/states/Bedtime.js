@@ -541,14 +541,11 @@ BasicGame.Bedtime.prototype = {
 	            	break;
 	        	// if colliding with bed
                 case "bedframe":
-                    if (this.exit == false) {
-                        this.exit = true;
-                        game.sound.stopAll(); 
-                        this.bedtimeSfx.play();
-                        bgm.fadeOut(2000);
-                        this.advanceState();
-                    }
-        			break;
+                    game.sound.stopAll();
+                    this.bedtimeSfx.play();
+                    bgm.fadeOut(2000);
+                    this.advanceState();
+                    break;
         		// if player check laptop, opens up social media
         		case "laptop":
         			if(BasicGame.global.case_number == 'final'){
@@ -619,7 +616,10 @@ BasicGame.Bedtime.prototype = {
 		var spaceKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.advanceState, this);
 	},
-	advanceState(){
+    advanceState() {
+        if (this.exit == true)
+            return;
+        this.exit = true;
 		this.camera.fade('#000', 2000);
         this.camera.onFadeComplete.addOnce(function () {
             if (calendar.date.getDay() == 0) {
@@ -629,18 +629,5 @@ BasicGame.Bedtime.prototype = {
         }, this);
     },
 	render: function(){
-		// game.debug.body(sprite);
-		// game.debug.body(this.lampsensor);
-		// game.debug.body(sensor);
-		// game.debug.body(this.lamp);
-		// // game.debug.body(this.sofa);
-		// game.debug.body(this.plant1);
-		// game.debug.body(this.trashcan);
-		// game.debug.body(this.table);
-		// // game.debug.body(this.armrest1);
-		// // game.debug.body(this.armrest2);
-		// game.debug.body(this.bed);
-		// game.debug.body(this.bedframe);
-		// game.debug.body(this.bookshelf1);
 	}
 };
