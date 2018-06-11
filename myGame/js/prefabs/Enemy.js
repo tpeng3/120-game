@@ -473,7 +473,7 @@ EnemyAI.AI_boss_bird = {
             if (this.state == 'init') {
                 this.movementPattern = Enemy.movementPattern_doNothing;
                 this.shootingPattern = function () { };
-                this.speed = 75;
+                this.speed = 150;
                 var targetPoint = new Phaser.Point(600, 150);
                 game.physics.arcade.moveToObject(this, targetPoint, this.speed);
                 let buffer = 50;

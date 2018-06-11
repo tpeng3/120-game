@@ -53,7 +53,7 @@ BasicGame.FinalCaseDecision.prototype = {
                     this.endingUnlocked[i] = false;
                 }
             } else if (end_state != 'complete') {
-                BasicGame.save = 'unlocked';
+                BasicGame.save['end_' + this.characters[i]] = 'unlocked';
             }
         }
         this.characterSprites[0].x -= 20;
