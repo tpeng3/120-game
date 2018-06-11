@@ -538,11 +538,13 @@ BasicGame.Bedtime.prototype = {
 	            	this.lighting.visible = (this.lighting.visible? false : true);
 	            	break;
 	        	// if colliding with bed
-                case "bedframe":
-                    game.sound.stopAll();
-                    this.bedtimeSfx.play();
-                    bgm.fadeOut(2000);
-                    this.advanceState();
+                case "bedframe":             
+                    if (this.exit == false) {
+                        game.sound.stopAll();
+                        this.bedtimeSfx.play();
+                        bgm.fadeOut(2000);
+                        this.advanceState();
+                    }
                     break;
         		// if player check laptop, opens up social media
         		case "laptop":

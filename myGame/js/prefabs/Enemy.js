@@ -296,6 +296,9 @@ function EnemyAI(game, xPos, yPos, imageKey, startingHealth, maxHealth, target, 
         this.AI.init.call(this);
     this.state = 'init';
     this.pause = true;
+    this.AI.phase2Start = undefined;
+    this.AI.phase3Start = undefined;
+    this.AI.phase4Start = undefined;
 }
 //Finish prefab stuff
 EnemyAI.prototype = Object.create(EnemyShooter.prototype);
