@@ -88,7 +88,7 @@ BasicGame.Bedtime.prototype = {
 		this.notification = this.add.sprite(64*2+10, 64*6+0, 'furniture', 'sprite_notification');
 		this.add.tween(this.notification).to( { y: 64*6+6 }, 500, Phaser.Easing.Linear.None, true, 0, 500, true);
 		// don't need a notification if its final week
-		if(BasicGame.global.case_number == 'final'){
+		if(BasicGame.global.case_number == 'final' || calendar.date.getDay() == 0){
 			this.notification.visible = false;
 		}
 
