@@ -34,7 +34,7 @@
 	{"name":"Fedelynn", "expression": "angry",
 	  "text":"You're coming down to the station."},
 	{"name":"Locke",
-	  "text":"(This is bad. I can't be caught in the cluthes of the law. Maybe if I...",
+	  "text":"(This is bad. I can't be caught in the clucthes of the law. Maybe if I...",
 	  "functions": ["this.bodyText.style.fill = '#ccc';"]},
 	{"name":"Locke",
 	  "text":"LOOK! A FLYING POLICE CAR!",

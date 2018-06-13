@@ -603,6 +603,7 @@ BasicGame.Bedtime.prototype = {
         this.world.bringToTop(this.flavor);
 	},
 	sundayTransition(){
+		BasicGame.global.player_stats.fatigue--;
 		this.lighting.visible = true;
 		sprite.x = this.sofa.x+ (this.sofa.width / 2);
 		sprite.y = this.sofa.y + 6;

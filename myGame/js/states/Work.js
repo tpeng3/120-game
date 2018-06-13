@@ -30,7 +30,7 @@ BasicGame.Work.prototype = {
         this.load.audio('sfx_enemy_death', 'assets/audio/sfx/sfx_enemy_death.ogg');
     },
     create: function () {
-        this.BH_TIME = 60000; //time limit for the bullet hell is currently a minute
+        this.BH_TIME = 90000; //time limit for the bullet hell is currently a minute
 
         //Initialize lives based on the player's fatigue
         this.lives = Math.max(1, 3 - Math.floor((BasicGame.global.player_stats.fatigue - 1) / 2));

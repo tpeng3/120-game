@@ -70,7 +70,7 @@ BasicGame.ActivityDecision.prototype = {
         if (BasicGame.global.case == undefined) {
             let dateNum = calendar.date.getDate();
             if ((dateNum == 9 && BasicGame.global.case_flags['Case_1'] != true) || (dateNum == 16 && BasicGame.global.case_flags['Case_2'] != true)) {
-                info = "Locke's agnecy is going under. Finish a case today!";
+                info = "Locke's agency is going under. Finish a case today!";
                 this.lastDayTofinish = true;
             } else if (BasicGame.global.case_flags['Case_2'] == true)
                 info = 'No more clients for now: take it easy!'
